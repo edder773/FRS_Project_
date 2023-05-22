@@ -18,11 +18,13 @@
         <p>이메일: {{ user.email }}</p> 
         <p>이름: {{ user.nickname }}</p>
         <label for="annual-income">연봉:</label>
-        <input id="annual-income" v-model="editedUser.annual_income" type="number"><br>
+        <input id="annual-income" v-model="editedUser.annual_income" type="number" step="1000000"><br>
         <label for="assets">자산:</label>
-        <input id="assets" v-model="editedUser.assets" type="number"><br>
+        <input id="assets" v-model="editedUser.assets" type="number" step="1000000"><br>
         <label for="bank">은행:</label>
-        <input id="bank" v-model="editedUser.bank" type="text"><br>
+        <select id="bank" v-model="editedUser.bank">
+          <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
+        </select><br>
         <label for="location">주소:</label>
         <input id="location" v-model="editedUser.location" type="text"><br>
         <label for="age">나이:</label>
@@ -49,7 +51,10 @@ export default {
         bank: "",
         location: "",
         age: 0
-      }
+      },
+      bankOptions: ["KEB하나은행", "SC은행", "경남은행", "광주은행", "국민은행", "기업은행", "농협은행", "대구은행", "부산은행",
+       "새마을금고", "산업은행", "수협은행", "신한은행", "신협중앙회", "외환은행","우체국", "우리은행", "저축은행",
+        "제주은행", "한국산업은행", "한국수출입은행", "한국은행", "현대은행"]
     }
   },
   computed: {

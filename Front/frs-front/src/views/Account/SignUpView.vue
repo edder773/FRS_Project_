@@ -54,18 +54,18 @@
               <label for="age" class="mb-0"> 나이 : </label>
             </div>
             <div class="col-sm-3 d-flex align-items-center">
-              <b-form-input id="age" v-model="age" size="sm"></b-form-input>
+              <b-form-input type="number" id="age" v-model="age" size="sm"></b-form-input>
             </div>
             <div class="col-sm-7"></div>
             <div class="col-sm-2">
               <label for="annual_income" class="mb-0"> 연봉 : </label>
             </div>
             <div class="col-sm-3 d-flex align-items-center">
-              <b-form-input id="annual_income" v-model="annual_income" size="sm"></b-form-input>
+              <b-form-input type="number" step="1000000" id="annual_income" v-model="annual_income" size="sm"></b-form-input>
             </div>
             <div class="col-sm-7"></div>
             <div class="col-sm-2">
-              <label for="occupation" class="mb-0"> 나이 : </label>
+              <label for="occupation" class="mb-0"> 직업 : </label>
             </div>
             <div class="col-sm-3 d-flex align-items-center">
               <b-form-input id="occupation" v-model="occupation" size="sm"></b-form-input>
@@ -75,14 +75,16 @@
               <label for="assets" class="mb-0"> 자산 : </label>
             </div>
             <div class="col-sm-3 d-flex align-items-center">
-              <b-form-input id="assets" v-model="assets" size="sm"></b-form-input>
+              <b-form-input type="number" step="1000000" id="assets" v-model="assets" size="sm"></b-form-input>
             </div>
             <div class="col-sm-7"></div>
             <div class="col-sm-2">
               <label for="bank" class="mb-0"> 선호은행 : </label>
             </div>
             <div class="col-sm-3 d-flex align-items-center">
-              <b-form-input id="bank" v-model="bank" size="sm"></b-form-input>
+              <b-form-select id="bank" v-model="bank" size="sm">
+                <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
+              </b-form-select>
             </div>
             <div class="col-sm-7"></div>
             <div class="col-sm-2">
@@ -114,7 +116,9 @@
         bank: null,
         location: null,
         age: null,
-        
+        bankOptions: ["KEB하나은행", "SC은행", "경남은행", "광주은행", "국민은행", "기업은행", "농협은행", "대구은행", "부산은행",
+       "새마을금고", "산업은행", "수협은행", "신한은행", "신협중앙회", "외환은행","우체국", "우리은행", "저축은행",
+        "제주은행", "한국산업은행", "한국수출입은행", "한국은행", "현대은행"]
       }
     },
     computed:{

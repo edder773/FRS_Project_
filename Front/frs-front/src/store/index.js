@@ -65,6 +65,9 @@ export default new Vuex.Store({
     },
     CLEAR_TOKEN(state){
       state.token = null
+    },
+    UPDATE_USER(state, user){
+      state.user = user
     }
   },
   actions: {
@@ -153,6 +156,37 @@ export default new Vuex.Store({
       context.commit('CLEAR_TOKEN')
 
       router.push({ name: 'home'})
+    },
+    //회원정보수정
+    profileChange(context,payload){
+      const username = payload.username
+      const nickname = payload.nickname
+      const email = payload.email
+      const annual_income = payload.annual_income
+      const occupation = payload.occupation
+      const assets = payload.assets
+      const bank = payload.bank
+      const location = payload.location
+      const age = payload.age
+      const token = context.state.token
+      console.log(token)
+      axios({
+        method: 'put',
+        url: `${API_URL}/accounts/user/change/`,
+        data: {
+          username, nickname, email, annual_income, occupation, assets, bank, location, age
+        },
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      })
+        .then((response) => {
+          const updatedUser =response.data
+          context.commit('UPDATE_USER', updatedUser)
+        })
+        .catch((err) => {
+        console.log(err)
+      })
     }
   },
   modules: {

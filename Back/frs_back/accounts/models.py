@@ -10,6 +10,8 @@ class User(AbstractUser):
     bank = models.CharField(max_length=15, null=True)
     location = models.CharField(max_length=25, null=True)
     age = models.IntegerField(null=True)
+    
+        
 class CustomAccountAdapter(DefaultAccountAdapter):
     def save_user(self, request, user, form, commit=True):
         from allauth.account.utils import user_email, user_field, user_username

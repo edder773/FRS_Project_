@@ -179,6 +179,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_AUTH = {
     'REGISTER_SERIALIZER': 'accounts.serializers.RegisterSerializer',
     'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserDetailsSerializer',
+    # 'UPDATE_SERIALIZER': 'accounts.serializers.UpdateSerializer',
 }
 
 # allauth 의 default adapter 설정

@@ -41,12 +41,13 @@
       </li>
     </ul>
     <p v-if="!editMode && !comments.length">댓글이 없습니다.</p>
-
-    <form v-if="!editMode" @submit.prevent="createComment">
-      <label for="comment">댓글 작성:</label>
-      <input type="text" id="comment" v-model="newComment">
-      <button type="submit">댓글 작성</button>
-    </form>
+    <div v-if="!editMode">
+      <form @submit.prevent="createComment">
+        <label for="comment">댓글 작성:</label>
+        <input type="text" id="comment" v-model="newComment">
+        <button type="submit">댓글 작성</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -118,6 +119,7 @@ export default {
     },
     // 댓글 생성 부분
     createComment() {
+
       if (this.newComment.trim() === '') {
         alert('댓글을 입력하세요.')
         return
@@ -191,9 +193,18 @@ export default {
     cancelEditComment(comment) {
       comment.editMode = false
     },
-  
+    // 게시글 수정 부분
     updateArticle() {
       const token = this.getToken
+      if (!this.article.title){
+        alert('제목을 입력해주세요')
+        return
+      }
+      else if(!this.article.content){
+        alert('내용을 입력해주세요')
+        return
+      }
+
       axios({
         method: 'put',
         url: `${API_URL}/api/v1/articles/${this.$route.params.id}/`,
@@ -205,8 +216,9 @@ export default {
           Authorization: `Token ${token}`
         }
       })
-        .then(() => {
-          this.editMode = false; // 수정 완료 후 편집 모드 비활성화
+        .then((res) => {
+          this.original = { ...res.data }
+          this.editMode = false
         })
         .catch((error) => {
           console.log(error)

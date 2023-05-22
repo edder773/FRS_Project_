@@ -111,3 +111,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         model = User
         fields = ('pk', *extra_fields)
         read_only_fields = ('email',)
+        
+class ProfileChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username','nickname','email','annual_income','occupation','assets','bank','location','age')

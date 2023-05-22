@@ -5,7 +5,7 @@ from rest_framework import status
 
 from .models import Article, Comment
 from .serializers import ArticleListSerializer, CommentSerializer
-
+from rest_framework.permissions import IsAuthenticated
 
 
 

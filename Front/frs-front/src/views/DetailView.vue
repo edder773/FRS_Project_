@@ -8,8 +8,8 @@
       <p>내용: {{ article?.content }}</p>
       <p>작성시간: {{ article?.created_at }}</p>
       <p>수정시간: {{ article?.updated_at }}</p>
-      <button @click="editMode = true">수정하기</button>
-      <button @click="deleteArticle">삭제</button>
+      <button v-if="IsCurrentUser(article.user)" @click="editMode = true">수정하기</button>
+      <button v-if="IsCurrentUser(article.user)" @click="deleteArticle">삭제</button>
     </div>
 
     <form v-if="editMode" @submit.prevent="updateArticle">
@@ -30,8 +30,8 @@
       <li v-for="comment in comments" :key="comment.id">
         <div v-if="!comment.editMode">
           {{ comment?.user }} : {{ comment?.content }}
-          <button @click="editComment(comment)">수정</button>
-          <button @click="deleteComment(comment.id)">삭제</button>
+          <button v-if="IsCurrentUser(comment.user)" @click="editComment(comment)">수정</button>
+          <button v-if="IsCurrentUser(comment.user)" @click="deleteComment(comment.id)">삭제</button>
         </div>
         <div v-else>
           <input type="text" v-model="comment.editedContent">
@@ -62,11 +62,17 @@ export default {
       article: null,
       comments: [],
       newComment: '',
-      editMode: false
+      editMode: false,
+      original: null
     }
   },
   computed:{
-    ...mapGetters(['getUser','getToken'])
+    ...mapGetters(['getUser','getToken']),
+    IsCurrentUser() {
+      return(user) => {
+        return user === this.getUser.username
+      }
+    }
   },
   created() {
     this.getArticleDetail()
@@ -76,12 +82,17 @@ export default {
   },
   methods: {
     getArticleDetail() {
+      const token = this.getToken
       axios({
         method: 'get',
         url: `${API_URL}/api/v1/articles/${this.$route.params.id}/`,
+        headers: {
+          Authorization: `Token ${token}`
+        }
       })
         .then((res) => {
           this.article = res.data
+          this.original = { ...res.data }
         })
         .catch((error) => {
           console.log(error)
@@ -182,12 +193,16 @@ export default {
     },
   
     updateArticle() {
+      const token = this.getToken
       axios({
         method: 'put',
         url: `${API_URL}/api/v1/articles/${this.$route.params.id}/`,
         data: {
           title: this.article.title,
           content: this.article.content,
+        },
+        headers: {
+          Authorization: `Token ${token}`
         }
       })
         .then(() => {
@@ -198,6 +213,8 @@ export default {
         })
     },
     cancelEdit() {
+      this.article.title = this.original.title
+      this.article.content = this.original.content
       this.editMode = false
     },
       deleteArticle() {

@@ -8,7 +8,6 @@ import KakaoMap from '../views/KakaoMap.vue'
 import ArticleView from '../views/Boards/ArticleView.vue'
 import CreateView from '../views/Boards/CreateView.vue'
 import DetailView from '../views/Boards/DetailView.vue'
-import ProductView from '../views/ProductView.vue'
 import ProfileView from '../views/Account/ProfileView.vue'
 import DepositList from '@/views/Products/DepositList.vue'
 import SavingList from '@/views/Products/SavingList.vue'
@@ -54,11 +53,6 @@ const routes = [
     path: '/detail',
     name: 'detail',
     component: DetailView
-  },
-  {
-    path: '/product',
-    name: 'product',
-    component: ProductView
   },
   {
     path: '/profile/:userId',

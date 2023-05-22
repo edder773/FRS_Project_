@@ -8,19 +8,24 @@
         <thead>
           <tr>
             <th scope="col">번호</th>
-            <th scope="col">기본금리</th>
-            <th scope="col">우대금리</th>
+            <th scope="col">6개월</th>
+            <th scope="col">12개월</th>
+            <th scope="col">24개월</th>
+            <th scope="col">36개월</th>
             <th scope="col">금융기관</th>
             <th scope="col">상품</th>
           </tr>
         </thead>
         <tbody>
-          <div v-for="product in products" :key="product.id">
+          <tr v-for="product in products" :key="product.id">
             <td>{{ product.id }}</td>
-            <td><DepositOption :productId="product.id"/></td>
+            <td><DepositOption6 :productId="product.id"/></td>
+            <td><DepositOption12 :productId="product.id"/></td>
+            <td><DepositOption24 :productId="product.id"/></td>
+            <td><DepositOption36 :productId="product.id"/></td>
             <td>{{ product.kor_co_nm }}</td>
             <td>{{ product.fin_prdt_nm }}</td>
-          </div>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -54,15 +59,19 @@
 <script>
 import axios from 'axios'
 import KakaoMap from '@/components/KakaoMap.vue'
-// import DepositProduct from '@/components/DepositProduct.vue'
-import DepositOption from '@/components/DepositOption.vue'
+import DepositOption6 from '@/components/DepositOption6.vue'
+import DepositOption12 from '@/components/DepositOption12.vue'
+import DepositOption24 from '@/components/DepositOption24.vue'
+import DepositOption36 from '@/components/DepositOption36.vue'
 
 export default {
   name: 'DepositList',
   components: {
     KakaoMap,
-    // DepositProduct,
-    DepositOption,
+    DepositOption6,
+    DepositOption12,
+    DepositOption24,
+    DepositOption36,
   },
   data() {
     return {
@@ -79,33 +88,11 @@ export default {
       axios.get('http://127.0.0.1:8000/deposits/products/')
         .then(response => {
           this.products = response.data
-          this.fetchOptions() // fetchOptions()를 호출하여 options 가져오기
         })
         .catch(error => {
           console.error(error)
         })
     },
-    // fetchOptions() {
-    //   axios.get('http://127.0.0.1:8000/deposits/products-option/')
-    //     .then(response => {
-    //       const options = {}
-    //       response.data.filter(option => {
-    //         const productId = option.fin_prdt_cd_id
-    //         if (options[productId]) {
-    //           options[productId].push(option)
-    //         } else {
-    //           options[productId] = [option]
-    //         }
-    //       })
-    //       this.options = options
-    //     })
-    //     .catch(error => {
-    //       console.error(error)
-    //     })
-    // },
-    // getProductOptions(productId) {
-    //   return this.options[productId] || []
-    // },
     openModal(productId) {
       const selectedProduct = this.products.find(product => product.id === productId)
       this.selectedProduct = selectedProduct
@@ -118,9 +105,6 @@ export default {
 </script>
 
 <style>
-#deposit-page {
-  margin-top: 100px;
-}
 
 .table-responsive {
   overflow-x: auto;

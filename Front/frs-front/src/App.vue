@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <div id="home"><router-link to="/"></router-link></div>
-    <div class="header-dev">
-      <div id="header-dev-top">
-        <div class="main"><a href="/">FRS</a></div >
-        <div class="gnb">
-          <li class="left deposit"><a href="/deposit">예금비교</a></li>
-          <li class="left exchange"><a href="/exchange">환율계산</a></li>
-          <li class="left map"><a href="/map">은행찾기</a></li>
-          <li class="left article"><a href="/article">게시판</a></li>
-        </div>
-        <div class="gnb-right">
-          <li class="right profile"><a :href="`/profile/${userId}`">프로필</a></li>
-          <div class="right logout" @click="loggedout()">로그아웃</div>
-          <li class="right login"><a href="/login">로그인</a></li>
-          <li class="right signup"><a href="/signup">회원가입</a></li>
-        </div>       
-      </div>
-    </div>
+    <b-navbar toggleable="lg" type="light" variant="light" class="header-dev">
+      <b-navbar-brand href="/">FRS</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item><router-link to="/deposit">예금비교</router-link></b-nav-item>
+          <b-nav-item><router-link to="/exchange">환율계산</router-link></b-nav-item>
+          <b-nav-item><router-link to="/map">은행찾기</router-link></b-nav-item>
+          <b-nav-item><router-link to="/article">게시판</router-link></b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item v-if="userId" @click="loggedout()">로그아웃</b-nav-item>
+          <b-nav-item v-else><router-link to="/signup">회원가입</router-link>
+          <router-link to="/login">로그인</router-link></b-nav-item>
+          <b-nav-item v-if="userId"><router-link :to="`/profile/${userId}`">프로필</router-link></b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <router-view/>
   </div>
 </template>
@@ -26,9 +26,9 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  methods:{
+  methods: {
     ...mapActions(['logout']),
-    loggedout(){
+    loggedout() {
       this.logout()
     }
   },
@@ -50,49 +50,39 @@ export default {
   color: #505050;
   position: relative;
 }
-/* nav {
-  padding: 30px;
+
+.header-dev {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
-nav a {
+
+.b-navbar {
+  padding: 20px;
+}
+
+.b-navbar-brand {
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.b-navbar-nav .b-nav-item {
+  padding: 20px;
+}
+
+.b-nav-item a {
   font-weight: bold;
   color: #11038d;
 }
-nav a.router-link-exact-active {
+
+.b-nav-item.router-link-exact-active a {
   color: #61a9c5;
-} */
-.header-dev {
-  list-style: none;
-  position: fixed;
-  top: 0; 
-  width: 100%; 
-  background-color: #fff; 
-  z-index: 1; 
-}
-.main{
-  font-weight: bold;
-  font-size: 60px;
-  position: relative;
-  float: left;
-}
-#header-dev-top .gnb{
-  position: relative;
-  float: left;
-}
-.left{
-  padding: 20px;
-  position: relative;
-  float: left;
-}
-.header-dev{
-  list-style: none;
 }
 
-.right{
+.b-nav-item {
   padding: 10px;
   padding-top: 20px;
-  position: relative;
-  float: right;
 }
-
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="detail-page">
     <h1>Detail</h1>
     <div v-if="!editMode && article">
       <p>작성자 : {{ article.user }}</p>
@@ -221,3 +221,8 @@ export default {
   }
 }
 </script>
+<style>
+#datail-page{
+  margin-top: 80px;
+}
+</style>

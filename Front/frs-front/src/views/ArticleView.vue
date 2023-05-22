@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="article-page">
       <h1>Article Page</h1>
       <router-link :to="{ name: 'create' }">[CREATE]</router-link>
       <ArticleList />
@@ -37,5 +37,7 @@
   </script>
   
   <style>
-  
+  #article-page{
+  margin-top: 80px;
+}
   </style>

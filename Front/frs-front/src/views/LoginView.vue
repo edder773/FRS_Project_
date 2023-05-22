@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="login-page">
       <h1>로그인</h1>
       <form @submit.prevent="login">
         <label for="username">ID : </label>
@@ -37,4 +37,8 @@
     }
   }
   </script>
-  
+  <style>
+#login-page{
+  margin-top: 80px;
+}
+</style>

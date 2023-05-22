@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="signup-page">
       <h1>회원가입</h1>
       <form @submit.prevent="signUp">
         
@@ -174,4 +174,8 @@
     }
   }
   </script>
-  
+<style>
+#signup-page{
+  margin-top: 80px;
+}
+</style>

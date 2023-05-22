@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="exchange-page">
     <div>
       <label for="amount">해외 -> 한국 : </label>
       <input type="number" id="amount" v-model="amount" value="result1" @input="calculateExchangeRate" />
@@ -87,3 +87,8 @@ export default {
   },
 }
 </script>
+<style>
+#exchange-page{
+  margin-top: 80px;
+}
+</style>

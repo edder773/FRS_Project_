@@ -31,7 +31,7 @@
       <tbody class="table-content">
         <tr v-for="(product, index) in products" :key="product.id" @click="openModal(product)">
           <td class="table-content">{{ product.id }}</td>
-          <td class="table-content">{{ product.max_limt }}</td>
+          <td class="table-content">{{ product.max_limit }}</td>
           <td class="table-content">{{ options[index].intr_rate }}</td>
           <td class="table-content">{{ options[index].intr_rate2 }}</td>
           <td class="table-content">{{ product.kor_co_nm }}</td>
@@ -69,7 +69,7 @@
         <p> 이자율 조건 : {{ product.mtrt_int }}</p>
         <p> 특별 조건 : {{ product.spcl_cnd }}</p>
         <p> 가입 가능 유형 : {{ product.join_member }}</p>
-        <p> 가입한도 : {{ product.max_limt }}</p>
+        <p> 가입한도 : {{ product.max_limit }}</p>
         <p> 기타 참고 사항 : {{ product.etc_note }}</p>
         <hr>
       </li>

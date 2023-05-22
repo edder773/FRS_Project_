@@ -1,7 +1,7 @@
 <!-- ProfileView.vue -->
 
 <template>
-    <div>
+    <div id="profile-page">
       <h2>User Profile</h2>
       <div v-if="isLogin && user">
         <p>아이디: {{ user.username }}</p>
@@ -33,4 +33,8 @@
     }
   }
   </script>
-  
+<style>
+#profile-page{
+  margin-top: 80px;
+}
+</style>

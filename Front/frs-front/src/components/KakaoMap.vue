@@ -81,7 +81,6 @@
     </select>
     <button @click="search()">검색</button>
     <div id="map">
-
     </div>
   </div>
 </template>
@@ -271,5 +270,20 @@ export default {
 #map {
   width: 400px;
   height: 400px;
+  margin-left: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  /* justify-content: center;
+  align-items: center; */
 }
+#map-page {
+  margin-top: 80px;
+  /* background-color: #baf5ff; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
 </style>

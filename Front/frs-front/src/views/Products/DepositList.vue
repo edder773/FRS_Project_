@@ -11,38 +11,52 @@
     </li> -->
 
     <div class="table-container">
-    <table class="main_table content">
+    <table class="option_table content">
     <colgroup>
-      <col>
-      <col>
-      <col>
       <col>
       <col>
       <col>
     </colgroup>
       <thead class="table-head">
         <th scope="col">번호 |</th>
-        <th scope="col">가입한도 |</th>
         <th scope="col">기본 금리 |</th>
         <th scope="col">우대 금리 |</th>
-        <th scope="col">금융기관 |</th>
-        <th scope="col">상품 |</th>
       </thead>
       <tbody class="table-content">
+        <tr v-for="option in options" :key="option.id">
+          <td class="table-content" v-if="option.save_trm===6">{{ option.fin_prdt_cd }}</td>
+          <td class="table-content" v-if="option.save_trm===6">{{ option.intr_rate }}</td>
+          <td class="table-content" v-if="option.save_trm===6">{{ option.intr_rate2 }}</td>
+        </tr>
+      </tbody>
+      <!-- <tbody class="table-content">
         <tr v-for="(product, index) in products" :key="product.id" @click="openModal(product)">
           <td class="table-content">{{ product.id }}</td>
-          <td class="table-content">{{ product.max_limit }}</td>
-          <td class="table-content">{{ options[index].intr_rate }}</td>
-          <td class="table-content">{{ options[index].intr_rate2 }}</td>
+          <td class="table-content" v-if="options[index].fin_prdt_cd === product.id && options[index].save_trm===6">{{ options[index].intr_rate }}</td>
+          <td class="table-content" v-if="options[index].fin_prdt_cd === product.id && options[index].save_trm===6">{{ options[index].intr_rate2 }}</td>
           <td class="table-content">{{ product.kor_co_nm }}</td>
           <td class="table-content">{{ product.fin_prdt_nm }}</td>
         </tr>
-      </tbody>
+      </tbody> -->
+    </table>
+    <table class="product-table content">
+      <colgroup>
+        <col>
+        <col>
+        <col>
+      </colgroup>
+        <thead class="table-head">
+          <th scope="col">금융기관 |</th>
+          <th scope="col">상품 |</th>
+        </thead>
+        <tbody class="table-content">
+          <tr v-for="product in products" :key="product.id" @click="openModal(product)">
+            <td class="table-content">{{ product.kor_co_nm }}</td>
+            <td class="table-content">{{ product.fin_prdt_nm }}</td>
+          </tr>
+        </tbody>
     </table>
     <div class="modal" v-if="selectedProduct" @click.self="closeModal">
-      <!-- <div class="modal-header">
-
-      </div> -->
       <div class="modal-content">
         <div class="modal-header">
           <button style="float: right;" @click="closeModal">
@@ -52,8 +66,9 @@
         <h2>{{selectedProduct.fin_prdt_nm}}</h2>
         <h3>{{selectedProduct.kor_co_nm}}</h3><hr>
         <KakaoMap/>
-        <p>가입 가능 유형:{{ selectedProduct.join_member }}</p>
-        <p>상품 공시 시작일:{{ selectedProduct.dcls_strt_day }}</p>
+        <p>가입 가능 유형 : {{ selectedProduct.join_member }}</p>
+        <p>상품 공시 시작일 : {{ selectedProduct.dcls_strt_day }}</p>
+        <p v-if="selectedProduct.max_limit">가입한도 : {{ selectedProduct.max_limit }} 원</p>
         <p> {{ selectedProduct.etc_note }}</p>
 
         <!-- <button @click="closeModal">닫기</button> -->
@@ -90,7 +105,8 @@ export default {
     return {
       products: [],
       options: [],
-      selectedProduct: null
+      selectedProduct: null,
+      number: null,
     }
   },
   created() {
@@ -102,6 +118,7 @@ export default {
       axios.get('http://127.0.0.1:8000/deposits/products/')
         .then(response => {
           this.products = response.data
+          this.number = this.products.id
         })
         .catch(error => {
           console.error(error)

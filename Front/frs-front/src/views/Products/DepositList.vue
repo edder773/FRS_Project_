@@ -3,138 +3,112 @@
     <a href="/deposit">예금비교</a> |
     <a href="/saving">적금비교</a> |
     <h2>정기예금</h2>
-    <!-- <li v-for="option in options" :key="option.id">
-      <p>이자율 유형: {{ option.intr_rate_type_nm }}</p>
-      <p>기본 금리: {{ option.intr_rate }}</p>
-      <p>우대 금리: {{ option.intr_rate2 }}</p>
-      <p>저축 기간: {{ option.save_trm }}</p>
-    </li> -->
-
     <div class="table-container">
-    <table class="option_table content">
-    <colgroup>
-      <col>
-      <col>
-      <col>
-    </colgroup>
-      <thead class="table-head">
-        <th scope="col">번호 |</th>
-        <th scope="col">기본 금리 |</th>
-        <th scope="col">우대 금리 |</th>
-      </thead>
-      <tbody class="table-content">
-        <tr v-for="option in options" :key="option.id">
-          <td class="table-content" v-if="option.save_trm===6">{{ option.fin_prdt_cd }}</td>
-          <td class="table-content" v-if="option.save_trm===6">{{ option.intr_rate }}</td>
-          <td class="table-content" v-if="option.save_trm===6">{{ option.intr_rate2 }}</td>
-        </tr>
-      </tbody>
-      <!-- <tbody class="table-content">
-        <tr v-for="(product, index) in products" :key="product.id" @click="openModal(product)">
-          <td class="table-content">{{ product.id }}</td>
-          <td class="table-content" v-if="options[index].fin_prdt_cd === product.id && options[index].save_trm===6">{{ options[index].intr_rate }}</td>
-          <td class="table-content" v-if="options[index].fin_prdt_cd === product.id && options[index].save_trm===6">{{ options[index].intr_rate2 }}</td>
-          <td class="table-content">{{ product.kor_co_nm }}</td>
-          <td class="table-content">{{ product.fin_prdt_nm }}</td>
-        </tr>
-      </tbody> -->
-    </table>
-    <table class="product-table content">
-      <colgroup>
-        <col>
-        <col>
-        <col>
-      </colgroup>
-        <thead class="table-head">
-          <th scope="col">금융기관 |</th>
-          <th scope="col">상품 |</th>
-        </thead>
-        <tbody class="table-content">
-          <tr v-for="product in products" :key="product.id" @click="openModal(product)">
-            <td class="table-content">{{ product.kor_co_nm }}</td>
-            <td class="table-content">{{ product.fin_prdt_nm }}</td>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">번호</th>
+            <th scope="col">기본금리</th>
+            <th scope="col">우대금리</th>
+            <th scope="col">금융기관</th>
+            <th scope="col">상품</th>
           </tr>
+        </thead>
+        <tbody>
+          <div v-for="product in products" :key="product.id">
+            <td>{{ product.id }}</td>
+            <td><DepositOption :productId="product.id"/></td>
+            <td>{{ product.kor_co_nm }}</td>
+            <td>{{ product.fin_prdt_nm }}</td>
+          </div>
         </tbody>
-    </table>
+      </table>
+    </div>
+    
     <div class="modal" v-if="selectedProduct" @click.self="closeModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button style="float: right;" @click="closeModal">
-            <span aria-hidden="true" >X</span>
-          </button>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ selectedProduct.fin_prdt_nm }}</h5>
+            <button type="button" class="close" @click="closeModal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h6>{{ selectedProduct.kor_co_nm }}</h6>
+            <KakaoMap/>
+            <p>가입 가능 유형: {{ selectedProduct.join_member }}</p>
+            <p>상품 공시 시작일: {{ selectedProduct.dcls_strt_day }}</p>
+            <p v-if="selectedProduct.max_limit">가입한도: {{ selectedProduct.max_limit }} 원</p>
+            <p>{{ selectedProduct.etc_note }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="closeModal">닫기</button>
+          </div>
         </div>
-        <h2>{{selectedProduct.fin_prdt_nm}}</h2>
-        <h3>{{selectedProduct.kor_co_nm}}</h3><hr>
-        <KakaoMap/>
-        <p>가입 가능 유형 : {{ selectedProduct.join_member }}</p>
-        <p>상품 공시 시작일 : {{ selectedProduct.dcls_strt_day }}</p>
-        <p v-if="selectedProduct.max_limit">가입한도 : {{ selectedProduct.max_limit }} 원</p>
-        <p> {{ selectedProduct.etc_note }}</p>
-
-        <!-- <button @click="closeModal">닫기</button> -->
       </div>
     </div>
-  </div>
-    <!-- <ul>
-      <li v-for="product in products" :key="product.id">
-        <p> 상품명 : {{ product.fin_prdt_nm }}</p>
-        <p> 은행명 : {{ product.kor_co_nm }}</p>
-        <p> 상품 공시 월 : {{ product.dcls_month }}</p>
-        <p> 상품 공시 시작일 : {{ product.dcls_strt_day }}</p>
-        <p> 이자율 조건 : {{ product.mtrt_int }}</p>
-        <p> 특별 조건 : {{ product.spcl_cnd }}</p>
-        <p> 가입 가능 유형 : {{ product.join_member }}</p>
-        <p> 가입한도 : {{ product.max_limit }}</p>
-        <p> 기타 참고 사항 : {{ product.etc_note }}</p>
-        <hr>
-      </li>
-    </ul> -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import KakaoMap from '@/components/KakaoMap.vue'
+// import DepositProduct from '@/components/DepositProduct.vue'
+import DepositOption from '@/components/DepositOption.vue'
 
 export default {
-  name: 'depositList',
+  name: 'DepositList',
   components: {
-    KakaoMap
+    KakaoMap,
+    // DepositProduct,
+    DepositOption,
   },
   data() {
     return {
       products: [],
-      options: [],
+      options: {},
       selectedProduct: null,
-      number: null,
     }
   },
   created() {
     this.fetchProducts()
-    this.fetchOptions()
   },
   methods: {
     fetchProducts() {
       axios.get('http://127.0.0.1:8000/deposits/products/')
         .then(response => {
           this.products = response.data
-          this.number = this.products.id
+          this.fetchOptions() // fetchOptions()를 호출하여 options 가져오기
         })
         .catch(error => {
           console.error(error)
         })
     },
-    fetchOptions() {
-      axios.get('http://127.0.0.1:8000/deposits/products-option/')
-        .then(response => {
-          this.options = response.data
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    },
-    openModal(product) {
-      this.selectedProduct = product
+    // fetchOptions() {
+    //   axios.get('http://127.0.0.1:8000/deposits/products-option/')
+    //     .then(response => {
+    //       const options = {}
+    //       response.data.filter(option => {
+    //         const productId = option.fin_prdt_cd_id
+    //         if (options[productId]) {
+    //           options[productId].push(option)
+    //         } else {
+    //           options[productId] = [option]
+    //         }
+    //       })
+    //       this.options = options
+    //     })
+    //     .catch(error => {
+    //       console.error(error)
+    //     })
+    // },
+    // getProductOptions(productId) {
+    //   return this.options[productId] || []
+    // },
+    openModal(productId) {
+      const selectedProduct = this.products.find(product => product.id === productId)
+      this.selectedProduct = selectedProduct
     },
     closeModal() {
       this.selectedProduct = null
@@ -144,21 +118,14 @@ export default {
 </script>
 
 <style>
-.table-container{
-  display: flex;
-  justify-content: center;
-  font-family: "Spoqa Han Sans", Malgun Gothic, "맑은 고딕", dotum, "돋움", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #555;
+#deposit-page {
+  margin-top: 100px;
 }
-.table-content{
-  padding-top: 10px;
-  padding-bottom: 10px;
+
+.table-responsive {
+  overflow-x: auto;
 }
-.table-head{
-  font-size: 20px;
-}
+
 .modal {
   display: flex;
   align-items: center;
@@ -172,28 +139,23 @@ export default {
   z-index: 9999;
 }
 
+.modal-dialog {
+  max-width: 600px;
+}
+
 .modal-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 4px;
-  width: 600px;
-  overflow-y: auto; /* 내용이 모달 크기를 초과할 경우 스크롤 생성 */
-  /* height: 600px; */
-  
 }
+
 .modal-header {
   display: flex;
   justify-content: flex-end;
-  /* align-items: flex-start; */
 }
-
 
 .close:hover {
   opacity: 1;
   color: #000;
-}
-
-#deposit-page{
-  margin-top: 80px;
 }
 </style>

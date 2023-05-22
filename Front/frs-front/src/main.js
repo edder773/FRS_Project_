@@ -1,11 +1,11 @@
 import Vue from 'vue'
-// import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import BootstrapVue from 'bootstrap-vue'
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap'
+import { BootstrapVue } from 'bootstrap-vue'
 
 // const instance = axios.create({
 //   baseURL: '/api', // 프록시 경로 설정
@@ -13,7 +13,7 @@ import store from './store'
 
 // Vue.config.productionTip = false
 // Vue.prototype.$axios = instance
-// Vue.use(BootstrapVue)
+Vue.use(BootstrapVue)
 
 new Vue({
   router,

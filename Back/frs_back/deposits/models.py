@@ -45,3 +45,6 @@ class SavingOptions(models.Model):
     intr_rate = models.FloatField(null=True)
     intr_rate2 = models.FloatField()
     save_trm = models.IntegerField()
+    
+    class Meta:
+        unique_together = ['fin_prdt_cd', 'intr_rate_type_nm', 'save_trm']

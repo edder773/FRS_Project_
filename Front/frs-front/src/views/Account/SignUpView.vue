@@ -1,40 +1,98 @@
 <template>
-    <div id="signup-page">
-      <h1>회원가입</h1>
+  <div id="signup-page">
+    <h1>회원가입</h1>
       <form @submit.prevent="signUp">
-        
-        <label for="username">*ID : </label>
-        <input type="text" id="username" :state="username" v-model="username"><br>
-        
-        <label for="email"> *이메일 : </label>
-        <input type="email" id="email" v-model="email"><br>
-
-        <label for="password1"> *PW : </label>
-        <input type="password" id="password1" v-model="password1"><br>
-        
-        <label for="password2"> *PW Confirmation : </label>
-        <input type="password" id="password2" v-model="password2"><br>
-        
-        <label for="nickname"> *이름 : </label>
-        <input type="text" id="nickname" v-model="nickname"><br>
-        
-        <label for="age"> 나이 : </label>
-        <input type="text" id="age" v-model="age"><br>
-
-        <label for="annual_income"> 연봉 : </label>
-        <input type="text" id="annual_income" v-model="annual_income"><br>
-
-        <label for="occupation"> 직업 : </label>
-        <input type="text" id="occupation" v-model="occupation"><br>
-
-        <label for="assets"> 자산 : </label>
-        <input type="text" id="assets" v-model="assets"><br>
-
-        <label for="bank"> 선호은행 : </label>
-        <input type="text" id="bank" v-model="bank"><br>
-
-        <label for="location"> 주소 : </label>
-        <input type="text" id="location" v-model="location"><br>
+        <div class="row">
+          <div class="col-sm-2">
+            <label for="username" class="mb-0">*ID:</label>
+          </div>
+          <div class="col-sm-3 d-flex align-items-center">
+            <b-form-input id="username" v-model="username" :state="usernameValid" size="sm"></b-form-input>
+            <b-form-invalid-feedback id="input-live-feedback">
+              4글자 이상 입력하세요
+            </b-form-invalid-feedback>
+          </div>
+          <div class="col-sm-7"></div>
+          <div class="col-sm-2">
+            <label for="email" class="mb-0"> *이메일 : </label>
+          </div>
+          <div class="col-sm-3 d-flex align-items-center">
+            <b-form-input type="email" id="email" v-model="email" :state="emailValid" size="sm"></b-form-input>
+            <b-form-invalid-feedback id="input-live-feedback">
+              이메일 형태로 입력해주세요
+            </b-form-invalid-feedback>
+          </div>
+          <div class="col-sm-7"></div>
+          <div class="col-sm-2">
+            <label for="password" class="mb-0">*PW:</label>
+          </div>
+          <div class="col-sm-3 d-flex align-items-center">
+            <b-form-input type="password" id="password1" v-model="password1" :state="passwordValid" size="sm"></b-form-input>
+            <b-form-invalid-feedback id="input-live-feedback">
+              8글자 이상 입력하세요
+            </b-form-invalid-feedback>
+          </div>
+          <div class="col-sm-7"></div>
+        <div class="col-sm-2">
+            <label for="password" class="mb-0">비밀번호 확인:</label>
+          </div>
+          <div class="col-sm-3 d-flex align-items-center">
+            <b-form-input type="password" id="password2" v-model="password2" :state="password2Valid" size="sm"></b-form-input>
+            <b-form-invalid-feedback id="input-live-feedback">
+              비밀번호가 일치하지 않습니다
+            </b-form-invalid-feedback>
+          </div>
+        <div class="col-sm-7"></div>
+        <div class="col-sm-2">
+            <label for="nickname" class="mb-0"> *이름 : </label>
+          </div>
+          <div class="col-sm-3 d-flex align-items-center">
+            <b-form-input id="nickname" v-model="nickname" :state="nicknameValid" size="sm"></b-form-input>
+          </div>
+          <div class="col-sm-7"></div>
+          <div class="col-sm-2">
+              <label for="age" class="mb-0"> 나이 : </label>
+            </div>
+            <div class="col-sm-3 d-flex align-items-center">
+              <b-form-input id="age" v-model="age" size="sm"></b-form-input>
+            </div>
+            <div class="col-sm-7"></div>
+            <div class="col-sm-2">
+              <label for="annual_income" class="mb-0"> 연봉 : </label>
+            </div>
+            <div class="col-sm-3 d-flex align-items-center">
+              <b-form-input id="annual_income" v-model="annual_income" size="sm"></b-form-input>
+            </div>
+            <div class="col-sm-7"></div>
+            <div class="col-sm-2">
+              <label for="occupation" class="mb-0"> 나이 : </label>
+            </div>
+            <div class="col-sm-3 d-flex align-items-center">
+              <b-form-input id="occupation" v-model="occupation" size="sm"></b-form-input>
+            </div>
+            <div class="col-sm-7"></div>
+            <div class="col-sm-2">
+              <label for="assets" class="mb-0"> 자산 : </label>
+            </div>
+            <div class="col-sm-3 d-flex align-items-center">
+              <b-form-input id="assets" v-model="assets" size="sm"></b-form-input>
+            </div>
+            <div class="col-sm-7"></div>
+            <div class="col-sm-2">
+              <label for="bank" class="mb-0"> 선호은행 : </label>
+            </div>
+            <div class="col-sm-3 d-flex align-items-center">
+              <b-form-input id="bank" v-model="bank" size="sm"></b-form-input>
+            </div>
+            <div class="col-sm-7"></div>
+            <div class="col-sm-2">
+              <label for="location" class="mb-0"> 주소 : </label>
+            </div>
+            <div class="col-sm-3 d-flex align-items-center">
+              <b-form-input id="location" v-model="location" size="sm"></b-form-input>
+            </div>
+            <div class="col-sm-7"></div>
+          </div>
         <input type="submit" value="SignUp">
       </form>
     </div>
@@ -59,6 +117,24 @@
         
       }
     },
+    computed:{
+      usernameValid(){
+        return this.username && this.username.length >= 4
+      },
+      passwordValid(){
+        return this.password1 && this.password1.length >= 8
+      },
+      password2Valid(){
+        return this.password2 && this.password1===this.password2
+      },
+      nicknameValid(){
+        return this.nickname && this.nickname.length >= 2
+      },
+      emailValid() {
+      const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+      return this.email && emailRegex.test(this.email);
+    }
+    },
     methods: {
       signUp() {
         const payload = {
@@ -74,9 +150,7 @@
           location: this.location !== null ? this.location : undefined,
           age: this.age !== null ? this.age : undefined,
         }
-  
         this.$store.dispatch('signUp', payload)
-        console.log(payload)
       }
     }
   }

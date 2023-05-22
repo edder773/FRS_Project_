@@ -97,6 +97,23 @@ export default new Vuex.Store({
       const bank = payload.bank
       const location = payload.location
       const age = payload.age
+      
+      if (!username){
+        alert('아이디를 입력해주세요')
+        return
+      }
+      if (!password1 || !password2){
+        alert('비밀번호를 입력해주세요')
+        return
+      }
+      if (!email){
+        alert('이메일을 입력해주세요')
+        return
+      }
+      if (!nickname){
+        alert('이름을 입력해주세요')
+        return
+      }
       axios({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
@@ -105,13 +122,12 @@ export default new Vuex.Store({
         }
       })
         .then((res) => {
-          // console.log(res)
-          // context.commit('SIGN_UP', res.data.key)
           context.commit('SAVE_TOKEN', res.data.key)
           router.push({ name: 'home' })
         })
-        .catch((err) => {
-        console.log(err)
+        .catch(() => {
+        alert('아이디와 유사한 비밀번호는 사용할 수 없습니다.')
+        return
       })
     },
     // 로그인 부분

@@ -34,8 +34,6 @@ def products(request):
         for j, option_data in enumerate(options_data):
             if option_data['fin_prdt_cd'] == product_data['fin_prdt_cd']:
                 option_data['fin_prdt_cd'] = product.id
-            if option_data['intr_rate'] == None:
-                option_data['intr_rate'] = -1
             option_serializer = DepositOptionsSerializer(data=option_data)
             if option_serializer.is_valid():
                 option_serializer.save()
@@ -69,8 +67,6 @@ def savings(request):
         for option_data in options_data:
             if option_data['fin_prdt_cd'] == saving_data['fin_prdt_cd']:
                 option_data['fin_prdt_cd'] = saving.id
-            if option_data['intr_rate'] == None:
-                option_data['intr_rate'] = -1
             option_serializer = SavingOptionSerializer(data=option_data)
             if option_serializer.is_valid():
                 option_serializer.save()

@@ -62,7 +62,5 @@ export default {
 </script>
 
 <style>
-#create-page{
-  margin-top: 80px;
-}
+
 </style>

@@ -96,7 +96,5 @@ export default {
 </script>
 
 <style>
-#profile-page {
-  margin-top: 80px;
-}
+
 </style>

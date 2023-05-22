@@ -277,7 +277,6 @@ export default {
   align-items: center; */
 }
 #map-page {
-  margin-top: 80px;
   /* background-color: #baf5ff; */
   display: flex;
   justify-content: center;

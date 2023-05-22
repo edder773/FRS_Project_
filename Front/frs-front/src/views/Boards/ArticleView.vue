@@ -37,7 +37,5 @@
   </script>
   
   <style>
-  #article-page{
-  margin-top: 80px;
-}
+
   </style>

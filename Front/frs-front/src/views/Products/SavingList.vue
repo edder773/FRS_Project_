@@ -105,9 +105,6 @@ export default {
 </script>
 
 <style>
-#deposit-page {
-  margin-top: 100px;
-}
 
 .table-responsive {
   overflow-x: auto;

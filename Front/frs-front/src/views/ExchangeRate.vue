@@ -88,7 +88,5 @@ export default {
 }
 </script>
 <style>
-#exchange-page{
-  margin-top: 100px;
-}
+
 </style>

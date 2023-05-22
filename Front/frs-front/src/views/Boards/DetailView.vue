@@ -251,7 +251,5 @@ export default {
 }
 </script>
 <style>
-#datail-page{
-  margin-top: 80px;
-}
+
 </style>

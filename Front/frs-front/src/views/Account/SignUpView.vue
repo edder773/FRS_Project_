@@ -156,7 +156,5 @@
   }
   </script>
 <style>
-#signup-page{
-  margin-top: 80px;
-}
+
 </style>

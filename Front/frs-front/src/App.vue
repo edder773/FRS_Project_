@@ -1,20 +1,22 @@
 <template>
   <div id="app">
     <b-navbar toggleable="lg" type="light" variant="light" class="header-dev">
-      <b-navbar-brand href="/">FRS</b-navbar-brand>
+      <b-navbar-brand href="/" class="navbar-brand-custom">FRS</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item><router-link to="/deposit">예금비교</router-link></b-nav-item>
-          <b-nav-item><router-link to="/exchange">환율계산</router-link></b-nav-item>
-          <b-nav-item><router-link to="/map">은행찾기</router-link></b-nav-item>
-          <b-nav-item><router-link to="/article">게시판</router-link></b-nav-item>
+          <b-nav-item><router-link to="/deposit" class="nav-link-custom">예금비교</router-link></b-nav-item>
+          <b-nav-item><router-link to="/exchange" class="nav-link-custom">환율계산</router-link></b-nav-item>
+          <b-nav-item><router-link to="/map" class="nav-link-custom">은행찾기</router-link></b-nav-item>
+          <b-nav-item><router-link to="/article" class="nav-link-custom">게시판</router-link></b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item v-if="userId" @click="loggedout()">로그아웃</b-nav-item>
-          <b-nav-item v-else><router-link to="/signup">회원가입</router-link>
-          <router-link to="/login">로그인</router-link></b-nav-item>
-          <b-nav-item v-if="userId"><router-link :to="`/profile/${userId}`">프로필</router-link></b-nav-item>
+          <b-nav-item v-if="userId"><router-link :to="`/profile/${userId}`" class="nav-link-custom">프로필</router-link></b-nav-item>
+          <b-nav-item v-else><router-link to="/signup" class="nav-link-custom">회원가입</router-link></b-nav-item> 
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item v-if="userId"><b-button variant="danger" @click="loggedout()" class="logout-button">로그아웃</b-button></b-nav-item>
+          <b-nav-item v-else><b-button variant="primary"><router-link to="/login" class="nav-link-custom">로그인</router-link></b-button></b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -58,31 +60,33 @@ export default {
   z-index: 1;
 }
 
-.b-navbar {
-  padding: 20px;
-}
-
-.b-navbar-brand {
+.navbar-brand-custom {
   font-weight: bold;
   font-size: 36px;
+  color: #505050;
 }
 
 .b-navbar-nav .b-nav-item {
   padding: 20px;
 }
 
-.b-nav-item a {
+.nav-link-custom {
   font-weight: bold;
-  color: #11038d;
+  color: #505050;
+  border-bottom: none;
 }
 
-.b-nav-item.router-link-exact-active a {
+.nav-link-custom.router-link-exact-active {
   color: #61a9c5;
 }
 
 .b-nav-item {
   padding: 10px;
   padding-top: 20px;
+}
+
+.logout-button {
+  color: #fff;
 }
 
 </style>

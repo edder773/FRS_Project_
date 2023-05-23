@@ -14,6 +14,7 @@ import SavingList from '@/views/Products/SavingList.vue'
 import RecommendSelect from '@/views/Products/RecommendSelect.vue'
 import OnetoOne from '@/views/OnetoOne.vue'
 import QuestionBoard from '@/views/QuestionBoard.vue'
+import RecommendSimilar from '@/views/Products/RecommendSimilar.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -86,6 +87,11 @@ const routes = [
     path: '/onetoone',
     name: 'onetoone',
     component: OnetoOne
+  },
+  {
+    path: '/similar',
+    name: 'similar',
+    component: RecommendSimilar
   },
 ]
 

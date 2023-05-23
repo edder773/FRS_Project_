@@ -22,6 +22,7 @@ class RegisterSerializer(serializers.Serializer):
     bank = serializers.CharField(max_length=15, required=False)
     location = serializers.CharField(max_length = 25, required=False)
     age = serializers.IntegerField(required=False)
+    financial_products = serializers.CharField(max_length=50, required=False)
 
     def validate_username(self, username):
         username = get_adapter().clean_username(username)
@@ -59,6 +60,7 @@ class RegisterSerializer(serializers.Serializer):
             'bank': self.validated_data.get('bank', ''),
             'location': self.validated_data.get('location', ''),
             'age': self.validated_data.get('age', ''),
+            'financial_products' : self.validated_data.get('financial_products','')
         }
 
     def save(self, request):

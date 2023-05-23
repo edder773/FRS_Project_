@@ -12,7 +12,8 @@ import ProfileView from '../views/Account/ProfileView.vue'
 import DepositList from '@/views/Products/DepositList.vue'
 import SavingList from '@/views/Products/SavingList.vue'
 import RecommendSelect from '@/views/Products/RecommendSelect.vue'
-
+import OnetoOne from '@/views/OnetoOne.vue'
+import QuestionBoard from '@/views/QuestionBoard.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -75,7 +76,17 @@ const routes = [
     path: '/recommend',
     name: 'recommend',
     component: RecommendSelect
-  }
+  },
+  {
+    path: '/question',
+    name: 'question',
+    component: QuestionBoard
+  },
+  {
+    path: '/onetoone',
+    name: 'onetoone',
+    component: OnetoOne
+  },
 ]
 
 const router = new VueRouter({

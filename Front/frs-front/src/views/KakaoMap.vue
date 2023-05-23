@@ -1,5 +1,6 @@
 <template>
   <div id="map-page">
+    <div class="map-box">
     <select id="region" v-model="searchSi">
       <option value="">전체</option>
       <option v-for="si in siList" :value="si" :key="si">{{ si }}</option>
@@ -80,6 +81,7 @@
       <option v-for="bank in bankList" :value="bank" :key="bank">{{ bank }}</option>
     </select>
     <button @click="search()">검색</button>
+  </div>
     <div id="map">
     </div>
   </div>
@@ -268,24 +270,25 @@ export default {
 
 <style>
 #map-page {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
 }
 
 #map {
   width: 500px;
   height: 500px;
-  margin-left: 100px;
-  margin-right: 100px;
   margin-top: 20px;
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   
+}
+.map-box {
+  display: flex;
 }
 
 </style>

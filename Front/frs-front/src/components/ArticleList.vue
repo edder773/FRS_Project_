@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <b-card title="Article List" class="text-primary">
+    <b-card title="Article List">
       <template v-if="articles && articles.length > 0">
         <ArticleListItem
           v-for="article in articles"

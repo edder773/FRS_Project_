@@ -1,16 +1,18 @@
 <template>
-    <div id="article-page">
-      <router-link to="/article">자유게시판</router-link> |
-      <router-link to="/question">자주 묻는 질문</router-link> |
-      <router-link to="/onetoone">1:1 문의</router-link> |
-      <hr>
-      <h1>자유게시판</h1>
-      <b-button variant="primary"><router-link :to="{ name: 'create' }">글 작성하기</router-link></b-button>
-      <ArticleList />
-      <hr>
-      <router-view/>
-    </div>
-  </template>
+  <div id="article-page" class="container">
+    <router-link to="/article" class="menu-link">자유게시판 | </router-link> 
+    <router-link to="/question" class="menu-link">자주 묻는 질문 | </router-link> 
+    <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
+    <hr>
+    <h2>자유게시판</h2>
+    <b-button class="create-button">
+      <router-link :to="{ name: 'create' }" class="create-button" >글 작성하기</router-link>
+    </b-button><br><br>
+    <ArticleList />
+    <hr>
+    <router-view/>
+  </div>
+</template>
   
   <script>
   import ArticleList from '@/components/ArticleList.vue'
@@ -42,5 +44,18 @@
   </script>
   
   <style>
+  .menu-link {
+    color: black;
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+  }
+  
+  .create-button {
+    background-color: rgb(197, 225, 243);
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
+  }
 
   </style>

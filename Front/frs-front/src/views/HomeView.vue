@@ -1,19 +1,16 @@
 <template>
-<div>
-  <h1>Home</h1>
-
-<header class="jumbotron">
+  <div>
+    <header class="jumbotron">
       <div class="container">
         <h1 class="display-4">금융 추천 페이지</h1>
         <p class="lead">당신에게 가장 적합한 금융 상품을 추천해드립니다.</p>
       </div>
     </header>
-
     <section class="container">
       <div class="row">
         <div class="col-md-4">
           <div class="card">
-            <img src="'@/views/Homeimage/computer.jpg'" class="card-img-top" alt="Image 1">
+            <img src="@/views/Image/computer.jpg" class="card-img-top" alt="Image 1">
             <div class="card-body">
               <h5 class="card-title">추천 상품 1</h5>
               <p class="card-text">이 상품은 ...</p>
@@ -51,6 +48,7 @@
     </footer>
   </div>
 </template>
+
 <script>
 export default {
   name: 'HomeView',

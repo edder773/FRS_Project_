@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <select id="region-com" v-model="searchSi">
+  <div class="map-page">
+    <div class="map-box">
+    <select id="region" v-model="searchSi">
       <option value="">전체</option>
       <option v-for="si in siList" :value="si" :key="si">{{ si }}</option>
     </select>
@@ -75,12 +76,12 @@
       <option value="">전체</option>
       <option v-for="gu in JejuList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select id="bank" v-model="searchBank">
-      <option value="">은행</option>
-      <option v-for="bank in bankList" :value="bank" :key="bank">{{ bank }}</option>
+    <select v-model="searchBank">
+      <option :value="`${this.bank}`">{{this.bank}}</option>
     </select>
     <button @click="search()">검색</button>
-    <div id="map-com">
+    </div>
+    <div id="map-comp">
     </div>
   </div>
 </template>
@@ -88,12 +89,18 @@
 <script>
 export default {
   name: 'KakaoMapCom',
+  props: {
+      bank: {
+        type: String,
+        required: true,
+      },
+    },
   data() {
     return {
       map: null,
       searchSi: '',
       searchGu: '',
-      searchBank: '',
+      searchBank: this.bank,
       siList: [
       '서울특별시 ','부산광역시 ','대구광역시 ','인천광역시 ','광주광역시 ','대전광역시 ',
       '울산광역시 ','세종특별자치시 ','경기도 ','강원도 ','충청북도 ','충청남도 ',
@@ -169,11 +176,6 @@ export default {
       "서귀포시", "제주시"
       ],
 
-      bankList: [
-      "KEB하나은행", "SC은행", "경남은행", "광주은행", "국민은행", "기업은행", "농협은행", "대구은행", "부산은행",
-       "새마을금고", "산업은행", "수협은행", "신한은행", "신협중앙회", "외환은행","우체국", "우리은행", "저축은행",
-        "제주은행", "한국산업은행", "한국수출입은행", "한국은행", "현대은행"
-      ],
       searchdic: {
         '서울특별시 ': this.SeoulList,
         '부산광역시 ': this.BusanList,
@@ -194,6 +196,7 @@ export default {
       },
     }
   },
+
   // computed: {
   //   filteredList() {
   //     return this.searchdic[this.searchSi]
@@ -214,10 +217,10 @@ export default {
   },
   methods: {
     initMap() {
-      const container = document.getElementById("map")
+      const container = document.getElementById("map-comp")
       const options = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 15,
+        level: 3,
       }
       this.map = new kakao.maps.Map(container, options)
     },
@@ -243,7 +246,7 @@ export default {
       }
       this.searchSi= ''
       this.searchGu= ''
-      this.searchBank= ''
+      this.searchBank= this.bank
       
     },
     displayMarker(place, map, bounds) {
@@ -266,14 +269,27 @@ export default {
 }
 </script>
 
-<style>
-#map-com {
-  width: 600px;
-  height: 600px;
-  margin-left: 100px;
+<style scoped>
+.map-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#map-comp {
+  width: 500px;
+  height: 500px;
   margin-top: 20px;
   margin-bottom: 10px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
+}
+.map-box {
+  display: flex;
 }
 
 </style>

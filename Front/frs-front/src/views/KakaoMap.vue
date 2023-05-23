@@ -243,9 +243,6 @@ export default {
       } else {
         alert('은행을 선택해주세요.')
       }
-      this.searchSi= ''
-      this.searchGu= ''
-      this.searchBank= ''
       
     },
     displayMarker(place, map, bounds) {
@@ -268,7 +265,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #map-page {
   display: flex;
   flex-direction: column;

@@ -1,10 +1,12 @@
 <template>
   <div id="deposit-page">
-    <a href="/deposit">예금비교</a> |
-    <a href="/saving">적금비교</a> |
-    <h2>정기예금</h2>
-    <p @click="openrecommend">추천받기</p>
-    <b-modal v-model="recommend" centered>
+    <div id="deposit-router">
+      <a href="/deposit">예금비교</a> |
+      <a href="/saving">적금비교</a> |
+      <h2>정기예금</h2>
+      <p @click="openRecommend">추천받기</p>
+    </div>
+    <b-modal v-model="recommendItem" @hide="closeRecommend">
       <h3>추천받기</h3>
       <a href="/recommend">
         <b-card overlay img-src="https://picsum.photos/2000/1500/?image=3" img-alt="Card Image" text-variant="white" title="나와 맞는 금융 상품 찾기">
@@ -28,44 +30,32 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id">
-            <td>{{ product.id }}</td>
-            <td><DepositOption6 :productId="product.id"/></td>
-            <td><DepositOption12 :productId="product.id"/></td>
-            <td><DepositOption24 :productId="product.id"/></td>
-            <td><DepositOption36 :productId="product.id"/></td>
-            <td>{{ product.kor_co_nm }}</td>
-            <td>{{ product.fin_prdt_nm }}</td>
+          <tr v-for="product in products" :key="product.id" @click="openModal(product)">
+            <td @click="openModal(product)">{{ product.id }}</td>
+            <td @click="openModal(product)"><DepositOption6 :productId="product.id"/></td>
+            <td @click="openModal(product)"><DepositOption12 :productId="product.id"/></td>
+            <td @click="openModal(product)"><DepositOption24 :productId="product.id"/></td>
+            <td @click="openModal(product)"><DepositOption36 :productId="product.id"/></td>
+            <td @click="openModal(product)">{{ product.kor_co_nm }}</td>
+            <td @click="openModal(product)">{{ product.fin_prdt_nm }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    
-    <div class="modal" v-if="selectedProduct" @click.self="closeModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">{{ selectedProduct.fin_prdt_nm }}</h5>
-            <button type="button" class="close" @click="closeModal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <h6>{{ selectedProduct.kor_co_nm }}</h6>
-            <KakaoMapCom/>
-            <p>가입 가능 유형: {{ selectedProduct.join_member }}</p>
-            <p>상품 공시 시작일: {{ selectedProduct.dcls_strt_day }}</p>
-            <p v-if="selectedProduct.max_limit">가입한도: {{ selectedProduct.max_limit }} 원</p>
-            <p>{{ selectedProduct.etc_note }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeModal">닫기</button>
-          </div>
-        </div>
-      </div>
+    <b-modal v-if="selectedProduct" v-model="showModal" @hide="closeModal">
+    <h3>{{ selectedProduct.fin_prdt_nm }}</h3>
+    <h4>{{ selectedProduct.kor_co_nm }}</h4>
+    <hr>
+    <div>
+    <KakaoMapCom :bank="selectedProduct.kor_co_nm"/>
+    <!-- Modal content goes here -->
     </div>
+    </b-modal>
+
+    
   </div>
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -74,22 +64,27 @@ import DepositOption6 from '@/components/DepositOption6.vue'
 import DepositOption12 from '@/components/DepositOption12.vue'
 import DepositOption24 from '@/components/DepositOption24.vue'
 import DepositOption36 from '@/components/DepositOption36.vue'
+import { BModal } from 'bootstrap-vue'
 
 export default {
   name: 'DepositList',
   components: {
+    BModal,
+    // VBModal,
     KakaoMapCom,
     DepositOption6,
     DepositOption12,
     DepositOption24,
     DepositOption36,
+
   },
   data() {
     return {
       products: [],
       options: {},
       selectedProduct: null,
-      recommend: false
+      recommendItem: false,
+      showModal: false,
     }
   },
   created() {
@@ -105,59 +100,36 @@ export default {
           console.error(error)
         })
     },
-    openModal(productId) {
-      const selectedProduct = this.products.find(product => product.id === productId)
-      this.selectedProduct = selectedProduct
+    openModal(product) {
+      this.selectedProduct = product
+      this.showModal = true
+      console.log('Modal')
     },
     closeModal() {
       this.selectedProduct = null
+      this.showModal = false
     },
-    openrecommend(){
-      this.recommend = true
+    openRecommend() {
+      this.recommendItem = true
     },
-    closerecommend(){
-      this.recommend = fasle
+    closeRecommend() {
+      this.recommendItem = false
     }
   }
 }
 </script>
+<style scoped>
 
-<style>
-
-.table-responsive {
-  overflow-x: auto;
+#deposit-router{
+  display: block;
 }
 
-.modal {
+.table-container{
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  align-items: right;
+  justify-content: right;
 }
-
-.modal-dialog {
-  max-width: 600px;
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 4px;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.close:hover {
-  opacity: 1;
-  color: #000;
+td{
+  cursor: pointer;
 }
 </style>

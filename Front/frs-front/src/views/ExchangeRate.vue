@@ -1,18 +1,17 @@
 <template>
-  <div id="exchange-page">
+  <div id="exchange-page" class="container">
+    <h1> 환율 비교 </h1><br>
     <div>
-      <label for="amount">해외 -> 한국 : </label>
-      <input type="number" id="amount" v-model="amount" @input="calculateExchangeRate" />
+      <b-input-group size="sm" prepend="$" append=""><b-form-input type="number" id="amount" v-model="amount" @input="calculateExchangeRate" /></b-input-group>
       <select id="currency" v-model="currency">
         <option v-for="currency in currencies" :key="currency" :value="currency">{{ getCurrencyName(currency) }}</option>
       </select>
       <br>
-      <p v-if="result">한국 돈: {{ result }} 원</p>
     </div>
     <br>
     <div>
-      <label for="amount">한국 -> 해외 : </label>
-      <input type="number" id="amount1" v-model="amount1" @input="calculateExchangeRate1" />
+      <b-input-group size="sm" prepend="$" append="">
+      <b-form-input type="number" id="amount1" v-model="amount1" @input="calculateExchangeRate1" /></b-input-group>
       <select id="currency1" v-model="currency1">
         <option v-for="currency1 in currencies" :key="currency1" :value="currency1">{{ getCurrencyName(currency1) }}</option>
       </select>

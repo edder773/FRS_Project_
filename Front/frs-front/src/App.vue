@@ -5,10 +5,10 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item><router-link to="/deposit" class="nav-link-custom">예금비교</router-link></b-nav-item>
-          <b-nav-item><router-link to="/exchange" class="nav-link-custom">환율계산</router-link></b-nav-item>
-          <b-nav-item><router-link to="/map" class="nav-link-custom">은행찾기</router-link></b-nav-item>
-          <b-nav-item><router-link to="/article" class="nav-link-custom">게시판</router-link></b-nav-item>
+          <b-nav-item href="/deposit" class="nav-link-custom">예금비교</b-nav-item>
+          <b-nav-item href="/exchange" class="nav-link-custom">환율계산</b-nav-item>
+          <b-nav-item href="/map" class="nav-link-custom">은행찾기</b-nav-item>
+          <b-nav-item href="/article" class="nav-link-custom">게시판</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item v-if="userId"><router-link :to="`/profile/${userId}`" class="nav-link-custom">프로필</router-link></b-nav-item>

@@ -1,13 +1,14 @@
 <template>
     <div id="article-page">
-      <a href="/deposit">자유게시판</a> |
-      <a href="/saving">자주 묻는 질문</a> |
-      <a href="/saving">1:1 문의</a> |
+      <router-link to="/article">자유게시판</router-link> |
+      <router-link to="/question">자주 묻는 질문</router-link> |
+      <router-link to="/onetoone">1:1 문의</router-link> |
       <hr>
       <h1>자유게시판</h1>
       <b-button variant="primary"><router-link :to="{ name: 'create' }">글 작성하기</router-link></b-button>
       <ArticleList />
       <hr>
+      <router-view/>
     </div>
   </template>
   

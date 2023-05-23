@@ -3,7 +3,17 @@
     <a href="/deposit">예금비교</a> |
     <a href="/saving">적금비교</a> |
     <h2>정기예금</h2>
-    <a href="/recommend">추천받기</a>
+    <p @click="openrecommend">추천받기</p>
+    <b-modal v-model="recommend" centered>
+      <h3>추천받기</h3>
+      <a href="/recommend">
+        <b-card overlay img-src="https://picsum.photos/2000/1500/?image=3" img-alt="Card Image" text-variant="white" title="나와 맞는 금융 상품 찾기">
+          <b-card-text>
+            간단한 미니 게임을 통해 나와 맞는 금융 상품을 찾아보세요
+          </b-card-text>
+        </b-card>
+      </a>
+    </b-modal>
     <div class="table-container">
       <table class="table table-striped">
         <thead>
@@ -79,6 +89,7 @@ export default {
       products: [],
       options: {},
       selectedProduct: null,
+      recommend: false
     }
   },
   created() {
@@ -101,6 +112,12 @@ export default {
     closeModal() {
       this.selectedProduct = null
     },
+    openrecommend(){
+      this.recommend = true
+    },
+    closerecommend(){
+      this.recommend = fasle
+    }
   }
 }
 </script>

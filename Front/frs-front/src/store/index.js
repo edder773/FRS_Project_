@@ -159,9 +159,8 @@ export default new Vuex.Store({
         })
         .then((res) => {
           const user = res.data
-          console.log(res)
           context.commit('SAVE_USER', user)
-          console.log('User:', user)
+          location.reload()
         })
         .catch((err) => console.log(err))
     },
@@ -171,7 +170,7 @@ export default new Vuex.Store({
       context.commit('CLEAR_USER')
       context.commit('CLEAR_TOKEN')
 
-      router.push({ name: 'home'})
+      location.reload()
     },
     //회원정보수정
     profileChange(context,payload){

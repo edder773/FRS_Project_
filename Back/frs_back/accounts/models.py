@@ -10,6 +10,7 @@ class User(AbstractUser):
     bank = models.CharField(max_length=15, null=True)
     location = models.CharField(max_length=25, null=True)
     age = models.IntegerField(null=True)
+    financial_products = models.CharField(max_length=50, null=True)
     
         
 class CustomAccountAdapter(DefaultAccountAdapter):
@@ -28,6 +29,7 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         bank = data.get("bank")
         location = data.get("location")
         age = data.get("age")
+        financial_products = data.get("financial_products")
 
         user_email(user, email)
         user_username(user, username)
@@ -49,7 +51,8 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             user_field(user, "location", location)
         if age :
             user.age = age
-
+        if financial_products:
+            user_field(user, "financial_products", financial_products)
         
         if "password1" in data:
             user.set_password(data["password1"])

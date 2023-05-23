@@ -13,16 +13,15 @@ def profile_change(request):
         return Response("Authentication required", status=status.HTTP_401_UNAUTHORIZED)
     
     user = request.user
-    if request.method == 'PUT':  # PUT 요청 처리
+    if request.method == 'PUT':  
         serializer = ProfileChangeSerializer(user, data=request.data)
         print(request.data)
         if serializer.is_valid():
-            serializer.save()  # 유효한 경우 데이터 저장
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # GET 요청 처리
     serializer = ProfileChangeSerializer(user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 

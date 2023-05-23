@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <b-container>
-    <b-navbar toggleable="lg" type="light" class="header-dev">
+    <!-- <b-container> -->
+    <b-navbar toggleable="lg" type="light" class="header-dev container">
       <b-navbar-brand href="/" class="navbar-brand-custom">FRS</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
@@ -22,7 +22,7 @@
       </b-collapse>
     </b-navbar>
     <router-view/>
-  </b-container>
+  <!-- </b-container> -->
   </div>
 </template>
 
@@ -47,12 +47,10 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #000000;
-  position: relative;
+    font-family: 'TTWanjudaedunsancheB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
 }
 
 .header-dev {
@@ -80,11 +78,9 @@ export default {
   color: #fff;
 }
 .logo {
-  font-family: Arial, sans-serif;
-  font-size: 48px;
-  font-weight: bold;
-  color: #000;
-  background-color: #f8f8f8;
-  padding: 10px 20px;
+    font-family: 'TTWanjudaedunsancheB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
 }
 </style>

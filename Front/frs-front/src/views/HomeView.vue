@@ -8,7 +8,7 @@
     </header> -->
     <b-carousel
       id="my-carousel"
-      interval="3000"
+      :interval="3000"
       controls
       indicators
       background="#f8f9fa"
@@ -20,7 +20,7 @@
         :key="index"
         :img-src="getImagePath(image)"
         alt="Image"
-        style="height: 700px;"
+        style="height: 500px"
       ></b-carousel-slide>
     </b-carousel>
     <footer class="footer mt-auto py-3">

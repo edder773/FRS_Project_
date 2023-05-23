@@ -102,8 +102,11 @@ export default {
     },
     openModal(product) {
       this.selectedProduct = product
-      this.showModal = true
+      this.showModal = false // 모달을 닫음
       console.log('Modal')
+      this.$nextTick(() => {
+        this.showModal = true // 모달을 다시 열어 갱신
+      })
     },
     closeModal() {
       this.selectedProduct = null

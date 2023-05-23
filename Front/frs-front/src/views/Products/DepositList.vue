@@ -3,6 +3,7 @@
     <a href="/deposit">예금비교</a> |
     <a href="/saving">적금비교</a> |
     <h2>정기예금</h2>
+    <a href="/recommend">추천받기</a>
     <div class="table-container">
       <table class="table table-striped">
         <thead>

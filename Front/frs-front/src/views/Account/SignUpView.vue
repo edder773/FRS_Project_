@@ -118,7 +118,8 @@
         age: null,
         bankOptions: ["KEB하나은행", "SC은행", "경남은행", "광주은행", "국민은행", "기업은행", "농협은행", "대구은행", "부산은행",
        "새마을금고", "산업은행", "수협은행", "신한은행", "신협중앙회", "외환은행","우체국", "우리은행", "저축은행",
-        "제주은행", "한국산업은행", "한국수출입은행", "한국은행", "현대은행"]
+        "제주은행", "한국산업은행", "한국수출입은행", "한국은행", "현대은행"],
+        isSimilarUsername: false,
       }
     },
     computed:{
@@ -136,8 +137,8 @@
       },
       emailValid() {
       const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-      return this.email && emailRegex.test(this.email);
-    }
+      return this.email && emailRegex.test(this.email)
+      },
     },
     methods: {
       signUp() {

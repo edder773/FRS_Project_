@@ -1,5 +1,5 @@
 <template>
-  <section id="map-page">
+  <div id="map-page">
     <select id="region" v-model="searchSi">
       <option value="">전체</option>
       <option v-for="si in siList" :value="si" :key="si">{{ si }}</option>
@@ -82,7 +82,7 @@
     <button @click="search()">검색</button>
     <div id="map">
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -267,21 +267,25 @@ export default {
 </script>
 
 <style>
+#map-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #map {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   margin-left: 100px;
+  margin-right: 100px;
   margin-top: 20px;
   margin-bottom: 10px;
-  /* justify-content: center;
-  align-items: center; */
-}
-#map-page {
-  /* background-color: #baf5ff; */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  flex-direction: column;
+  
 }
+
 </style>

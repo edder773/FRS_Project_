@@ -49,7 +49,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #505050;
+  color: #000000;
   position: relative;
 }
 
@@ -63,7 +63,7 @@ export default {
 .navbar-brand-custom {
   font-weight: bold;
   font-size: 36px;
-  color: #505050;
+  color: #000000;
 }
 
 .b-navbar-nav .b-nav-item {
@@ -77,7 +77,7 @@ export default {
 }
 
 .nav-link-custom.router-link-exact-active {
-  color: #61a9c5;
+  color: #f9abe6;
 }
 
 .b-nav-item {

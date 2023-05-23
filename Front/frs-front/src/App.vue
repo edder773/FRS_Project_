@@ -12,12 +12,12 @@
           <b-nav-item href="/article" class="nav-link-custom">게시판</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ms-auto">
-          <b-nav-item v-if="userId"><router-link :to="`/profile/${userId}`" class="nav-link-custom">프로필</router-link></b-nav-item>
-          <b-nav-item v-if="!userId"><router-link to="/signup" class="nav-link-custom">회원가입</router-link></b-nav-item> 
+          <b-nav-item v-if="userId" :href="`/profile/${userId}`" class="nav-link-custom">프로필</b-nav-item>
+          <b-nav-item v-if="!userId" href="/signup" class="nav-link-custom">회원가입</b-nav-item> 
         <!-- </b-navbar-nav>
         <b-navbar-nav class="ms-auto"> -->
           <b-nav-item v-if="userId" @click="loggedout()" class="nav-link-custom">로그아웃</b-nav-item>
-          <b-nav-item v-if="!userId"><router-link to="/login" class="nav-link-custom">로그인</router-link></b-nav-item>
+          <b-nav-item v-if="!userId" href="/login" class="nav-link-custom">로그인</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -51,6 +51,9 @@ export default {
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
+    text-align: center;
+    position: relative;
+
 }
 
 .header-dev {
@@ -60,23 +63,16 @@ export default {
   z-index: 1;
 }
 
-.b-navbar-nav .b-nav-item {
+.b-navbar-nav .b-nav-item .nav-link-custom{
   padding: 20px;
 }
 
 .nav-link-custom {
-  font-weight: bold;
+  /* font-weight: bold; */
   color: #505050;
-  border-bottom: none;
+  /* border-bottom: none; */
 }
 
-.router-link-exact-active {
-  color: #f9abe6;
-}
-
-.logout-button {
-  color: #fff;
-}
 .logo {
     font-family: 'TTWanjudaedunsancheB';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');

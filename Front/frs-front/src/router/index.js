@@ -11,6 +11,8 @@ import DetailView from '../views/Boards/DetailView.vue'
 import ProfileView from '../views/Account/ProfileView.vue'
 import DepositList from '@/views/Products/DepositList.vue'
 import SavingList from '@/views/Products/SavingList.vue'
+import RecommendSelect from '@/views/Products/RecommendSelect.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -69,7 +71,11 @@ const routes = [
     name: 'saving',
     component: SavingList
   },
-  
+  {
+    path: '/recommend',
+    name: 'recommend',
+    component: RecommendSelect
+  }
 ]
 
 const router = new VueRouter({

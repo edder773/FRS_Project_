@@ -42,7 +42,7 @@
           </div>
           <div class="modal-body">
             <h6>{{ selectedProduct.kor_co_nm }}</h6>
-            <KakaoMap/>
+            <KakaoMapCom/>
             <p>가입 가능 유형: {{ selectedProduct.join_member }}</p>
             <p>상품 공시 시작일: {{ selectedProduct.dcls_strt_day }}</p>
             <p v-if="selectedProduct.max_limit">가입한도: {{ selectedProduct.max_limit }} 원</p>
@@ -59,7 +59,7 @@
 
 <script>
 import axios from 'axios'
-import KakaoMap from '@/components/KakaoMap.vue'
+import KakaoMapCom from '@/components/KakaoMapCom.vue'
 import DepositOption6 from '@/components/DepositOption6.vue'
 import DepositOption12 from '@/components/DepositOption12.vue'
 import DepositOption24 from '@/components/DepositOption24.vue'
@@ -68,7 +68,7 @@ import DepositOption36 from '@/components/DepositOption36.vue'
 export default {
   name: 'DepositList',
   components: {
-    KakaoMap,
+    KakaoMapCom,
     DepositOption6,
     DepositOption12,
     DepositOption24,

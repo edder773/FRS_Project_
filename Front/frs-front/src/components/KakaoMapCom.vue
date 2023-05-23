@@ -1,6 +1,6 @@
 <template>
   <div>
-    <select id="region" v-model="searchSi">
+    <select id="region-com" v-model="searchSi">
       <option value="">전체</option>
       <option v-for="si in siList" :value="si" :key="si">{{ si }}</option>
     </select>
@@ -80,14 +80,14 @@
       <option v-for="bank in bankList" :value="bank" :key="bank">{{ bank }}</option>
     </select>
     <button @click="search()">검색</button>
-    <div id="map">
+    <div id="map-com">
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'KakaoMap',
+  name: 'KakaoMapCom',
   data() {
     return {
       map: null,
@@ -217,7 +217,7 @@ export default {
       const container = document.getElementById("map")
       const options = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 3,
+        level: 15,
       }
       this.map = new kakao.maps.Map(container, options)
     },
@@ -267,23 +267,13 @@ export default {
 </script>
 
 <style>
-#map {
-  width: 400px;
-  height: 400px;
+#map-com {
+  width: 600px;
+  height: 600px;
   margin-left: 100px;
   margin-top: 20px;
   margin-bottom: 10px;
-  /* justify-content: center;
-  align-items: center; */
-}
-#map-page {
-  margin-top: 80px;
-  /* background-color: #baf5ff; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-direction: column;
+  
 }
 
 </style>

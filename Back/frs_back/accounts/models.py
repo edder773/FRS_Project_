@@ -11,6 +11,7 @@ class User(AbstractUser):
     bank = models.CharField(max_length=15, null=True)
     address = models.CharField(max_length=25, null=True)
     age = models.IntegerField(null=True)
+    products = models.CharField(max_length=100, null=True,)
     financial_products = models.ManyToManyField(DepositProducts, related_name='users', blank=True)
     
         
@@ -30,8 +31,8 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         bank = data.get("bank")
         address = data.get("address")
         age = data.get("age")
+        products = data.get("products")
         financial_products = data.get("financial_products")
-        fin_prdt_nm = data.get("fin_prdt_nm")
 
         user_email(user, email)
         user_username(user, username)
@@ -54,9 +55,11 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         if age :
             user.age = age
         if financial_products:
-            user_field(user, "financial_products", financial_products)
-        if fin_prdt_nm:
-            user_field(user, "fin_prdt_nm", fin_prdt_nm)
+            for product_id in financial_products:
+                product = DepositProducts.objects.get(id=product_id)
+                user.financial_products.add(product)
+        if products:
+            user_field(user, "products", products)
         
         
         if "password1" in data:

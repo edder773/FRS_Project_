@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class DepositProducts(models.Model):
-    id = models.IntegerField(primary_key=True)
+    # id = models.IntegerField(primary_key=True)
     fin_prdt_cd = models.TextField(unique=True)
     dcls_month = models.CharField(max_length=6)
     kor_co_nm = models.TextField()
@@ -26,7 +26,7 @@ class DepositOptions(models.Model):
 
 
 class SavingProducts(models.Model):
-    id = models.IntegerField(primary_key=True)
+    # id = models.IntegerField(primary_key=True)
     fin_prdt_cd = models.TextField(unique=True)
     dcls_month = models.CharField(max_length=6)
     kor_co_nm = models.TextField()

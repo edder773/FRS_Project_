@@ -74,10 +74,6 @@ export default new Vuex.Store({
     UPDATE_USER(state, user){
       state.user = user
     },
-    ADD_FINANCIAL_PRODUCT(state, product) {
-      state.financialProducts.push(product.finPrdtCd);
-      state.signedProducts.push(product.fin_prdt_nm)
-    }
   },
   actions: {
     getArticles(context) {
@@ -182,6 +178,36 @@ export default new Vuex.Store({
 
       location.reload()
     },
+    addProduct(context, payload) {
+      const user_id = payload.user_id
+      const product_id = payload.product_id
+      axios({
+        method: 'post',
+        url: `${API_URL}/deposits/add/`,
+        data: {
+          user_id, product_id
+        },
+      })
+      .then((response) => {
+        console.log(response)
+        axios({
+          method: 'get',
+          url: `${API_URL}/accounts/user/`,
+          headers: {
+            Authorization: `Token ${context.state.token}`
+          }
+        })
+        .then((res) => {
+          const user = res.data
+          context.commit('SAVE_USER', user)
+        })
+        .catch((err) => console.log(err))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+    ,
     //회원정보수정
     profileChange(context,payload){
       const username = payload.username
@@ -229,27 +255,6 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    addFinancialProduct(context, product) {
-      const financial_products = product.finPrdtCd
-      const fin_prdt_nm = product.fin_prdt_nm;
-      const token = context.state.token
-      axios({
-        method: 'put',
-        url: `${API_URL}/accounts/user/add/`,
-        data: {
-          financial_products, fin_prdt_nm
-        },
-        headers: {
-          Authorization: `Token ${token}`
-        }
-      })
-        .then(response => {
-          context.commit('ADD_FINANCIAL_PRODUCT', response.data)
-        })
-        .catch(error => {
-          console.error('Failed to add financial product:', error);
-        });
-    }
   },
   modules: {
   }

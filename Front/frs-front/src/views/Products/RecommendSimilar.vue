@@ -3,12 +3,15 @@
     <h1 style="text-align: center;">나와 비슷한 조건의 다른 사람이 선택한 상품!</h1>
     <div class="d-flex flex-column align-items-center">
       <div v-for="product in productresult" :key="product.id">
+        {{ product.id }}
         <b-card style="width: 1000px" border-variant="secondary" :header="product.fin_prdt_nm" header-border-variant="secondary" align="center">
           <div class="card-body">
             <b-card-text style="height: 100%">{{ product.mtrt_int }}</b-card-text>
           </div>
           <div class="d-flex justify-content-end mt-2">
-            <b-button variant="primary" @click="addProduct(product)">가입하기</b-button>
+            <b-button variant="primary" @click="checkProduct(product)">
+           {{ checkIn(product) ? '해지하기' : '가입하기' }}
+          </b-button>
           </div>
         </b-card>
         <hr>
@@ -27,7 +30,7 @@ export default {
       recommendedProducts: [],
       recommendProducts: [],
       recommendSaving: [],
-      productresult: []
+      productresult: [],
     };
   },
   computed: {
@@ -87,12 +90,19 @@ export default {
         }
       }
     },
-    addProduct(product) {
-      const finPrdtCd = product.fin_prdt_cd;
-      const fin_prdt_nm = product.fin_prdt_nm;
-      this.addFinancialProduct({ finPrdtCd, fin_prdt_nm });
-    }
-  },
+    checkIn(product){
+      return this.getUser.financial_products.includes(product.id)
+    },
+  checkProduct(product) {
+  const user = this.getUser
+  console.log(user.financial_products)
+  const payload = {
+    user_id: user.pk,  // 'user_id' 키에 사용자 ID 값을 전달
+    product_id: product.id  // 'product_id' 키에 상품 ID 값을 전달
+  }
+  this.$store.dispatch('addProduct', payload)
+}
+},
   created() {
     this.fetchrecommendProducts();
     this.fetchRecommendedProducts();

@@ -23,25 +23,25 @@ def products(request):
         'topFinGrpNo': '020000',
         'pageNo': '1'
     }
-    with transaction.atomic():
-        DepositProducts.objects.all().delete()
-        DepositOptions.objects.all().delete()
+    # with transaction.atomic():
+    #     DepositProducts.objects.all().delete()
+    #     DepositOptions.objects.all().delete()
     
     response = requests.get(url, params=params)
     products_data = response.json()['result']['baseList']
     
-    for i, product_data in enumerate(products_data):
+    for product_data in products_data:
         product_serializer = DepositProductsSerializer(data=product_data)
-        product_data['id'] = i + 1
+        # product_data['id'] = i + 1
         if product_serializer.is_valid():
             product = product_serializer.save()
-        options_data = response.json()['result']['optionList']
-        for j, option_data in enumerate(options_data):
-            if option_data['fin_prdt_cd'] == product_data['fin_prdt_cd']:
-                option_data['fin_prdt_cd'] = product.id
-            option_serializer = DepositOptionsSerializer(data=option_data)
-            if option_serializer.is_valid():
-                option_serializer.save()
+            options_data = response.json()['result']['optionList']
+            for j, option_data in enumerate(options_data):
+                if option_data['fin_prdt_cd'] == product_data['fin_prdt_cd']:
+                    option_data['fin_prdt_cd'] = product.id
+                option_serializer = DepositOptionsSerializer(data=option_data)
+                if option_serializer.is_valid():
+                    option_serializer.save()
             # print(option_serializer.errors)
     serialized_data = DepositProductsSerializer(DepositProducts.objects.all(), many=True).data
     
@@ -56,25 +56,25 @@ def savings(request):
         'pageNo': '1'
     }
     
-    with transaction.atomic():
-        SavingProducts.objects.all().delete()
-        SavingOptions.objects.all().delete()
+    # with transaction.atomic():
+    #     SavingProducts.objects.all().delete()
+    #     SavingOptions.objects.all().delete()
         
     response = requests.get(url, params=params)
     savings_data = response.json()['result']['baseList']
     # return Response(products_data)
-    for i, saving_data in enumerate(savings_data):
+    for saving_data in savings_data:
         saving_serializer = SavingProductsSerializer(data=saving_data)
-        saving_data['id'] = i + 1
+        # saving_data['id'] = i + 1
         if saving_serializer.is_valid():
             saving = saving_serializer.save()
-        options_data = response.json()['result']['optionList']
-        for option_data in options_data:
-            if option_data['fin_prdt_cd'] == saving_data['fin_prdt_cd']:
-                option_data['fin_prdt_cd'] = saving.id
-            option_serializer = SavingOptionSerializer(data=option_data)
-            if option_serializer.is_valid():
-                option_serializer.save()
+            options_data = response.json()['result']['optionList']
+            for option_data in options_data:
+                if option_data['fin_prdt_cd'] == saving_data['fin_prdt_cd']:
+                    option_data['fin_prdt_cd'] = saving.id
+                option_serializer = SavingOptionSerializer(data=option_data)
+                if option_serializer.is_valid():
+                    option_serializer.save()
     serialized_data = SavingProductsSerializer(SavingProducts.objects.all(), many=True).data
     return Response(serialized_data, status=status.HTTP_201_CREATED)
 
@@ -92,15 +92,19 @@ def savings_option(request):
 
 @api_view(['POST'])
 def addproduct(request):
+    print(request.data)
     user_id = request.data.get('user_id')
     product_id = request.data.get('product_id')
-
     user = User.objects.get(id=user_id)
     product = DepositProducts.objects.get(id=product_id)
 
-    user.financial_products.add(product)  # 상품 가입
+    if product in user.financial_products.all():
+        user.financial_products.remove(product) 
+    else:
+        user.financial_products.add(product) 
+    
+    return Response(status=200)
 
-    return Response({"message": "상품 가입이 완료되었습니다."})
 
 
 @api_view(['GET'])
@@ -134,8 +138,8 @@ def similar(request):
     # 추천된 financial_products 리스트 추출
     recommended_products = []
     for user in similar_users:
-        if user.financial_products:
-            for i in user.financial_products.split(","):
+        if user.products:
+            for i in user.products.split(","):
                 recommended_products.append(i)
     # 추천된 financial_products 리스트에서 중복 제거
     recommended_products = list(set(recommended_products))

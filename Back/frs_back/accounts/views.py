@@ -23,4 +23,3 @@ def profile_change(request):
 
     serializer = ProfileChangeSerializer(user)
     return Response(serializer.data, status=status.HTTP_200_OK)
-

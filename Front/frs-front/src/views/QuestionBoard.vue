@@ -1,28 +1,35 @@
 <template>
   <div id="question-page" class="container">
-    <router-link to="/article" class="menu-link">자유게시판 | </router-link> 
-    <router-link to="/question" class="menu-link">자주 묻는 질문 | </router-link> 
-    <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
-    <router-view/><br><br>
-    <h2>자주 묻는 질문</h2><br>
-    <b-card no-body class="mb-3" v-for="(item, index) in faqList" :key="index">
-      <div class="card-body">
-        <b-card-header header-tag="header" class="p-1 header-body" role="tab">
-          <b-button v-b-toggle="'collapse-' + (index + 1)" block variant="light" class="text-left">
-            <div class="text-left header-body" role="tab">{{ item.question }}</div>
-          </b-button>
-        </b-card-header>
-
-        <b-collapse :id="'collapse-' + (index + 1)" accordion="question-accordion" role="tabpanel">
-          <b-card-body>
-            {{ item.answer }}
-          </b-card-body>
-        </b-collapse>
+    <div class="main-menu">
+      <div class="menu-links">
+        <router-link to="/article" class="menu-link">자유게시판</router-link> 
+        <router-link to="/question" class="menu-link active">자주 묻는 질문</router-link> 
+        <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
       </div>
-    </b-card>
+    </div>
+
+    <div class="faq-section">
+      <h2 class="section-title">자주 묻는 질문</h2>
+      <div class="faq-list">
+        <b-card no-body class="mb-3" v-for="(item, index) in faqList" :key="index">
+          <div class="card-body">
+            <b-card-header header-tag="header" class="p-1 header-body" role="tab">
+              <b-button v-b-toggle="'collapse-' + (index + 1)" block variant="light" class="text-left">
+                <div class="text-left header-body" role="tab">{{ item.question }}</div>
+              </b-button>
+            </b-card-header>
+    
+            <b-collapse :id="'collapse-' + (index + 1)" accordion="question-accordion" role="tabpanel">
+              <b-card-body>
+                {{ item.answer }}
+              </b-card-body>
+            </b-collapse>
+          </div>
+        </b-card>
+      </div>
+    </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -72,10 +79,52 @@ export default {
 };
 </script>
 
-
 <style>
-/* .header-body {
-  cursor: pointer;
-} */
+.main-menu {
+  background-color: #f8f9fa;
+  padding: 20px;
+}
 
+.menu-links {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-link {
+  color: #333;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 10px;
+  margin-right: 10px;
+  transition: color 0.3s;
+}
+
+.menu-link:hover,
+.menu-link.active {
+  color: #007bff;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.faq-list {
+  margin-top: 20px;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.header-body {
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 10px;
+  max-width: 500px; /* 원하는 크기로 조정하세요 */
+  margin: 0 auto; /* 가운데 정렬을 위해 추가 */
+}
 </style>

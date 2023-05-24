@@ -20,9 +20,10 @@ class RegisterSerializer(serializers.Serializer):
     occupation = serializers.CharField(max_length=20, required=False)
     assets = serializers.IntegerField(required=False)
     bank = serializers.CharField(max_length=15, required=False)
-    location = serializers.CharField(max_length = 25, required=False)
+    address = serializers.CharField(max_length = 25, required=False)
     age = serializers.IntegerField(required=False)
-    financial_products = serializers.CharField(max_length=50, required=False)
+    financial_products = serializers.CharField(max_length=150, required=False)
+    fin_prdt_nm = serializers.CharField(max_length=150, required=False)
 
     def validate_username(self, username):
         username = get_adapter().clean_username(username)
@@ -58,9 +59,10 @@ class RegisterSerializer(serializers.Serializer):
             'occupation': self.validated_data.get('occupation', ''),
             'assets': self.validated_data.get('assets', ''),
             'bank': self.validated_data.get('bank', ''),
-            'location': self.validated_data.get('location', ''),
+            'address': self.validated_data.get('address', ''),
             'age': self.validated_data.get('age', ''),
-            'financial_products' : self.validated_data.get('financial_products','')
+            'financial_products' : self.validated_data.get('financial_products',''),
+            'fin_prdt_nm' : self.validated_data.get('fin_prdt_nm','')
         }
 
     def save(self, request):
@@ -106,10 +108,14 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             extra_fields.append('assets')
         if hasattr(User, 'bank'):
             extra_fields.append('bank')
-        if hasattr(User, 'location'):
-            extra_fields.append('location')
+        if hasattr(User, 'address'):
+            extra_fields.append('address')
         if hasattr(User, 'age'):
             extra_fields.append('age')
+        if hasattr(User, 'financial_products'):
+            extra_fields.append('financial_products')
+        if hasattr(User, 'fin_prdt_nm'):
+            extra_fields.append('fin_prdt_nm')
         model = User
         fields = ('pk', *extra_fields)
         read_only_fields = ('email',)
@@ -117,4 +123,4 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 class ProfileChangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username','nickname','email','annual_income','occupation','assets','bank','location','age')
+        fields = ('username','nickname','email','annual_income','occupation','assets','bank','address','age')

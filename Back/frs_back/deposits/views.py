@@ -90,6 +90,19 @@ def savings_option(request):
     serialized_data = SavingOptionSerializer(saving_options, many=True).data
     return Response(serialized_data, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def addproduct(request):
+    user_id = request.data.get('user_id')
+    product_id = request.data.get('product_id')
+
+    user = User.objects.get(id=user_id)
+    product = DepositProducts.objects.get(id=product_id)
+
+    user.financial_products.add(product)  # 상품 가입
+
+    return Response({"message": "상품 가입이 완료되었습니다."})
+
+
 @api_view(['GET'])
 def similar(request):
     # 현재 로그인된 사용자의 특성
@@ -122,8 +135,8 @@ def similar(request):
     recommended_products = []
     for user in similar_users:
         if user.financial_products:
-            recommended_products.append(user.financial_products)
-    
+            for i in user.financial_products.split(","):
+                recommended_products.append(i)
     # 추천된 financial_products 리스트에서 중복 제거
     recommended_products = list(set(recommended_products))
 

@@ -106,6 +106,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             extra_fields.append('assets')
         if hasattr(User, 'bank'):
             extra_fields.append('bank')
+        if hasattr(User, 'occupation'):
+            extra_fields.append('occupation')
         if hasattr(User, 'address'):
             extra_fields.append('address')
         if hasattr(User, 'age'):

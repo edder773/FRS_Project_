@@ -110,3 +110,28 @@ $ python manage.py migrate
 ### 1-3 컴포넌트 구조
 
 ### 1-4 ERD model
+
+# 2. 추천 알고리즘
+![recommend](https://github.com/edder773/FRS_Project_/assets/58801719/b4ad6c9f-8b61-4580-9d57-a0d363209cc2)
+
+> 예금 정보 비교 탭에서 알고리즘 추천 버튼을 통해 2개의 추천 서비스 이용 가능 구현
+> 2개의 추천 서비스 모두 사용자의 제공 정보 기반 추천 알고리즘
+
+### 2-1 나와 비슷한 조건을 가진 다른 사람들이 선택한 상품 추천 알고리즘
+![recommend2](https://github.com/edder773/FRS_Project_/assets/58801719/ff534200-6011-478a-b9de-46f86bec5a22)
+
+> - 사용자가 사전에 입력한 나이, 연봉, 자산을 근거로 나와 가까운 범위를 가진 사람의 데이터를 추출
+> - django에서 기본으로 제공하는 Q 사용
+> - 사용자의 사전 데이터를 기반으로 분류하므로, 나이, 연봉, 자산 등의 
+
+```
+similar_users = User.objects.filter(
+        Q(age__range=(age_min, age_max)) &
+        Q(annual_income__range=(income_min, income_max)) &
+        Q(assets__range=(assets_min, assets_max)) &
+        ~Q(id=current_user.id)
+```
+
+
+### 2-2 사용자의 선택을 기반으로 한 상품 추천 알고리즘
+

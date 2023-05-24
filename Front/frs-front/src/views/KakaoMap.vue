@@ -96,6 +96,7 @@ export default {
       searchSi: '',
       searchGu: '',
       searchBank: '',
+      markers:[],
       siList: [
       '서울특별시 ','부산광역시 ','대구광역시 ','인천광역시 ','광주광역시 ','대전광역시 ',
       '울산광역시 ','세종특별자치시 ','경기도 ','강원도 ','충청북도 ','충청남도 ',
@@ -228,8 +229,9 @@ export default {
         const ps = new kakao.maps.services.Places()
         ps.keywordSearch(this.searchSi+this.searchGu+this.searchBank, (data, status) => {
         if (status === kakao.maps.services.Status.OK) {
+          this.clearMarkers();
           const bounds = new kakao.maps.LatLngBounds()
-
+          
           for (let i = 0; i < data.length; i++) {
             this.displayMarker(data[i], this.map, bounds)
           }
@@ -251,14 +253,33 @@ export default {
         position: new kakao.maps.LatLng(place.y, place.x)
       })
 
-      kakao.maps.event.addListener(marker, 'click', () => {
-        const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 })
+      const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 })
+      kakao.maps.event.addListener(marker, 'mouseover', () => {
         infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>')
         infowindow.open(map, marker);
       })
+      kakao.maps.event.addListener(marker, 'mouseout', () => {
+        infowindow.close();
+      })
+      kakao.maps.event.addListener(marker, "click", () => {
+        // console.log(place);
+        // console.log(place.place_url);
+
+        if (confirm(`'${place.place_name}' 홈페이지로 이동하시겠습니까?`)) {
+          window.open(place.place_url, "_blank");
+        }
+      });
       
       bounds.extend(new kakao.maps.LatLng(place.y, place.x))
-
+      this.markers.push(marker);
+    },
+    // 마지막 단계에 추가한 부분
+clearMarkers() {
+      // 기존에 표시된 마커들을 제거
+      for (let i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+      this.markers = [];
     },
   },
 

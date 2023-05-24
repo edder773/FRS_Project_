@@ -9,7 +9,8 @@ import ArticleView from '../views/Boards/ArticleView.vue'
 import CreateView from '../views/Boards/CreateView.vue'
 import DetailView from '../views/Boards/DetailView.vue'
 import ProfileView from '../views/Account/ProfileView.vue'
-import DepositList from '@/views/Products/DepositList.vue'
+// import DepositList from '@/views/Products/DepositList.vue'
+import DepositNew from '@/views/Products/DepositNew.vue'
 import SavingList from '@/views/Products/SavingList.vue'
 import RecommendSelect from '@/views/Products/RecommendSelect.vue'
 import OnetoOne from '@/views/OnetoOne.vue'
@@ -66,7 +67,7 @@ const routes = [
   {
     path: '/deposit',
     name: 'deposit',
-    component: DepositList
+    component: DepositNew
   },
   {
     path: '/saving',

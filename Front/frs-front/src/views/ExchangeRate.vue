@@ -2,19 +2,21 @@
   <div id="exchange-page" class="container">
     <h1> 환율 비교 </h1><br>
     <div>
-      <b-input-group size="sm" prepend="$" append=""><b-form-input type="number" id="amount" v-model="amount" @input="calculateExchangeRate" /></b-input-group>
       <select id="currency" v-model="currency">
         <option v-for="currency in currencies" :key="currency" :value="currency">{{ getCurrencyName(currency) }}</option>
       </select>
+      <b-input-group size="sm" :prepend="getCurrencySymbol(currency)" :append="getCurrencyName(currency)">
+        <b-form-input type="number" id="amount" v-model="amount" @input="calculateExchangeRate" />
+      </b-input-group>
+
       <br>
     </div>
     <br>
     <div>
-      <b-input-group size="sm" prepend="$" append="">
-      <b-form-input type="number" id="amount1" v-model="amount1" @input="calculateExchangeRate1" /></b-input-group>
-      <select id="currency1" v-model="currency1">
-        <option v-for="currency1 in currencies" :key="currency1" :value="currency1">{{ getCurrencyName(currency1) }}</option>
-      </select>
+      <b-input-group size="sm" prepend="₩" append="원">
+        <b-form-input type="number" id="amount1" v-model="amount1" @input="calculateExchangeRate1" />
+      </b-input-group>
+
       <br>
       <p v-if="result1">{{ getCurrencyName(currency) }}: {{ result1 }} 원</p>
     </div>
@@ -32,18 +34,31 @@ export default {
       currency: 'USD',
       currency1: 'USD',
       result: null,
-      currencies: ['USD', 'EUR', 'JPY', 'GBP', 'HKD', 'VND'], // 사용할 통화 목록 
+      currencies: ['USD', 'EUR', 'JPY', 'GBP', 'HKD', 'VND', 'CAD', 'AUD', 'CNY', 'NZD', 'SEK', 'NOK', 'CHF', 'ZAR', 'BRL', 'INR', 'RUB', 'TRY', 'KRW'], // 사용할 통화 목록 
       result1: null,
+      currencySymbols: {
+        USD: '$',
+        EUR: '€',
+        JPY: '¥',
+        GBP: '£',
+        HKD: 'HK$',
+        VND: '₫',
+        CAD: 'CA$',
+        AUD: 'A$',
+        CNY: '¥',
+        NZD: 'NZ$',
+        SEK: 'kr',
+        NOK: 'kr',
+        CHF: 'CHF',
+        ZAR: 'R',
+        BRL: 'R$',
+        INR: '₹',
+        RUB: '₽',
+        TRY: '₺',
+        KRW: '₩',
+      },
     }
   },
-  // computed: {
-  //   result() {
-  //     return this.result
-  //   },
-  //   result1() {
-  //     return this.result1
-  //   },
-  // },
   methods: {
     async calculateExchangeRate() {
       try {
@@ -79,13 +94,47 @@ export default {
           return '홍콩달러'
         case 'VND':
           return '동'
+        case 'CAD':
+          return '캐나다달러'
+        case 'AUD':
+          return '호주달러'
+        case 'CNY':
+          return '위안'
+        case 'NZD':
+          return '뉴질랜드달러'
+        case 'SEK':
+          return '스웨덴 크로나'
+        case 'NOK':
+          return '노르웨이 크로네'
+        case 'CHF':
+          return '스위스 프랑'
+        case 'ZAR':
+          return '남아프리카 랜드'
+        case 'BRL':
+          return '브라질 레알'
+        case 'INR':
+          return '인도 루피'
+        case 'RUB':
+          return '러시아 루블'
+        case 'TRY':
+          return '터키 리라'
+        case 'KRW':
+          return '대한민국 원'
         default:
           return currency
       }
     },
+    getCurrencySymbol(currency) {
+  if (Object.prototype.hasOwnProperty.call(this.currencySymbols, currency)) {
+    return this.currencySymbols[currency];
+  }
+  return '';
+},
+
   },
 }
 </script>
-<style>
+
+<style scoped>
 
 </style>

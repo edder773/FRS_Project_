@@ -16,11 +16,20 @@
         </b-card>
       </a>
     </b-modal>
-    <!-- 필터링 -->
-    <div>
-
-    </div>
+    
     <div class="table-container">
+      <!-- 필터링 -->
+      <div class="filter-container">
+      <label for="filter-option">필터링 옵션:</label>
+      <select id="filter-option" v-model="selectedOption">
+        <option value="">전체</option>
+        <option value="6">6개월</option>
+        <option value="12">12개월</option>
+        <option value="24">24개월</option>
+        <option value="36">36개월</option>
+      </select>
+      <button @click="filteredProducts">확인</button>
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -34,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id" @click="openModal(product)">
+          <tr v-for="product in filterProducts" :key="product.id" :v-model="fetchOptions(product.id)">
             <td @click="openModal(product)">{{ product.id }}</td>
             <td @click="openModal(product)"><DepositOption6 :productId="product.id"/></td>
             <td @click="openModal(product)"><DepositOption12 :productId="product.id"/></td>
@@ -46,17 +55,25 @@
         </tbody>
       </table>
     </div>
-    <b-modal v-if="selectedProduct" v-model="showModal" @hide="closeModal">
+    <b-modal v-if="selectedProduct" v-model="showModal" @hide="closeModal" size="xl">
     <h3>{{ selectedProduct.fin_prdt_nm }}</h3>
     <h4>{{ selectedProduct.kor_co_nm }}</h4>
     <hr>
-    <div>
+    <div class="modal-content">
+    <div class="left-section">
     <KakaoMapCom :bank="selectedProduct.kor_co_nm"/>
-    <!-- Modal content goes here -->
     </div>
+    <div class="right-section">
+      <div class="detail-info">
+        <p><strong>상품 공시 시작일:</strong> {{ selectedProduct.dcls_strt_day }}</p>
+        <p><strong>우대 조건:</strong> {{ selectedProduct.spcl_cnd }}</p>
+        <p><strong>가입 가능 유형:</strong> {{ selectedProduct.join_member }}</p>
+        <p><strong>기타 참고 사항:</strong> {{ selectedProduct.etc_note }}</p>
+    </div>
+  </div>
+  </div>
     </b-modal>
 
-    
   </div>
 </template>
 
@@ -85,20 +102,41 @@ export default {
   data() {
     return {
       products: [],
+      tempoptions: [],
+      monthoptions: [],
       options: {},
       selectedProduct: null,
       recommendItem: false,
       showModal: false,
+      selectedOption: '',
+      filterProducts: [],
     }
   },
   created() {
     this.fetchProducts()
+    // this.fetchOptions()
+  
+  },
+  computed: {
+
   },
   methods: {
     fetchProducts() {
       axios.get('http://127.0.0.1:8000/deposits/products/')
         .then(response => {
           this.products = response.data
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+    fetchOptions(productId) {
+      axios
+        .get('http://127.0.0.1:8000/deposits/products-option/')
+        .then(response => {
+          // Filter options based on productId
+          const tempoptions = response.data.filter(option => option.fin_prdt_cd === productId)
+          this.monthoptions.push(tempoptions.save_trm)
         })
         .catch(error => {
           console.error(error)
@@ -121,22 +159,69 @@ export default {
     },
     closeRecommend() {
       this.recommendItem = false
-    }
-  }
+    },
+    filteredProducts() {
+      if (this.selectedOption === '') {
+        this.filterProducts = this.products; // 선택한 옵션이 없으면 전체 제품을 렌더링
+      } else {
+        const option = parseInt(this.selectedOption);
+        this.filterProducts = this.products.filter(() => {
+          return this.monthoptions.includes(option); // 선택한 옵션이 저장된 리스트에 있는 경우에만 렌더링
+        });
+      }
+    },
+
+}
 }
 </script>
-<style scoped>
 
+<style scoped>
+h3{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'TheJamsil5Bold';
+  font-weight: 500;
+}
+h4{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'TheJamsil5Bold';
+  font-weight: 400;
+}
 #deposit-router{
   display: block;
 }
 
-.table-container{
-  display: flex;
-  align-items: right;
-  justify-content: right;
-}
 td{
   cursor: pointer;
 }
+
+.modal-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-section {
+  flex: 1;
+}
+
+.right-section {
+  flex: 1;
+  font-family: 'GangwonEdu_OTFBoldA';
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-info {
+  width: 80%; /* 적절한 너비로 조정 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.detail-info p {
+  margin-bottom: 10px; /* 각 항목 사이의 간격 조정 */
+}
+
 </style>

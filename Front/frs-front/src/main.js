@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap'
 import { BootstrapVue } from 'bootstrap-vue'
+import '@/assets/font.css';
 
 // const instance = axios.create({
 //   baseURL: '/api', // 프록시 경로 설정

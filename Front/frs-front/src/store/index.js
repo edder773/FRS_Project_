@@ -18,7 +18,9 @@ export default new Vuex.Store({
     articles: [
     ],
     token: null,
-    user: null
+    user: null,
+    financialProducts: [],
+    signedProducts: []
   },
   getters: {
     isLogin(state) {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     getToken(state){
       return state.token
+    },
+    getFinancialProducts(state) {
+      return state.financialProducts;
     }
   },
   mutations: {
@@ -68,6 +73,10 @@ export default new Vuex.Store({
     },
     UPDATE_USER(state, user){
       state.user = user
+    },
+    ADD_FINANCIAL_PRODUCT(state, product) {
+      state.financialProducts.push(product.finPrdtCd);
+      state.signedProducts.push(product.fin_prdt_nm)
     }
   },
   actions: {
@@ -95,7 +104,7 @@ export default new Vuex.Store({
       const occupation = payload.occupation
       const assets = payload.assets
       const bank = payload.bank
-      const location = payload.location
+      const address = payload.address
       const age = payload.age
       
       if (!username){
@@ -118,12 +127,13 @@ export default new Vuex.Store({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, password1, password2, email, nickname, annual_income, occupation, assets, bank, location, age
+          username, password1, password2, email, nickname, annual_income, occupation, assets, bank, address, age
         }
       })
         .then((res) => {
+          alert('회원가입 되었습니다. 로그인 해주세요.')
           context.commit('SAVE_TOKEN', res.data.key)
-          router.push({ name: 'home' })
+          location.reload()
         })
         .catch(() => {
         alert('아이디와 유사한 비밀번호는 사용할 수 없습니다.')
@@ -160,7 +170,7 @@ export default new Vuex.Store({
         .then((res) => {
           const user = res.data
           context.commit('SAVE_USER', user)
-          location.reload()
+          // location.reload()
         })
         .catch((err) => console.log(err))
     },
@@ -181,27 +191,64 @@ export default new Vuex.Store({
       const occupation = payload.occupation
       const assets = payload.assets
       const bank = payload.bank
-      const location = payload.location
+      const address = payload.address
       const age = payload.age
+      const fin_prdt_nm = payload.fin_prdt_nm
       const token = context.state.token
-      console.log(token)
+
       axios({
         method: 'put',
         url: `${API_URL}/accounts/user/change/`,
         data: {
-          username, nickname, email, annual_income, occupation, assets, bank, location, age
+          username, nickname, email, annual_income, occupation, assets, bank, address, age, fin_prdt_nm
         },
         headers: {
           Authorization: `Token ${token}`
         }
       })
         .then((response) => {
-          const updatedUser =response.data
+          const updatedUser = response.data
           context.commit('UPDATE_USER', updatedUser)
+
+          axios({
+            method: 'get',
+            url: `${API_URL}/accounts/user/`,
+            headers: {
+              Authorization: `Token ${token}`
+            }
+          })
+            .then((res) => {
+              const user = res.data
+              console.log(res)
+              context.commit('SAVE_USER', user)
+              console.log('User:', user)
+            })
+            .catch((err) => console.log(err))
         })
         .catch((err) => {
         console.log(err)
       })
+    },
+    addFinancialProduct(context, product) {
+      const financial_products = product.finPrdtCd
+      const fin_prdt_nm = product.fin_prdt_nm;
+      const token = context.state.token
+      axios({
+        method: 'put',
+        url: `${API_URL}/accounts/user/add/`,
+        data: {
+          financial_products, fin_prdt_nm
+        },
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      })
+        .then(response => {
+          context.commit('ADD_FINANCIAL_PRODUCT', response.data)
+        })
+        .catch(error => {
+          console.error('Failed to add financial product:', error);
+        });
     }
   },
   modules: {

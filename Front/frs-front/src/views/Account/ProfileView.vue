@@ -9,9 +9,18 @@
         <p>연봉: {{ user.annual_income }}</p>
         <p>자산: {{ user.assets }}</p>
         <p>은행: {{ user.bank }}</p>
-        <p>주소: {{ user.location }}</p>
+        <p>주소: {{ user.address }}</p>
         <p>나이: {{ user.age }}</p>
+        <p>내가 가입한 상품 : {{ user.fin_prdt_nm }}</p>
         <button @click="editMode = true">수정하기</button>
+        <div class="d-flex flex-column align-items-center">
+          <b-list-group style="width: 70%">
+            <b-list-group-item v-for="product in signedProducts" :key="product.id">
+              <b-icon icon="check-square" scale="2" variant="success"></b-icon>
+              {{ product }}
+            </b-list-group-item>
+          </b-list-group>
+        </div>
       </div>
       <div v-else>
         <p>아이디: {{ user.username }}</p>
@@ -25,8 +34,8 @@
         <select id="bank" v-model="editedUser.bank">
           <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
         </select><br>
-        <label for="location">주소:</label>
-        <input id="location" v-model="editedUser.location" type="text"><br>
+        <label for="address">주소:</label>
+        <input id="address" v-model="editedUser.address" type="text"><br>
         <label for="age">나이:</label>
         <input id="age" v-model="editedUser.age" type="number"><br>
         <button @click="saveChanges">Save</button>
@@ -40,16 +49,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "ProfileView",
   data() {
     return {
+      signedProducts: [],
       editMode: false,
       editedUser: {
         annual_income: 0,
         assets: 0,
         bank: "",
-        location: "",
+        address: "",
         age: 0
       },
       bankOptions: ["KEB하나은행", "SC은행", "경남은행", "광주은행", "국민은행", "기업은행", "농협은행", "대구은행", "부산은행",
@@ -63,7 +74,10 @@ export default {
     },
     user() {
       return this.$store.getters.getUser;
-    }
+    },
+  },
+  created(){
+    this.signProducts()
   },
   methods: {
     saveChanges() {
@@ -75,8 +89,9 @@ export default {
         occupation: this.editedUser.occupation !== null ? this.editedUser.occupation : undefined,
         assets: this.editedUser.assets !== null ? this.editedUser.assets : undefined,
         bank: this.editedUser.bank !== null ? this.editedUser.bank : undefined,
-        location: this.editedUser.location !== null ? this.editedUser.location : undefined,
+        address: this.editedUser.address !== null ? this.editedUser.address : undefined,
         age: this.editedUser.age !== null ? this.editedUser.age : undefined,
+        fin_prdt_nm: this.user.fin_prdt_nm,
         }
       this.editMode = false;
       this.$store.dispatch('profileChange', payload)
@@ -90,14 +105,21 @@ export default {
         annual_income: this.user.annual_income,
         assets: this.user.assets,
         bank: this.user.bank,
-        location: this.user.location,
-        age: this.user.age
+        address: this.user.address,
+        age: this.user.age,
+        fin_prdt_nm: this.user.fin_prdt_nm,
       };
       this.editMode = false;
     },
-    
+    signProducts(){
+      if (this.user.fin_prdt_nm){
+        for (let product of this.user.fin_prdt_nm.split(',')){
+          this.signedProducts.push(product)
+        }
+      }
+    },
   }
-};
+}
 </script>
 
 <style>

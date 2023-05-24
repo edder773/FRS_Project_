@@ -3,6 +3,29 @@
     <a href="/deposit">예금비교</a> |
     <a href="/saving">적금비교</a> |
     <h2>정기적금</h2>
+    <p @click="openRecommend">추천받기</p>
+    <b-modal size="lg" title="금융 상품 추천 받기!" v-model="recommendItem" @hide="closeRecommend" centered>
+      <b-row>
+        <b-col>
+          <a href="/recommend">
+            <b-card overlay :img-src="getImagePath('recommend.jpg')" img-alt="Card Image" text-variant="white" title="금융BTI">
+              <b-card-text>
+                간단한 미니 게임을 통해 나와 맞는 금융 상품을 찾아보세요
+              </b-card-text>
+            </b-card>
+          </a>
+        </b-col>
+        <b-col>
+          <a href="/similar">
+            <b-card overlay :img-src="getImagePath('similar.png')" img-alt="Card Image" text-variant="white" title="나와 비슷한 사용자는?">
+              <b-card-text>
+                나와 비슷한 사용자들이 가입한 상품이 궁금하다면?
+              </b-card-text>
+            </b-card>
+          </a>
+        </b-col>
+      </b-row>
+    </b-modal>
     <div class="table-container">
       <table class="table table-striped">
         <thead>
@@ -78,6 +101,7 @@ export default {
       products: [],
       options: {},
       selectedProduct: null,
+      recommendItem: false,
     }
   },
   created() {
@@ -99,6 +123,15 @@ export default {
     },
     closeModal() {
       this.selectedProduct = null
+    },
+    openRecommend() {
+      this.recommendItem = true
+    },
+    closeRecommend() {
+      this.recommendItem = false
+    },
+    getImagePath(image) {
+      return require(`@/views/Image/${image}`);
     },
   }
 }

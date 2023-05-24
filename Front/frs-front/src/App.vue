@@ -33,7 +33,7 @@
                       <b-form-invalid-feedback id="input-live-feedback">8글자 이상 입력하세요</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group label="*비밀번호번호:" label-for="password" label-cols-sm="3" label-align-sm="right">
+                    <b-form-group label="*비밀번호확인:" label-for="password" label-cols-sm="3" label-align-sm="right">
                       <b-form-input type="password" id="password2" v-model="password2" :state="password2Valid"></b-form-input>
                       <b-form-invalid-feedback id="input-live-feedback">비밀번호가 일치하지 않습니다</b-form-invalid-feedback>
                     </b-form-group>
@@ -42,32 +42,37 @@
                       <b-form-input id="nickname" v-model="nickname" :state="nicknameValid"></b-form-input>
                     </b-form-group>
                     <br>
-                    선택 항목
+                    
+                    <b-form-group>
+                      <b-form-checkbox v-model="showAdditionalFields">선택 항목 (미제출 시 추천 서비스 이용 불가)</b-form-checkbox>
+                    </b-form-group>
                     <hr>
 
-                    <b-form-group label="나이:" label-for="age" label-cols-sm="3" label-align-sm="right">
+                    <b-form-group v-if="showAdditionalFields" label="나이:" label-for="age" label-cols-sm="3" label-align-sm="right">
                       <b-form-input type="number" id="age" v-model="age"></b-form-input>
                     </b-form-group>
-
-                    <b-form-group label="직업:" label-for="occupation" label-cols-sm="3" label-align-sm="right">
-                      <b-form-input id="occupation" v-model="occupation"></b-form-input>
-                    </b-form-group>
-
-                    <b-form-group label="연봉:" label-for="annual_income" label-cols-sm="3" label-align-sm="right">
+                    
+                    <b-form-group v-if="showAdditionalFields" label="연봉:" label-for="annual_income" label-cols-sm="3" label-align-sm="right">
                       <b-form-input type="number" step="1000000" id="annual_income" v-model="annual_income"></b-form-input>
                     </b-form-group>
-
-                    <b-form-group label="자산:" label-for="assets" label-cols-sm="3" label-align-sm="right">
+                    
+                    <b-form-group v-if="showAdditionalFields" label="자산:" label-for="assets" label-cols-sm="3" label-align-sm="right">
                       <b-form-input type="number" step="1000000" id="assets" v-model="assets"></b-form-input>
                     </b-form-group>
-
-                    <b-form-group label="선호은행:" label-for="bank" label-cols-sm="3" label-align-sm="right">
+                    
+                    <b-form-group v-if="showAdditionalFields" label="직업:" label-for="occupation" label-cols-sm="3" label-align-sm="right">
+                      <b-form-select id="occupation" v-model="occupation" style="width: 100%; height: 37px;" >
+                        <option v-for="option in occupationOptions" :value="option" :key="option.id">{{ option }}</option>
+                      </b-form-select>
+                    </b-form-group>
+                    
+                    <b-form-group v-if="showAdditionalFields" label="선호은행:" label-for="bank" label-cols-sm="3" label-align-sm="right">
                       <b-form-select id="bank" v-model="bank" style="width: 100%; height: 37px;" >
                         <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
                       </b-form-select>
                     </b-form-group>
-                    <b-form-group label="주소:" label-for="location" label-cols-sm="3" label-align-sm="right">
-                      <b-form-select id="location" v-model="location" style="width: 100%; height: 37px;" >
+                    <b-form-group v-if="showAdditionalFields" label="주소:" label-for="address" label-cols-sm="3" label-align-sm="right">
+                      <b-form-select id="address" v-model="address" style="width: 100%; height: 37px;" >
                         <option v-for="option in locationOptions" :value="option" :key="option.id">{{ option }}</option>
                       </b-form-select>
                     </b-form-group>   
@@ -118,7 +123,7 @@ export default {
         occupation: null,
         assets: null,
         bank: null,
-        location: null,
+        address: null,
         age: null,
         bankOptions: ["KEB하나은행", "SC은행", "경남은행", "광주은행", "국민은행", "기업은행", "농협은행", "대구은행", "부산은행",
        "새마을금고", "산업은행", "수협은행", "신한은행", "신협중앙회", "외환은행","우체국", "우리은행", "저축은행",
@@ -128,7 +133,10 @@ export default {
       '울산광역시 ','세종특별자치시 ','경기도 ','강원도 ','충청북도 ','충청남도 ',
       '전라북도 ','전라남도 ','경상북도 ','경상남도 ','제주특별자치도 '
       ],
-        isSimilarUsername: false,
+      occupationOptions: ['의사', '교사', '변호사', '엔지니어', '회계사', '디자이너', '개발자', '마케터', '경찰관', '소방관',
+        '간호사', '음악가', '배우', '기자', '요리사', '운전사', '경영자', '연구원', '프로그래머', '무직'],
+      isSimilarUsername: false,
+      showAdditionalFields: false,
     }
   },
   methods: {
@@ -153,7 +161,7 @@ export default {
           occupation: this.occupation !== null ? this.occupation : undefined,
           assets: this.assets !== null ? this.assets : undefined,
           bank: this.bank !== null ? this.bank : undefined,
-          location: this.location !== null ? this.location : undefined,
+          address: this.address !== null ? this.address : undefined,
           age: this.age !== null ? this.age : undefined,
         }
         this.$store.dispatch('signUp', payload)

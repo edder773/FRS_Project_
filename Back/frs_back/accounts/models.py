@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from allauth.account.adapter import DefaultAccountAdapter
+from deposits.models import DepositProducts
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=50)
@@ -8,9 +9,9 @@ class User(AbstractUser):
     occupation = models.CharField(max_length=20, null=True)
     assets = models.IntegerField(null=True)
     bank = models.CharField(max_length=15, null=True)
-    location = models.CharField(max_length=25, null=True)
+    address = models.CharField(max_length=25, null=True)
     age = models.IntegerField(null=True)
-    financial_products = models.CharField(max_length=50, null=True)
+    financial_products = models.ManyToManyField(DepositProducts, related_name='users', blank=True)
     
         
 class CustomAccountAdapter(DefaultAccountAdapter):
@@ -27,9 +28,10 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         occupation = data.get("occupation")
         assets = data.get("assets")
         bank = data.get("bank")
-        location = data.get("location")
+        address = data.get("address")
         age = data.get("age")
         financial_products = data.get("financial_products")
+        fin_prdt_nm = data.get("fin_prdt_nm")
 
         user_email(user, email)
         user_username(user, username)
@@ -47,12 +49,15 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             user.assets = assets
         if bank:
             user_field(user, "bank", bank)
-        if location:
-            user_field(user, "location", location)
+        if address:
+            user_field(user, "address", address)
         if age :
             user.age = age
         if financial_products:
             user_field(user, "financial_products", financial_products)
+        if fin_prdt_nm:
+            user_field(user, "fin_prdt_nm", fin_prdt_nm)
+        
         
         if "password1" in data:
             user.set_password(data["password1"])

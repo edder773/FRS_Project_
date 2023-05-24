@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ProfileChangeSerializer
 from rest_framework import status
-
+from .models import User
 User = get_user_model()
 
 @api_view(['GET', 'PUT'])  # GET과 PUT 메서드 허용

@@ -5,7 +5,7 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap'
-import { BootstrapVue } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import '@/assets/font.css';
 
 // const instance = axios.create({
@@ -15,6 +15,7 @@ import '@/assets/font.css';
 // Vue.config.productionTip = false
 // Vue.prototype.$axios = instance
 Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
 new Vue({
   router,

@@ -51,6 +51,7 @@
         <div class="profile-button"><button @click="editMode = true">수정하기</button></div>
         <hr><br>
         <!-- 가입한 목록 나오기 -->
+        <div class="profile-join">
         <h2>🎁내가 가입한 상품🎁</h2>
         <div class="profile-card d-flex flex-column align-items-center">
           <b-list-group style="width: 70%">
@@ -64,67 +65,65 @@
           </b-list-group>
           <br>
         </div>
+        <div class="profile-chart">
+          <div id="chart" ref="chart" style="width: 100%; height: 400px;"></div>
+        </div>
+      </div>
       </div>
       <!-- 여기까지 가입한 목록 -->
       <div v-else>
-        <div>
+        <div class="profile-table">
         <table class="table table-bordered">
-          <tbody>
+          <tbody class="text-center">
             <tr>
-              <th>아이디:</th>
+              <th>아이디</th>
               <td>{{ user.username }}</td>
             </tr>
             <tr>
-              <th>이메일:</th>
+              <th>이메일</th>
               <td>{{ user.email }}</td>
             </tr>
             <tr>
-              <th>이름:</th>
+              <th>이름</th>
               <td>{{ user.nickname }}</td>
             </tr>
             <tr>
-              <th>연봉:</th>
+              <th>연봉</th>
               <td>
-                <label for="annual-income">연봉:</label>
                 <input id="annual-income" v-model="editedUser.annual_income" type="number" step="1000000">
               </td>
             </tr>
             <tr>
-              <th>자산:</th>
+              <th>자산</th>
               <td>
-                <label for="assets">자산:</label>
                 <input id="assets" v-model="editedUser.assets" type="number" step="1000000">
               </td>
             </tr>
             <tr>
-              <th>나이:</th>
+              <th>나이</th>
               <td>
-                <label for="age">나이:</label>
                 <input id="age" v-model="editedUser.age" type="number">
               </td>
             </tr>
             <tr>
-              <th>은행:</th>
+              <th>은행</th>
               <td>
-                <label for="bank">은행:</label>
-                <select id="bank" v-model="editedUser.bank">
+                  <select id="bank" v-model="editedUser.bank">
                   <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
                 </select>
               </td>
             </tr>
             <tr>
-              <th>주소:</th>
+              <th>주소</th>
               <td>
-                <label for="address">주소:</label>
                 <select id="address" v-model="editedUser.address">
                   <option v-for="option in locationOptions" :value="option" :key="option.id">{{ option }}</option>
                 </select>
               </td>
             </tr>
             <tr>
-              <th>직업:</th>
+              <th>직업</th>
               <td>
-                <label for="occupation">직업:</label>
                 <select id="occupation" v-model="editedUser.occupation">
                   <option v-for="option in occupationOptions" :value="option" :key="option.id">{{ option }}</option>
                 </select>
@@ -133,8 +132,11 @@
           </tbody>
         </table>
       </div>
-        <button @click="saveChanges">Save</button>
-        <button @click="cancelEdit">Cancel</button>
+      <div class="profile-button" style="margin-bottom: 40px;">
+        <button @click="saveChanges">저장하기</button>
+        <button @click="cancelEdit">취소</button>
+      </div>
+      <hr><br>
       </div>
     </div>
     <div v-else>
@@ -145,18 +147,14 @@
 
 <script>
 import axios from 'axios'
-// import { Bar } from 'vue-chartjs'
+import * as echarts from "echarts"
 export default {
   name: "ProfileView",
-  // extends: Bar,
-  // props: ['chartdata', 'options'],
-  // mounted () {
-  //   this.renderChart(this.chartdata, this.options)
-  // },
   data() {
     return {
       signedProducts: [],
       editMode: false,
+      option :[], //chart를 위한 option
       editedUser: {
         annual_income: 0,
         assets: 0,
@@ -186,6 +184,33 @@ export default {
     user() {
       return this.$store.getters.getUser;
     },
+  },
+  mounted() {
+    let chartDom = this.$refs.chart;
+    let myChart = echarts.init(chartDom);
+
+    if (myChart != null && myChart != '' && myChart != undefined) {
+      myChart.dispose();
+    }
+
+    myChart = echarts.init(chartDom);
+
+    let option = {
+      tooltip: {
+        trigger: 'item',
+      },
+      legend: {
+        bottom: '10px',
+        width: '300px',
+      },
+      series: this.series,
+    };
+
+    option && myChart.setOption(option);
+
+    window.addEventListener('resize', () => {
+      myChart.resize();
+    });
   },
   methods: {
     saveChanges() {
@@ -292,7 +317,7 @@ h2{
   background-size: cover;
   height: 230px;
   margin-bottom: 30px;
-  /* margin-top: 30px; */
+  margin-top: 15px;
 }
 .profile-name{
   font-size: 30px;

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <b-navbar toggleable="lg" type="light" class="header-dev container">
-      <b-navbar-brand href="/" class="navbar-brand-custom">FRS</b-navbar-brand>
+      <b-navbar-brand href="/" class="navbar-brand-custom">
+        <img src='@/views/Image/frslogo.png' alt="FRS" class="logo-img">
+      </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -225,6 +227,9 @@ export default {
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
+}
+.logo-img {
+  max-height: 50px; /* 로고의 최대 높이 조정 */
 }
 
 .header-dev {

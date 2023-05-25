@@ -204,9 +204,7 @@ export default {
     closeRecommend() {
       this.recommendItem = false
     },
-    getImagePath(image) {
-      return require(`@/views/Image/${image}`)
-    },
+
   },
   computed: {
     formattedProducts() {

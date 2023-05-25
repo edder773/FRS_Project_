@@ -23,7 +23,7 @@ $ npm install axios
 ```
 $ cd Back/frs_back/
 $ python -m vevn venv
-$ source venv/Script/activcate
+$ source venv/Script/activate
 $ pip install -r requirements.txt
 $ python manage.py loaddata user_data.json
 $ python manage.py makemigrations
@@ -36,8 +36,8 @@ $ python manage.py migrate
 김보석(팀장) : Front-end & Back-end
 - Vue 클라이언트 구현
 - Django 서버 구현
-- Vue - django 연동
-- css 모델링
+- Vue - Django 연동
+- Css 모델링
 
 박승희(팀원) : Front-end
 - Vue 클라이언트 구현

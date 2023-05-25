@@ -50,6 +50,7 @@
         <!-- {{ user.financial_products }} -->
         <div class="profile-button"><button @click="editMode = true">수정하기</button></div>
         <hr><br>
+        <p v-for="option in signedOptions" :key="option.id"> {{ option }}</p>
         <!-- 가입한 목록 나오기 -->
         <div class="profile-join">
         <h2>🎁내가 가입한 상품🎁</h2>
@@ -61,6 +62,7 @@
                 {{ product.fin_prdt_nm }}
               </template>
               {{ product.mtrt_int }}
+              {{ product.id }}
             </b-card>
           </b-list-group>
           <br>
@@ -153,6 +155,7 @@ export default {
   data() {
     return {
       signedProducts: [],
+      signedOptions: [],
       editMode: false,
       option :[], //chart를 위한 option
       editedUser: {
@@ -174,7 +177,8 @@ export default {
       occupationOptions: ['의사', '교사', '변호사', '엔지니어', '회계사', '디자이너', '개발자', '마케터', '경찰관', '소방관',
       '간호사', '음악가', '배우', '기자', '요리사', '운전사', '경영자', '연구원', '프로그래머', '무직'],
       // savingProduct: [],
-      depositProducts: []
+      depositProducts: [],
+      depositOption: []
     }
   },
   computed: {
@@ -251,18 +255,18 @@ export default {
         console.error(error);
       });
     },
-    // fetchSavings() {
-    //   axios.get(`http://127.0.0.1:8000/deposits/savings/`)
-    //   .then(response => {
-    //     this.savingProduct = response.data
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-    // },
+    fetchOption() {
+      axios.get(`http://127.0.0.1:8000/deposits/products-option/`)
+      .then(response => {
+        this.depositOption = response.data
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
     async fetchSign() {
   try {
-    await Promise.all([this.fetchDeposits()])
+    await Promise.all([this.fetchDeposits(),this.fetchOption()])
     setTimeout(() => {
       this.depositProducts.forEach((product) => {
       this.user.financial_products.forEach((result) => {
@@ -272,13 +276,13 @@ export default {
       })
     })
     
-    // this.savingProduct.forEach((product) => {
-    //   this.user.financial_products.forEach((result) => {
-    //     if (product.id == result) {
-    //       this.signedProducts.push(product);
-    //     }
-    //   })
-    // })
+    this.depositOption.forEach((product) => {
+      this.user.financial_products.forEach((result) => {
+        if (product.id == result) {
+          this.signedOptions.push(product);
+        }
+      })
+    })
     },1500)
   } catch (error) {
     console.error(error);

@@ -1,7 +1,7 @@
 <template>
   <div class="exchange-page">
-  <div id="exchange-page" class="container">
-    <div style="height: 800px;">
+    <div id="exchange-page" class="container">
+    <div style="height: 800px;" >
     <!-- <h1> 환율 비교 </h1><br> -->
     <div>
       <select id="currency" v-model="currency">

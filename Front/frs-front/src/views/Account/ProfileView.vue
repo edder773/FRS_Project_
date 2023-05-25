@@ -139,14 +139,14 @@
 
 <script>
 import axios from 'axios'
-import { Bar } from 'vue-chartjs'
+// import { Bar } from 'vue-chartjs'
 export default {
   name: "ProfileView",
-  extends: Bar,
-  props: ['chartdata', 'options'],
-  mounted () {
-    this.renderChart(this.chartdata, this.options)
-  },
+  // extends: Bar,
+  // props: ['chartdata', 'options'],
+  // mounted () {
+  //   this.renderChart(this.chartdata, this.options)
+  // },
   data() {
     return {
       signedProducts: [],

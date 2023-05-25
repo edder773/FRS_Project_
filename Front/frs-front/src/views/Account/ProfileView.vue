@@ -238,8 +238,8 @@ export default {
         if (product.id == result) {
           this.signedProducts.push(product);
         }
-      });
-    });
+      })
+    })
     
     // this.savingProduct.forEach((product) => {
     //   this.user.financial_products.forEach((result) => {

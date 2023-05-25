@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1> 간단하게 알아보는 M(money)BTI</h1>
+    <div style="text-align: center; margin-top: 2%; margin-bottom: 2%">
+     <h1 style="margin: 0;">간단하게 알아보는 M(money)BTI</h1>
+    </div>
     <div class="container">
       <div v-if="isMain" class="container">
         <img src="@/views/Image/main.jpg" alt="Image" ><br><br>
@@ -65,72 +67,224 @@
     <div v-if="currentImageIndex === 8" class="centered-container">
       <div v-if="loadingData">
         <h3>당신에게 맞는 상품을 찾는 중...</h3>
-        <b-spinner style="width: 8em; height: 8rem;"></b-spinner>
+        <b-spinner style="width: 10em; height: 10rem;"></b-spinner>
       </div>
       <div v-if="!loadingData">
         <div v-if="this.score === 0">
           <img src="@/views/Image/s0.jpg" alt="Image" ><br><br>
           <h3>당신은 미래의 가치보단 지금 당장이 중요한 사람!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
 
         <div v-if="this.score === 1">
           <img src="@/views/Image/s1.jpg" alt="Image" ><br><br>
           <h3>당신은 마음 속 한편으론 절약을 꿈꾸는 사람!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
 
         <div v-if="this.score === 2">
           <img src="@/views/Image/s2.jpg" alt="Image" ><br><br>
           <h3>당신은 절약을 시도하지만 주위 환경이 돈을 쓰게 만들고 있군요!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
 
         <div v-if="this.score === 3">
           <img src="@/views/Image/s3.jpg" alt="Image" ><br><br>
           <h3>당신은 절약의 중요성을 알지만 정신차리면 돈을 탕진 하는 타입!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
 
         <div v-if="this.score === 4">
           <img src="@/views/Image/s4.jpg" alt="Image" ><br><br>
           <h3>어느정도 절약을 하는 당신! 그러나 가끔 사고 싶은게 있으면 참지 못하고 긁는 타입!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
 
         <div v-if="this.score === 5">
           <img src="@/views/Image/s5.jpg" alt="Image" ><br><br>
           <h3>사고 싶은걸 참으면서 절약을 할줄 아는 당신!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
 
         <div v-if="this.score === 6">
           <img src="@/views/Image/s6.jpg" alt="Image" ><br><br>
           <h3>근검절약하는 당신! 미래에 대한 저축이 확실한 사람!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
-
         <div v-if="this.score >= 7">
           <img src="@/views/Image/s7.jpg" alt="Image" ><br><br>
           <h3>절약왕! 돈 저축하는걸 사랑하는 사람!</h3>
           <div v-for="product in products" :key="product.id">
-            {{ product.kor_co_nm }}의 ▷▶ {{ product.fin_prdt_nm }} ◀◁ 을 고객님께 추천드려요! 
-          </div>
+            <b-card header="당신에게 맞는 상품은!" header-tag="header" :title="product.kor_co_nm">
+              <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
+              <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
+              <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
+                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                  <b-card-text>
+                    <p>만기시 이자 정보</p>
+                    <p>{{product.mtrt_int}}</p>
+                    <br>
+                    <p>조건에 따른 우대 정보</p>
+                    <p>{{product.spcl_cnd}}</p>
+                    <br>
+                    <p>거래 실적 인정 기간</p>
+                    <p>{{product.etc_note}}</p>
+                    <b-button variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+                    </b-card-text>
+                  </b-card>
+                </b-modal>
+              </b-card>
+            </div>
         </div>
+        <br>
         <div v-if="!isMain" class="container">
           <b-button pill variant="danger" @click="restartGame">다시하기</b-button>
         </div>
@@ -141,6 +295,7 @@
   
 <script>
 import axios from 'axios' 
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -160,16 +315,37 @@ export default {
       loadingData: true,
       score: 0,
       options: [],
-      products: []
+      products: [],
+      modalVisible: false
     }
   },
+  created(){
+    this.getArticles()
+  },
   computed: {
+    ...mapGetters(['getUser', 'getToken']),
     currentImage() {
       return this.images[this.currentImageIndex];
     },
+    isLogin() {
+      return this.$store.getters.isLogin // 로그인 여부
+    }
   },
 
   methods: {
+    // 로그인 여부
+    getArticles() {
+      if (this.isLogin) {
+        this.$store.dispatch('getArticles')
+      } else {
+        alert('로그인이 필요한 페이지입니다...')
+        this.$router.push({ name: 'home' })
+      }
+    },
+//모달표시
+    showModal() {
+    this.modalVisible = true
+  },
 // 이미지 선택할 시 다음 스탭(스코어 증가)
     nextStep(){
       this.selectImage()
@@ -194,7 +370,7 @@ export default {
         this.loadingData = false
       }, 4000)
     },
-  // 추천을 위한 알고리즘
+// 추천을 위한 알고리즘
     fetchProductOption() { // if문을 통해 짝수 홀수에 따라 예금 or 적금 테이블에서 가져옴
       if (this.score == 0 || this.score == 2 || this.score == 4 || this.score == 6){
         axios.get('http://127.0.0.1:8000/deposits/products-option/')
@@ -315,16 +491,57 @@ export default {
     this.options = []
     this.products = []
     },
+// 가입하기 기능
+    checkProduct(product) {
+  const user = this.getUser
+  console.log(user.financial_products)
+  const payload = {
+    user_id: user.pk,  // 'user_id' 키에 사용자 ID 값을 전달
+    product_id: product.id  // 'product_id' 키에 상품 ID 값을 전달
   }
+  this.$store.dispatch('addProduct', payload)
+},
+// 가입여부 확인 기능
+checkIn(product){
+      return this.getUser.financial_products.includes(product.id)
+    },
+  },
 }
 </script>
   
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .game-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  height: 100vh; 
+  text-align: center;
 }
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  text-align: center;
+}
+
 
 .image-container {
   width: 48%;

@@ -3,7 +3,6 @@
     <h1 style="text-align: center;">나와 비슷한 조건의 다른 사람이 선택한 상품!</h1>
     <div class="d-flex flex-column align-items-center">
       <div v-for="product in productresult" :key="product.id">
-        {{ product.id }}
         <b-card style="width: 1000px" border-variant="secondary" :header="product.fin_prdt_nm" header-border-variant="secondary" align="center">
           <div class="card-body">
             <b-card-text style="height: 100%">{{ product.mtrt_int }}</b-card-text>
@@ -35,9 +34,20 @@ export default {
   },
   computed: {
     ...mapGetters(['getUser', 'getToken']),
+    isLogin() {
+      return this.$store.getters.isLogin // 로그인 여부
+    }
   },
   methods: {
     ...mapActions(['addFinancialProduct']),
+    getArticles() {
+      if (this.isLogin) {
+        this.$store.dispatch('getArticles')
+      } else {
+        alert('로그인이 필요한 페이지입니다...')
+        this.$router.push({ name: 'home' })
+      }
+    },
     fetchRecommendedProducts() {
       const token = this.getToken
       axios.get('http://127.0.0.1:8000/deposits/similar/', {
@@ -104,6 +114,7 @@ export default {
 }
 },
   created() {
+    this.getArticles()
     this.fetchrecommendProducts();
     this.fetchRecommendedProducts();
     setTimeout(() => {

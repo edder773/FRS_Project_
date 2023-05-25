@@ -1,15 +1,18 @@
 <template>
   <div id="create-page">
-    <h1>게시글 작성</h1>
-    <form @submit.prevent="createArticle">
-      <label for="title">제목 : </label>
-      <input type="text" id="title" v-model.trim="title"><br>
-      <label for="content">내용 : </label>
-      <textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
-      <input type="submit" id="submit">
-    </form>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-top: 50px;">
+      <h2>커뮤니티 글 작성하기</h2>
+      <b-card style="width: 90%" header-tag="header" border-variant="secondary" header-border-variant="secondary">
+        <template #header>
+          <input placeholder="제목을 입력하세요" style="width: 100%;" type="text" id="title" v-model.trim="title"><br>
+        </template>
+        <textarea placeholder="내용을 입력하세요" style="width: 100%;" id="content" cols="50" rows="30" v-model="content"></textarea><br>
+        <p style="cursor: pointer;" @click="submitForm">등록</p>
+      </b-card>
+    </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -28,6 +31,9 @@ export default {
     ...mapGetters(['getUser','getToken'])
   },
   methods: {
+    submitForm(){
+      this.createArticle()
+    },
     createArticle() {
       const title = this.title
       const content = this.content

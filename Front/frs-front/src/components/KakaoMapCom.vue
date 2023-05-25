@@ -1,85 +1,87 @@
 <template>
   <div class="map-page">
     <div class="map-box">
-    <select id="region" v-model="searchSi">
+      <div class="kakao-filter">
+    <select id="region" class="kakao-select" v-model="searchSi">
       <option value="">전체</option>
       <option v-for="si in siList" :value="si" :key="si">{{ si }}</option>
     </select>
-    <select v-if="searchSi ==''" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi ==''" id="Gu" v-model="searchGu">
       <option value="">전체</option>
     </select>
-    <select v-if="searchSi =='서울특별시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='서울특별시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in SeoulList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='부산광역시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='부산광역시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in BusanList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='대구광역시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='대구광역시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in DaeguList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='인천광역시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='인천광역시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in IncheonList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='광주광역시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='광주광역시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in GuangjuList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='대전광역시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='대전광역시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in DaejeonList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='울산광역시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='울산광역시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in UlsanList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='세종특별자치시 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='세종특별자치시 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in SejongList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='경기도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='경기도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in GyeongiList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='강원도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='강원도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in GangwonList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='충청북도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='충청북도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in ChoongbookList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='충청남도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='충청남도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in ChoongnamList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='전라북도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='전라북도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in JeonbookList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='전라남도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='전라남도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in JeonnamList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='경상북도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='경상북도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in GyeongbookList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='경상남도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='경상남도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in GyeongnamList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-if="searchSi =='제주특별자치도 '" id="Gu" v-model="searchGu">
+    <select class="kakao-select" v-if="searchSi =='제주특별자치도 '" id="Gu" v-model="searchGu">
       <option value="">전체</option>
       <option v-for="gu in JejuList" :value="gu" :key="gu">{{ gu }}</option>
     </select>
-    <select v-model="searchBank">
+    <select class="kakao-select" v-model="searchBank">
       <option :value="`${this.bank}`">{{this.bank}}</option>
     </select>
     <button @click="search()">검색</button>
+      </div>
     </div>
     <div id="map-comp">
     </div>
@@ -309,5 +311,28 @@ export default {
 .map-box {
   display: flex;
 }
-
+.kakao-filter{
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* 가운데 정렬을 위해 추가 */
+  margin-top: 10px;
+}
+.kakao-select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  width: 100%;
+  flex-direction: row;
+}
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #383838;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px; /* 버튼 간격을 위해 추가 */
+  flex-direction: row;
+}
 </style>

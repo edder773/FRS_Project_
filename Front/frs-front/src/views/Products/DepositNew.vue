@@ -204,6 +204,19 @@ export default {
     closeRecommend() {
       this.recommendItem = false
     },
+    checkProduct(product) {
+      const user = this.getUser
+      console.log(user.financial_products)
+      const payload = {
+        user_id: user.pk,  // 'user_id' 키에 사용자 ID 값을 전달
+        product_id: product.id  // 'product_id' 키에 상품 ID 값을 전달
+      }
+      this.$store.dispatch('addProduct', payload)
+    },
+    // 가입여부 확인 기능
+    checkIn(product){
+          return this.getUser.financial_products.includes(product.id)
+        },
 
   },
   computed: {
@@ -251,14 +264,14 @@ h3{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'TheJamsil5Bold';
+  font-family: 'ONE-Mobile-Title';
   font-weight: 500;
 }
 h4{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'TheJamsil5Bold';
+  font-family: 'ONE-Mobile-Title';
   font-weight: 400;
 }
 .deposit-links {

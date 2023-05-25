@@ -325,7 +325,7 @@ export default {
   computed: {
     ...mapGetters(['getUser', 'getToken']),
     currentImage() {
-      return this.images[this.currentImageIndex];
+      return this.images[this.currentImageIndex]
     },
     isLogin() {
       return this.$store.getters.isLogin // 로그인 여부
@@ -401,13 +401,13 @@ export default {
         this.options = [maxIntrRate2Option]
         })
         .catch(error => {
-          console.error(error);
+          console.error(error)
         })
       } 
       else{
         axios.get('http://127.0.0.1:8000/deposits/savings-option/')
         .then(response => {
-        const options = response.data;
+        const options = response.data
         let filteredOptions = null
         if (this.score == 1){
           filteredOptions = options.filter(option => option.save_trm === 6)
@@ -426,8 +426,8 @@ export default {
         let maxIntrRate2 = -Infinity
         for (const option of filteredOptions) {
           if (option.intr_rate2 > maxIntrRate2) {
-            maxIntrRate2 = option.intr_rate2;
-            maxIntrRate2Option = option;
+            maxIntrRate2 = option.intr_rate2
+            maxIntrRate2Option = option
           }
         }
         this.options = [maxIntrRate2Option]
@@ -441,20 +441,20 @@ export default {
       if(!(this.score % 2)){
         axios.get('http://127.0.0.1:8000/deposits/products/')
         .then(response => {
-          const products = response.data;
+          const products = response.data
           const matchedProducts = products.filter(product => product.id === this.options[0].fin_prdt_cd);
-          this.products = matchedProducts;
+          this.products = matchedProducts
         })
         .catch(error => {
-          console.error(error);
+          console.error(error)
         })
       }
       else{
         axios.get('http://127.0.0.1:8000/deposits/savings/')
         .then(response => {
-          const products = response.data;
+          const products = response.data
           const matchedProducts = products.filter(product => product.id === this.options[0].fin_prdt_cd);
-          this.products = matchedProducts;
+          this.products = matchedProducts
         })
         .catch(error => {
           console.error(error)
@@ -478,7 +478,7 @@ export default {
       await this.fetchProductOption()
       await this.fetchProduct()
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   },
 // 다시 시작하기 기능

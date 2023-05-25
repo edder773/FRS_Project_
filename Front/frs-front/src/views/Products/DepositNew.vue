@@ -3,10 +3,10 @@
     <div><h2>예/적금 비교</h2></div>
     <div id="deposit-router">
       <div class="deposit-links">
-      <a href="/deposit" class="deposit-link">예금비교</a>
-      <a href="/saving" class="deposit-link">적금비교</a> 
-    </div>
-      <p @click="openRecommend">추천받기</p>
+        <a href="/deposit" class="deposit-link">예금비교</a>
+        <a href="/saving" class="deposit-link">적금비교</a> 
+      </div>
+      
       <b-modal size="lg" title="금융 상품 추천 받기!" v-model="recommendItem" @hide="closeRecommend" centered>
         <b-row>
           <b-col>
@@ -30,37 +30,49 @@
         </b-row>
       </b-modal>
     </div>
+    
     <div class="deposit-container">
-  <div class="filter-container">
-    <div class="filter-borderbox">
-    <label for="month-filter" class="filterdetail-margin" style="margin-top: 10px;">개월 수</label>
-    <select id="month-filter" v-model="selectedMonth" class="deposit-select">
-      <option value="">전체</option>
-      <option value="6">6개월</option>
-      <option value="12">12개월</option>
-      <option value="24">24개월</option>
-      <option value="36">36개월</option>
-    </select>
-    <br><br>
-    <label for="bank-filter" class="filterdetail-margin">은행 이름</label>
-    <select id="bank-filter" v-model="selectedBank" class="deposit-select" style="width: 100%;">
-      <option value="">전체</option>
-      <option v-for="bank in banks" :value="bank" :key="bank">{{ bank }}</option>
-    </select>
-    <div class="apply-button-container">
-      <button @click="applyFilter" class="apply-button">확인</button>
+      <!-- 필터부분 -->
+      <div>
+        <div class="filter-container">
+          <div class="filter-borderbox">
+            <b-card title="상품 추천!" :img-src="getImagePath('recommendation.jpeg')" img-alt="Image" img-top tag="article" style="max-width: 20rem;" class="mb-2"  >
+              <b-card-text>
+                <p>나랑 맞는 상품이 어떤건지 궁금하다면?</p>
+                <div class="text-center">
+                  <b-button variant="info" @click="openRecommend">추천받기</b-button>
+                </div>
+              </b-card-text>
+            </b-card>
+            <label for="month-filter" class="filterdetail-margin" style="margin-top: 10px;">개월 수</label>
+            <select id="month-filter" v-model="selectedMonth" class="deposit-select">
+            <option value="">전체</option>
+            <option value="6">6개월</option>
+            <option value="12">12개월</option>
+            <option value="24">24개월</option>
+            <option value="36">36개월</option>
+          </select>
+          <br><br>
+          <label for="bank-filter" class="filterdetail-margin">은행 이름</label>
+          <select id="bank-filter" v-model="selectedBank" class="deposit-select" style="width: 100%;">
+            <option value="">전체</option>
+            <option v-for="bank in banks" :value="bank" :key="bank">{{ bank }}</option>
+          </select>
+          <div class="apply-button-container">
+            <button @click="applyFilter" class="apply-button">확인</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
-
-  <div class="deposittable-container">
-    <b-table striped hover style="cursor: pointer;" @row-clicked="openModal" :items="filteredProducts" :fields="tableFields">
-      <template #cell(fin_prdt_nm)="row">
-        <p>{{ row.value }}</p>
-      </template>
-    </b-table>
-  </div>
-</div>
+      
+      <div class="deposittable-container">
+        <b-table striped hover style="cursor: pointer;" @row-clicked="openModal" :items="filteredProducts" :fields="tableFields">
+          <template #cell(fin_prdt_nm)="row">
+            <p>{{ row.value }}</p>
+          </template>
+        </b-table>
+      </div>
+    </div>
     <b-modal id="modalId" v-if="selectedProduct" v-model="showModal" @hide="closeModal" size="xl">
       <h3>{{ selectedProduct.fin_prdt_nm }}</h3>
       <h4>{{ selectedProduct.kor_co_nm }}</h4>
@@ -81,7 +93,6 @@
     </b-modal>
   </div>
 </template>
-
 
 <script>
 import axios from 'axios'
@@ -128,6 +139,9 @@ export default {
     })
   },
   methods: {
+    getImagePath(image) {
+        return require(`@/views/Image/${image}`);
+      },
     fetchProducts() {
       return new Promise((resolve, reject) => {
         axios

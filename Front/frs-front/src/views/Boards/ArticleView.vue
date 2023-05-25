@@ -46,28 +46,28 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .menu-links {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  /* align-items: center; 추가 */
+  justify-content: center;
 }
 
 .menu-link {
-  color: black;
+  color: #333;
   font-size: 18px;
-  font-family: 'Poppins', sans-serif;
   text-decoration: none;
-  padding-bottom: 5px;
-  border-bottom: 2px solid transparent;
-  transition: border-bottom-color 0.3s ease-in-out;
+  padding: 10px;
+  margin-right: 10px;
+  transition: color 0.3s;
 }
 
 .menu-link:hover {
   border-bottom-color: #555;
 }
-
+.menu-link:hover,
+.menu-link.active {
+  color: #007bff;
+}
 .create-button {
   background-color: #007bff;
   color: white;

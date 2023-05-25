@@ -60,6 +60,7 @@
                 {{ product.fin_prdt_nm }}
               </template>
               {{ product.mtrt_int }}
+              {{ product }}
             </b-card>
           </b-list-group>
           <br>

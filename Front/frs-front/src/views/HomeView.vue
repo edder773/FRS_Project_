@@ -47,11 +47,7 @@
       </a>
     </b-carousel>
       
-    <footer class="footer mt-auto py-3">
-      <div class="text-center">
-        <span class="text-muted">© 2023 FRS 금융 추천 페이지. All rights reserved.</span>
-      </div>
-    </footer>
+
   </div>
 </template>
 

@@ -5,7 +5,7 @@
     </div>
     <div v-if="isLogin && user">
       <div v-if="!editMode">
-        <div>
+        <div class="profile-table">
         <table class="table table-bordered">
           <tbody class="text-center">
             <tr>
@@ -49,19 +49,23 @@
       </div>
         <!-- {{ user.financial_products }} -->
         <div class="profile-button"><button @click="editMode = true">수정하기</button></div>
-        <div class="d-flex flex-column align-items-center">
+        <hr><br>
+        <!-- 가입한 목록 나오기 -->
+        <h2>🎁내가 가입한 상품🎁</h2>
+        <div class="profile-card d-flex flex-column align-items-center">
           <b-list-group style="width: 70%">
             <b-card v-for="(product, index) in signedProducts" :key="index" :header="product.fin_prdt_nm" >
               <template #header>
-                <b-icon icon="check-square" scale="1" variant="success"></b-icon>
+                <b-icon icon="check-square" scale="1" variant="success" class="me-2 profilecard-title"></b-icon>
                 {{ product.fin_prdt_nm }}
               </template>
               {{ product.mtrt_int }}
             </b-card>
-            
           </b-list-group>
+          <br>
         </div>
       </div>
+      <!-- 여기까지 가입한 목록 -->
       <div v-else>
         <div>
         <table class="table table-bordered">
@@ -264,6 +268,20 @@ export default {
 </script>
 
 <style scoped>
+table{
+  font-family: 'TheJamsil5Bold';
+  font-size: 20px;
+  
+}
+h2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'TheJamsil5Bold';
+  font-weight: 600;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
 .profile-button{
   display: flex;
   align-items: center;
@@ -272,9 +290,9 @@ export default {
 .profile-image{
   background-image: url('@/views/Image/chart.jpg');
   background-size: cover;
-  height: 200px;
-  margin-bottom: 50px;
-  margin-top: 30px;
+  height: 230px;
+  margin-bottom: 30px;
+  /* margin-top: 30px; */
 }
 .profile-name{
   font-size: 30px;
@@ -295,10 +313,19 @@ button {
   color: #fff;
   cursor: pointer;
   margin-left: 10px; /* 버튼 간격을 위해 추가 */
-
+  font-family: 'ONE-Mobile-Title';
 }
 
 .text-center {
   text-align: center;
+}
+.profile-card{
+  font-family: 'GangwonEdu_OTFBoldA';
+  font-weight: 300;
+  margin-bottom: 100px;
+}
+.profilecard-title{
+  font-family: 'GangwonEdu_OTFBoldA';
+  font-weight: 700;
 }
 </style>

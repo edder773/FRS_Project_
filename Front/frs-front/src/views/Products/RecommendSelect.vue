@@ -295,7 +295,7 @@
   
 <script>
 import axios from 'axios' 
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -546,7 +546,6 @@ checkIn(product){
 .image-container {
   width: 48%;
 }
-
 
 img {
   width: 70%;

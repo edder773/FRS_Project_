@@ -5,7 +5,7 @@
       <div v-if="!editMode">
         <div>
         <table class="table table-bordered">
-          <tbody>
+          <tbody class="text-center">
             <tr>
               <th>아이디</th>
               <td>{{ user.username }}</td>
@@ -62,39 +62,70 @@
       </div>
       <div v-else>
         <div>
-        <p class="profile-content username">아이디: {{ user.username }}</p>
-        <p class="profile-content email">이메일: {{ user.email }}</p> 
-        <p class="profile-content nickname">이름: {{ user.nickname }}</p>
-        <p class="profile-content annual_income">
-        <label for="annual-income">연봉:</label>
-        <input id="annual-income" v-model="editedUser.annual_income" type="number" step="1000000"><br>
-        </p>
-        <p class="profile-content assets">
-          <label for="assets">자산:</label>
-          <input id="assets" v-model="editedUser.assets" type="number" step="1000000"><br>
-        </p>
-        <p class="profile-content age">
-          <label for="age">나이:</label>
-          <input id="age" v-model="editedUser.age" type="number"><br>
-        </p>
-        <p class="profile-content bank">
-          <label for="bank">은행:</label>
-          <select id="bank" v-model="editedUser.bank">
-            <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
-          </select><br>
-        </p>
-        <p class="profile-content address">
-        <label for="address">주소:</label>
-        <select id="address" v-model="editedUser.address">
-          <option v-for="option in locationOptions" :value="option" :key="option.id">{{ option }}</option>
-        </select><br>
-        </p>
-        <p class="profile-content occupation">
-          <label for="occupation">직업:</label>
-          <select id="occupation" v-model="editedUser.occupation">
-            <option v-for="option in occupationOptions" :value="option" :key="option.id">{{ option }}</option>
-          </select><br>
-        </p>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th>아이디:</th>
+              <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+              <th>이메일:</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <th>이름:</th>
+              <td>{{ user.nickname }}</td>
+            </tr>
+            <tr>
+              <th>연봉:</th>
+              <td>
+                <label for="annual-income">연봉:</label>
+                <input id="annual-income" v-model="editedUser.annual_income" type="number" step="1000000">
+              </td>
+            </tr>
+            <tr>
+              <th>자산:</th>
+              <td>
+                <label for="assets">자산:</label>
+                <input id="assets" v-model="editedUser.assets" type="number" step="1000000">
+              </td>
+            </tr>
+            <tr>
+              <th>나이:</th>
+              <td>
+                <label for="age">나이:</label>
+                <input id="age" v-model="editedUser.age" type="number">
+              </td>
+            </tr>
+            <tr>
+              <th>은행:</th>
+              <td>
+                <label for="bank">은행:</label>
+                <select id="bank" v-model="editedUser.bank">
+                  <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>주소:</th>
+              <td>
+                <label for="address">주소:</label>
+                <select id="address" v-model="editedUser.address">
+                  <option v-for="option in locationOptions" :value="option" :key="option.id">{{ option }}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>직업:</th>
+              <td>
+                <label for="occupation">직업:</label>
+                <select id="occupation" v-model="editedUser.occupation">
+                  <option v-for="option in occupationOptions" :value="option" :key="option.id">{{ option }}</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
         <button @click="saveChanges">Save</button>
         <button @click="cancelEdit">Cancel</button>
@@ -108,8 +139,14 @@
 
 <script>
 import axios from 'axios'
+import { Bar } from 'vue-chartjs'
 export default {
   name: "ProfileView",
+  extends: Bar,
+  props: ['chartdata', 'options'],
+  mounted () {
+    this.renderChart(this.chartdata, this.options)
+  },
   data() {
     return {
       signedProducts: [],
@@ -245,15 +282,7 @@ export default {
   margin-top: 80px;
   margin-bottom: 50px;
 }
-.profile-content{
-  font-size: large;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* margin-top: 80px; */
-  /* border: 1px solid black; */
-  margin: 20px 200px 20px 200px;
-}
+
 
 
 

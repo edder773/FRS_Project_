@@ -92,6 +92,7 @@
 </template>
 
 <script>
+const apiKey = process.env.VUE_APP_KAKAO_API_KEY
 export default {
   name: 'KakaoMap',
   data() {
@@ -209,7 +210,7 @@ export default {
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script")
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=de3df61746f8e67e3902e4ef963f6bd5&libraries=services`
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${apiKey}&libraries=services`
       /* global kakao */
       script.addEventListener("load", () => {
         kakao.maps.load(this.initMap)

@@ -1,17 +1,50 @@
 <template>
-  <div id="profile-page">
-    <h2>{{user.nickname}}님의 프로필</h2>
+  <div id="profile-page" class="container">
+    <div class="profile-name">{{user.nickname}}님의 프로필</div>
     <div v-if="isLogin && user">
       <div v-if="!editMode">
-        <p>아이디: {{ user.username }}</p>
-        <p>이메일: {{ user.email }}</p> 
-        <p>이름: {{ user.nickname }}</p>
-        <p>연봉: {{ user.annual_income }}</p>
-        <p>자산: {{ user.assets }}</p>
-        <p>나이: {{ user.age }}</p>
-        <p>은행: {{ user.bank }}</p>
-        <p>주소: {{ user.address }}</p>
-        <p>직업: {{ user.occupation }}</p>
+        <div>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th>아이디</th>
+              <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+              <th>이메일</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <th>이름</th>
+              <td>{{ user.nickname }}</td>
+            </tr>
+            <tr>
+              <th>연봉</th>
+              <td>{{ user.annual_income }}</td>
+            </tr>
+            <tr>
+              <th>자산</th>
+              <td>{{ user.assets }}</td>
+            </tr>
+            <tr>
+              <th>나이</th>
+              <td>{{ user.age }}</td>
+            </tr>
+            <tr>
+              <th>은행</th>
+              <td>{{ user.bank }}</td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td>{{ user.address }}</td>
+            </tr>
+            <tr>
+              <th>직업</th>
+              <td>{{ user.occupation }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
         <!-- {{ user.financial_products }} -->
         <button @click="editMode = true">수정하기</button>
         <div class="d-flex flex-column align-items-center">
@@ -28,27 +61,41 @@
         </div>
       </div>
       <div v-else>
-        <p>아이디: {{ user.username }}</p>
-        <p>이메일: {{ user.email }}</p> 
-        <p>이름: {{ user.nickname }}</p>
+        <div>
+        <p class="profile-content username">아이디: {{ user.username }}</p>
+        <p class="profile-content email">이메일: {{ user.email }}</p> 
+        <p class="profile-content nickname">이름: {{ user.nickname }}</p>
+        <p class="profile-content annual_income">
         <label for="annual-income">연봉:</label>
         <input id="annual-income" v-model="editedUser.annual_income" type="number" step="1000000"><br>
-        <label for="assets">자산:</label>
-        <input id="assets" v-model="editedUser.assets" type="number" step="1000000"><br>
-        <label for="age">나이:</label>
-        <input id="age" v-model="editedUser.age" type="number"><br>
-        <label for="bank">은행:</label>
-        <select id="bank" v-model="editedUser.bank">
-          <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
-        </select><br>
+        </p>
+        <p class="profile-content assets">
+          <label for="assets">자산:</label>
+          <input id="assets" v-model="editedUser.assets" type="number" step="1000000"><br>
+        </p>
+        <p class="profile-content age">
+          <label for="age">나이:</label>
+          <input id="age" v-model="editedUser.age" type="number"><br>
+        </p>
+        <p class="profile-content bank">
+          <label for="bank">은행:</label>
+          <select id="bank" v-model="editedUser.bank">
+            <option v-for="option in bankOptions" :value="option" :key="option.id">{{ option }}</option>
+          </select><br>
+        </p>
+        <p class="profile-content address">
         <label for="address">주소:</label>
         <select id="address" v-model="editedUser.address">
           <option v-for="option in locationOptions" :value="option" :key="option.id">{{ option }}</option>
         </select><br>
-        <label for="occupation">직업:</label>
-        <select id="occupation" v-model="editedUser.occupation">
-          <option v-for="option in occupationOptions" :value="option" :key="option.id">{{ option }}</option>
-        </select><br>
+        </p>
+        <p class="profile-content occupation">
+          <label for="occupation">직업:</label>
+          <select id="occupation" v-model="editedUser.occupation">
+            <option v-for="option in occupationOptions" :value="option" :key="option.id">{{ option }}</option>
+          </select><br>
+        </p>
+      </div>
         <button @click="saveChanges">Save</button>
         <button @click="cancelEdit">Cancel</button>
       </div>
@@ -178,7 +225,36 @@ export default {
 }
 }
 </script>
+<!-- 
+  <p class="username">아이디: {{ user.username }}</p>
+  <p class="email">이메일: {{ user.email }}</p> 
+  <p class="nickname">이름: {{ user.nickname }}</p>
+  <p class="annual_income">연봉: {{ user.annual_income }}</p>
+  <p class="assets">자산: {{ user.assets }}</p>
+  <p class="age">나이: {{ user.age }}</p>
+  <p class="bank">은행: {{ user.bank }}</p>
+  <p class="address">주소: {{ user.address }}</p>
+  <p class="occupation">직업: {{ user.occupation }}</p>
+ -->
+<style scoped>
+.profile-name{
+  font-size: x-large;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+.profile-content{
+  font-size: large;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 80px; */
+  /* border: 1px solid black; */
+  margin: 20px 200px 20px 200px;
+}
 
-<style>
+
 
 </style>

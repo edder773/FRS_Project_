@@ -50,28 +50,41 @@
         <!-- {{ user.financial_products }} -->
         <div class="profile-button"><button @click="editMode = true">수정하기</button></div>
         <hr><br>
-        <p v-for="option in signedOptions" :key="option.id"> {{ option }}</p>
+        <!-- <p v-for="option in signedOptions" :key="option.id"> {{ option.intr_rate }}</p> -->
         <!-- 가입한 목록 나오기 -->
         <div class="profile-join">
         <h2>🎁내가 가입한 상품🎁</h2>
-        <div class="profile-card d-flex flex-column align-items-center">
+        <div v-if="signedProducts && signedProducts.length > 0" class="profile-card d-flex flex-column align-items-center">
           <b-list-group style="width: 70%">
-            <b-card v-for="(product, index) in signedProducts" :key="index" :header="product.fin_prdt_nm" >
+            <b-card v-for="(product, index) in signedProducts" :key="index" :header="product.fin_prdt_nm" class="mb-3">
               <template #header>
                 <b-icon icon="check-square" scale="1" variant="success" class="me-2 profilecard-title"></b-icon>
                 {{ product.fin_prdt_nm }}
+                {{ product.kor_co_nm }}
+                  
               </template>
-              {{ product.mtrt_int }}
-              {{ product.id }}
+                  <p><strong>상품 공시 시작일:</strong> {{ product.dcls_strt_day }}</p>
+                  <p><strong>우대 조건:</strong> {{ product.spcl_cnd }}</p>
+                  <p><strong>가입 가능 유형:</strong> {{ product.join_member }}</p>
+                  <p><strong>기타 참고 사항:</strong> {{ product.etc_note }}</p>
+              <b-row>
+                <b-col class="d-flex align-items-center mt-3">
+                  <b-button class="apply-button-container ms-auto" variant="success" @click="checkProduct(product)">
+                      {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
+
+                </b-col>
+              </b-row>
             </b-card>
           </b-list-group>
           <br>
         </div>
-        <div class="profile-chart">
-          <div id="chart" ref="chart" style="width: 100%; height: 400px;"></div>
-        </div>
+        <div v-else class="text-danger">가입한 상품이 없습니다</div>
+        <!-- <div class="profile-chart">
+          <div id="chart" style="width: 600px; height: 400px"></div>
+        </div> -->
       </div>
       </div>
+      
       <!-- 여기까지 가입한 목록 -->
       <div v-else>
         <div class="profile-table">
@@ -150,6 +163,7 @@
 <script>
 import axios from 'axios'
 import * as echarts from "echarts"
+import { mapGetters } from 'vuex'
 export default {
   name: "ProfileView",
   data() {
@@ -178,10 +192,11 @@ export default {
       '간호사', '음악가', '배우', '기자', '요리사', '운전사', '경영자', '연구원', '프로그래머', '무직'],
       // savingProduct: [],
       depositProducts: [],
-      depositOption: []
+      depositOptions: [],
     }
   },
   computed: {
+    ...mapGetters(['getUser', 'getToken']),
     isLogin() {
       return this.$store.getters.isLogin;
     },
@@ -190,31 +205,8 @@ export default {
     },
   },
   mounted() {
-    let chartDom = this.$refs.chart;
-    let myChart = echarts.init(chartDom);
-
-    if (myChart != null && myChart != '' && myChart != undefined) {
-      myChart.dispose();
-    }
-
-    myChart = echarts.init(chartDom);
-
-    let option = {
-      tooltip: {
-        trigger: 'item',
-      },
-      legend: {
-        bottom: '10px',
-        width: '300px',
-      },
-      series: this.series,
-    };
-
-    option && myChart.setOption(option);
-
-    window.addEventListener('resize', () => {
-      myChart.resize();
-    });
+    this.fetchSign();
+        this.initializeChart();
   },
   methods: {
     saveChanges() {
@@ -247,51 +239,93 @@ export default {
       this.editMode = false;
     },
     fetchDeposits() {
-      axios.get(`http://127.0.0.1:8000/deposits/products/`)
-      .then(response => {
-        this.depositProducts = response.data
-      })
-      .catch(error => {
-        console.error(error);
-      });
+      return axios.get('http://127.0.0.1:8000/deposits/products/')
+        .then(response => response.data)
+        .catch(error => {
+          console.error(error);
+          return [];
+        });
     },
-    fetchOption() {
-      axios.get(`http://127.0.0.1:8000/deposits/products-option/`)
-      .then(response => {
-        this.depositOption = response.data
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    fetchOptions() {
+      return axios.get('http://127.0.0.1:8000/deposits/products-option/')
+        .then(response => response.data)
+        .catch(error => {
+          console.error(error);
+          return [];
+        });
     },
-    async fetchSign() {
-  try {
-    await Promise.all([this.fetchDeposits(),this.fetchOption()])
-    setTimeout(() => {
-      this.depositProducts.forEach((product) => {
-      this.user.financial_products.forEach((result) => {
-        if (product.id == result) {
-          this.signedProducts.push(product);
-        }
-      })
-    })
-    
-    this.depositOption.forEach((product) => {
-      this.user.financial_products.forEach((result) => {
-        if (product.id == result) {
-          this.signedOptions.push(product);
-        }
-      })
-    })
-    },1500)
-  } catch (error) {
-    console.error(error);
-  }
-},
+    fetchSign() {
+      try {
+        Promise.all([
+          this.fetchDeposits(),
+          this.fetchOptions(),
+        ]).then(([depositProducts, depositOptions]) => {
+          this.signedProducts = depositProducts.filter(product => {
+            return this.user.financial_products.some(result => result === product.id);
+          });
 
-  },
+          this.signedOptions = depositOptions.filter(option => {
+            return this.user.financial_products.some(result => result === option.id);
+          });
+
+          this.initializeChart();
+        }).catch(error => {
+          console.error(error);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    initializeChart() {
+      this.$nextTick(() => {
+        const chartDom = document.getElementById('chart');
+        const myChart = echarts.init(chartDom);
+
+      const option = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+          dimensions: ['products', '기본 금리', '우대 금리'],
+          source: [
+            this.signedProducts.map(product => ({
+              'products': product.fin_prdt_nm,
+              '기본 금리': product.mtrt_int,
+              '우대 금리': product.mtrt_int2,
+            })),
+            this.signedOptions.map(option => ({
+              'products': option.fin_prdt_nm,
+              '기본 금리': option.intr_rate,
+              '우대 금리': option.intr_rate2,
+            })),
+          ],
+        },
+        xAxis: { type: 'category' },
+        yAxis: {},
+        series: [
+          { type: 'bar' },
+          { type: 'bar' },
+        ],
+      };
+
+      option && myChart.setOption(option)
+    })
+    },
   created() {
   this.fetchSign();
+  },
+      checkProduct(product) {
+      const user = this.getUser
+      const payload = {
+        user_id: user.pk,  // 'user_id' 키에 사용자 ID 값을 전달
+        product_id: product.id  // 'product_id' 키에 상품 ID 값을 전달
+      }
+      this.$store.dispatch('addProduct', payload)
+    },
+    // 가입여부 확인 기능
+    checkIn(product){
+      return this.getUser.financial_products.includes(product.id)
+    },
 }
 }
 </script>
@@ -351,10 +385,14 @@ button {
 .profile-card{
   font-family: 'GangwonEdu_OTFBoldA';
   font-weight: 300;
-  margin-bottom: 100px;
+  /* margin-bottom: 100px; */
 }
 .profilecard-title{
   font-family: 'GangwonEdu_OTFBoldA';
   font-weight: 700;
+}
+.text-danger {
+  color: #dc3545;
+  font-weight: bold;
 }
 </style>

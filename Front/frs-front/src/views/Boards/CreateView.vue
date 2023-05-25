@@ -1,5 +1,5 @@
 <template>
-  <div id="create-page">
+  <div id="create-page" class="container">
     <div style="display: flex; flex-direction: column; align-items: center; margin-top: 50px;">
       <h2>커뮤니티 글 작성하기</h2>
       <b-card style="width: 90%" header-tag="header" border-variant="secondary" header-border-variant="secondary">
@@ -12,7 +12,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import axios from 'axios'
@@ -41,10 +40,10 @@ export default {
       const token = this.getToken
       console.log(token)
       if (!title) {
-        alert('제목 입력해주세요')
+        alert('제목을 입력해주세요')
         return
       } else if (!content){
-        alert('내용 입력해주세요')
+        alert('내용을 입력해주세요')
         return
       }
       axios({

@@ -3,9 +3,10 @@
     <div><h2>예/적금 비교</h2></div>
     <div id="deposit-router">
       <div class="deposit-links">
-        <a href="/deposit" class="deposit-link">예금비교</a>
+        <a href="/deposit" class="deposit-link">예금비교</a><div class="deposit-link"> |</div>
         <a href="/saving" class="deposit-link">적금비교</a> 
       </div>
+      <hr>
       <b-modal size="lg" title="금융 상품 추천 받기!" v-model="recommendItem" @hide="closeRecommend" centered>
         <b-row>
           <b-col>
@@ -33,11 +34,11 @@
       <!-- 필터부분 -->
       <div class="filter-container">
         <div class="filter-borderbox">
-          <b-card title="상품 추천!" :img-src="getImagePath('recommendation.jpeg')" img-alt="Image" img-top tag="article" style="max-width: 20rem;" class="mb-2"  >
+          <b-card title="상품 추천!" :img-src="getImagePath('recommendation.jpeg')" img-alt="Image" img-top tag="article" style="max-width: 20rem;font-family: 'TheJamsil5Bold';" class="mb-2"  >
             <b-card-text>
-              <p>나랑 맞는 상품이 어떤건지 궁금하다면?</p>
+              <p style="font-family: 'GangwonEdu_OTFBoldA';font-size:20px;">나랑 맞는 상품이 어떤건지 궁금하다면?</p>
               <div class="text-center">
-                <b-button variant="info" @click="openRecommend">추천받기</b-button>
+                <b-button class="deposit-button" style="background-color: #ff5b5b;border: none;" @click="openRecommend">추천받기</b-button>
               </div>
             </b-card-text>
           </b-card>
@@ -60,7 +61,7 @@
           </div>
         </div>
       </div>
-      <div class="deposittable-container">
+      <div class="deposittable-container deposit-option">
         <b-table striped hover style="cursor: pointer;" @row-clicked="openModal" :items="filteredProducts" :fields="tableFields">
           <template #cell(fin_prdt_nm)="row">
             <p>{{ row.value }}</p>
@@ -246,14 +247,14 @@ h3{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'TheJamsil5Bold';
+  font-family: 'ONE-Mobile-Title';
   font-weight: 500;
 }
 h4{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'TheJamsil5Bold';
+  font-family: 'ONE-Mobile-Title';
   font-weight: 400;
 }
 .deposit-links {
@@ -261,10 +262,14 @@ h4{
   display: flex;
   justify-content: center;
 }
-
+.deposit-option {
+    font-family: 'TheJamsil5Bold';
+    text-align: center;
+}
 .deposit-link {
-  color: #333;
-  font-size: 18px;
+  font-family: 'ONE-Mobile-Title';
+  color: #000000;
+  font-size: 23px;
   text-decoration: none;
   padding: 10px;
   margin-right: 10px;
@@ -273,7 +278,7 @@ h4{
 
 .deposit-link:hover,
 .deposit-link.active {
-  color: #007bff;
+  color: #b4b4b4;
 }
 #deposit-router{
   display: block;
@@ -325,6 +330,7 @@ td{
 }
 .filterdetail-margin {
   margin-bottom: 10px;
+  font-family: 'ONE-Mobile-Title';
 }
 .filter-borderbox{
   border: 1px solid #ccc;
@@ -334,6 +340,7 @@ td{
 }
 .apply-button {
   padding: 8px 16px;
+  font-family: 'TheJamsil5Bold';
   border: none;
   border-radius: 4px;
   background-color: #4caf50;
@@ -356,4 +363,5 @@ td{
 .filter-container {
   margin-bottom: 20px;
 }
+
 </style>

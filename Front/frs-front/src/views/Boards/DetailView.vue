@@ -1,34 +1,40 @@
 <template>
-  <div id="detail-page">
-    <div v-if="!editMode && article" style="display: flex; margin-top:50px; justify-content: center; align-items: center;">
-      <b-card style="width: 90%" header-tag="header" footer-tag="footer" footer-bg-variant="white">
+  <div id="detail-page" class="container">
+    <div class="menu-links  text-center">
+      <router-link to="/article" class="menu-link">자유게시판</router-link> <div class="menu-link">|</div>
+      <router-link to="/question" class="menu-link">자주 묻는 질문</router-link> <div class="menu-link">|</div>
+      <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
+    </div>
+    <hr>
+    <div v-if="!editMode && article">
+      <b-card>
         <template #header>
           <h3 class="mb-0 text-right">
             {{ article?.title }}
           </h3>
-          <p style="font-size: 16px; margin-bottom: 7px;">{{ article?.user }} </p>
-          <p style="font-size: 12px; margin-top: 7px">{{ new Date(article?.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
-          <button style="padding: 4px 5px; font-size: 10px;" v-if="IsCurrentUser(article.user)" @click="editMode = true">수정하기</button>
-          <button style="padding: 4px 5px; font-size: 10px;" v-if="IsCurrentUser(article.user)" @click="deleteArticle">삭제</button>
+          <p>{{ article?.user }} </p>
+          <p>{{ new Date(article?.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
+          <button v-if="IsCurrentUser(article.user)" @click="editMode = true">수정하기</button>
+          <button v-if="IsCurrentUser(article.user)" @click="deleteArticle">삭제</button>
         </template>
-        <b-card-text style="height: 500px;">{{ article?.content }}</b-card-text>
+        <b-card-text>{{ article?.content }}</b-card-text>
         <template #footer>
-          <p style="font-size: 16px;" v-if="!editMode">댓글</p>
+          <p v-if="!editMode">댓글</p>
           <ul v-if="!editMode && comments.length">
             <li v-for="comment in comments" :key="comment.id">
               <div v-if="!comment.editMode">
-                <p style="font-size: 16px; margin-bottom: 4px;"> {{ comment?.user }}</p>
-                <p style="font-size: 12px; margin-top: 5px; margin-bottom: 5px;"> {{ comment?.content }} </p>
-                <p style="font-size: 12px; margin-top: 5px; margin-bottom: 5px;"> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
-                <button style="padding: 3px 4px; font-size: 10px;" v-if="IsCurrentUser(comment.user)" @click="editComment(comment)">수정</button>
-                <button style="padding: 3px 4px; font-size: 10px;" v-if="IsCurrentUser(comment.user)" @click="deleteComment(comment.id)">삭제</button>
+                <p> {{ comment?.user }}</p>
+                <p> {{ comment?.content }} </p>
+                <p> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
+                <button v-if="IsCurrentUser(comment.user)" @click="editComment(comment)">수정</button>
+                <button v-if="IsCurrentUser(comment.user)" @click="deleteComment(comment.id)">삭제</button>
               </div>
               <div v-else>
-                <p style="font-size: 16px; margin-bottom: 4px;"> {{ comment?.user }}</p>
-                <input type="text" v-model="comment.editedContent" style="width: 20%; height: 20px;">
-                <p style="font-size: 12px; margin-top: 5px; margin-bottom: 5px;"> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
-                <button style="padding: 3px 4px; font-size: 10px;" @click="updateComment(comment)">수정 완료</button>
-                <button style="padding: 3px 4px; font-size: 10px;" @click="cancelEditComment(comment)">취소</button>
+                <p> {{ comment?.user }}</p>
+                <input type="text" v-model="comment.editedContent">
+                <p> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
+                <button @click="updateComment(comment)">수정 완료</button>
+                <button @click="cancelEditComment(comment)">취소</button>
               </div>
             </li>
           </ul>
@@ -36,7 +42,7 @@
           <div v-if="!editMode">
             <b-card :header="isUser">
               <form @submit.prevent="createComment">
-                <input type="text" id="comment" v-model="newComment" style="width: 100%; height: 70px;">
+                <input type="text" id="comment" v-model="newComment">
                 <p style="cursor: pointer;" @click="submitForm">등록</p>
               </form>
             </b-card>
@@ -45,9 +51,9 @@
       </b-card>
     </div>
     <form v-if="editMode" @submit.prevent="updateArticle">
-      <div style="display: flex; flex-direction: column; align-items: center; margin-top: 50px;">
+      <div>
         <h2>커뮤니티 글 작성하기</h2>
-        <b-card style="width: 90%" header-tag="header" border-variant="secondary" header-border-variant="secondary">
+        <b-card>
           <template #header>
             <input placeholder="제목을 입력하세요" style="width: 100%;" type="text" id="title" v-model.trim="article.title"><br>
           </template>
@@ -258,6 +264,31 @@ export default {
     }
   }
 </script>
-<style>
 
+
+<style scoped>
+#detail-page{
+  margin-bottom: 100px;
+}
+.menu-links {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-link {
+  color: #333;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 10px;
+  margin-right: 10px;
+  transition: color 0.3s;
+}
+
+.menu-link:hover {
+  border-bottom-color: #555;
+}
+.menu-link:hover,
+.menu-link.active {
+  color: #9bb5d1;
+}
 </style>

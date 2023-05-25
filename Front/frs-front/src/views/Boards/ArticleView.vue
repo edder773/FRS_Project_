@@ -1,19 +1,20 @@
 <template>
   <div id="article-page" class="container">
     <div class="menu-links  text-center">
-      <router-link to="/article" class="menu-link">자유게시판</router-link> 
-      <router-link to="/question" class="menu-link">자주 묻는 질문</router-link> 
+      <router-link to="/article" class="menu-link">자유게시판</router-link> <div class="menu-link">|</div>
+      <router-link to="/question" class="menu-link">자주 묻는 질문</router-link> <div class="menu-link">|</div>
       <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
     </div>
     <hr>
     <b-row>
       <b-col class="d-flex align-items-center mt-3">
     <h2 class="section-title">자유게시판</h2>
-    <b-button class="create-button ms-auto">
+    <b-button class="create-button ms-auto" style="font-family: 'ONE-Mobile-Title';">
       <router-link :to="{ name: 'create' }" class="create-link" >글 작성하기</router-link>
     </b-button>
   </b-col>
   </b-row>
+  <br>
     <hr>
     <ArticleList />
     <!-- <hr> -->
@@ -71,6 +72,12 @@ export default {
 .menu-link:hover,
 .menu-link.active {
   color: #9bb5d1;
+}
+.section-title {
+  font-family: 'TheJamsil5Bold';
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 .create-button {
   background-color: #383838;

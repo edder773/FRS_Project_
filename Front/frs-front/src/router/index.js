@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import ExchangeRate from '../views/ExchangeRate.vue'
 import KakaoMap from '../views/KakaoMap.vue'
 import ArticleView from '../views/Boards/ArticleView.vue'
+import OnetoOneCreate from '../views/Boards/OnetoOneCreate.vue'
 import CreateView from '../views/Boards/CreateView.vue'
 import DetailView from '../views/Boards/DetailView.vue'
 import ProfileView from '../views/Account/ProfileView.vue'
@@ -81,6 +82,11 @@ const routes = [
     path: '/similar',
     name: 'similar',
     component: RecommendSimilar
+  },
+  {
+    path: '/onetoonecreate',
+    name: 'onetoonecreate',
+    component: OnetoOneCreate
   },
 ]
 

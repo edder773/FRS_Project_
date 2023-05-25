@@ -1,5 +1,5 @@
 <template>
-  <div id="create-page" class="container">
+  <div id="onetoonecreate-page" class="container">
     <div class="menu-links  text-center">
       <router-link to="/article" class="menu-link">자유게시판</router-link> <div class="menu-link">|</div>
       <router-link to="/question" class="menu-link">자주 묻는 질문</router-link> <div class="menu-link">|</div>
@@ -7,18 +7,18 @@
     </div>
     <hr>
     <div style="display: flex; flex-direction: column; align-items: center; margin-top: 50px;">
-     <h2 class="section-title">자유게시판 작성하기</h2>
+     <h2 class="section-title">1:1 문의 작성하기</h2>
       <div class="input-box">
         <label for="title" class="label-text">제목:</label>
         <input placeholder="제목을 입력하세요." type="text" id="title" class="create-input" v-model.trim="title">
       </div><br>
       <div class="input-box">
         <label for="content" class="label-text">내용:</label>
-        <textarea placeholder="내용을 입력하세요." id="content" class="create-input content-input" v-model.trim="content"></textarea>
+        <textarea placeholder="문의 내용을 입력하세요." id="content" class="create-input content-input" v-model.trim="content"></textarea>
       </div><br>
       <div class="button-group">
         <b-button class="create-button" @click="submitForm">등록하기</b-button>
-        <b-button class="create-button" href="/article" style="margin-left: 3px;">취소</b-button>
+        <b-button class="create-button" href="/onetoone" style="margin-left: 3px;">취소</b-button>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@ import { mapGetters } from 'vuex'
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
-  name: 'CreateView',
+  name: 'OnetoOneCreate',
   data() {
     return {
       title: null,
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style scoped>
-#create-page{
+#onetoonecreate-page{
   margin-bottom: 100px;
 }
 .menu-links {

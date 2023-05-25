@@ -4,10 +4,10 @@
         <table>
           <thead>
             <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>아이디</th>
-              <th>작성시간</th>
+              <th style="text-align: center;">번호</th>
+              <th class="create-button" style="width: 60%;text-align: center;">제목</th>
+              <th style="text-align: right;">아이디</th>
+              <th style="text-align: right;">작성시간</th>
             </tr>
           </thead>
           <tbody>
@@ -15,7 +15,7 @@
           </tbody>
         </table>
       </template>
-      <p v-else class="text-danger">게시글이 없습니다.</p>
+      <p v-else class="text-danger" style="font-size:18px;">게시글이 없습니다.</p>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .article-list {
   text-align: start;
 }
@@ -65,8 +65,8 @@ table {
 }
 
 th, td {
+  font-family: 'ONE-Mobile-Title';
   padding: 10px;
-  text-align: left;
   border-bottom: 1px solid #ccc;
 }
 </style>

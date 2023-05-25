@@ -4,14 +4,14 @@
     <div style="height: 800px;" >
     <!-- <h1> 환율 비교 </h1><br> -->
     <div>
-      <select id="currency" v-model="currency">
+      <select id="currency" class="exchange-select" v-model="currency">
         <option v-for="currency in currencies" :key="currency" :value="currency">{{ getCurrencyName(currency) }}</option>
       </select>
+      <br><br>
       <b-input-group size="sm" :prepend="getCurrencySymbol(currency)" :append="getCurrencyName(currency)">
         <b-form-input type="number" id="amount" v-model="amount" @input="calculateExchangeRate" />
       </b-input-group>
 
-      <br>
     </div>
     <br>
     <div>
@@ -19,9 +19,8 @@
         <b-form-input type="number" id="amount1" v-model="amount1" @input="calculateExchangeRate1" />
       </b-input-group>
 
-      <br>
-      <p v-if="result1">{{ getCurrencyName(currency) }}: {{ result1 }} 원</p>
     </div>
+      <br>
   </div>
 </div>
 </div>
@@ -107,23 +106,23 @@ export default {
         case 'NZD':
           return '뉴질랜드달러'
         case 'SEK':
-          return '스웨덴 크로나'
+          return '크로나'
         case 'NOK':
-          return '노르웨이 크로네'
+          return '크로네'
         case 'CHF':
-          return '스위스 프랑'
+          return '프랑'
         case 'ZAR':
-          return '남아프리카 랜드'
+          return '랜드'
         case 'BRL':
-          return '브라질 레알'
+          return '레알'
         case 'INR':
-          return '인도 루피'
+          return '루피'
         case 'RUB':
-          return '러시아 루블'
+          return '루블'
         case 'TRY':
-          return '터키 리라'
+          return '리라'
         case 'KRW':
-          return '대한민국 원'
+          return '원'
         default:
           return currency
       }
@@ -142,5 +141,13 @@ export default {
 <style scoped>
 .exchange-page{
   margin-top: 150px;
+}
+.exchange-select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  width: 100%;
+  flex-direction: row;
 }
 </style>

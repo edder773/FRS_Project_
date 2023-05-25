@@ -1,6 +1,7 @@
 <template>
+  <div class="exchange-page">
   <div id="exchange-page" class="container">
-    <h1> 환율 비교 </h1><br>
+    <!-- <h1> 환율 비교 </h1><br> -->
     <div>
       <select id="currency" v-model="currency">
         <option v-for="currency in currencies" :key="currency" :value="currency">{{ getCurrencyName(currency) }}</option>
@@ -21,6 +22,7 @@
       <p v-if="result1">{{ getCurrencyName(currency) }}: {{ result1 }} 원</p>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -136,5 +138,7 @@ export default {
 </script>
 
 <style scoped>
-
+.exchange-page{
+  margin-top: 150px;
+}
 </style>

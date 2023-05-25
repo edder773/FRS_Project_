@@ -1,6 +1,8 @@
 <template>
   <div id="profile-page" class="container">
-    <div class="profile-name">{{user.nickname}}님의 프로필</div>
+    <div class="profile-image">
+      <div class="profile-name">{{user.nickname}}님의 프로필</div>
+    </div>
     <div v-if="isLogin && user">
       <div v-if="!editMode">
         <div>
@@ -46,7 +48,7 @@
         </table>
       </div>
         <!-- {{ user.financial_products }} -->
-        <button @click="editMode = true">수정하기</button>
+        <div class="profile-button"><button @click="editMode = true">수정하기</button></div>
         <div class="d-flex flex-column align-items-center">
           <b-list-group style="width: 70%">
             <b-card v-for="(product, index) in signedProducts" :key="index" :header="product.fin_prdt_nm" >
@@ -260,28 +262,43 @@ export default {
 }
 }
 </script>
-<!-- 
-  <p class="username">아이디: {{ user.username }}</p>
-  <p class="email">이메일: {{ user.email }}</p> 
-  <p class="nickname">이름: {{ user.nickname }}</p>
-  <p class="annual_income">연봉: {{ user.annual_income }}</p>
-  <p class="assets">자산: {{ user.assets }}</p>
-  <p class="age">나이: {{ user.age }}</p>
-  <p class="bank">은행: {{ user.bank }}</p>
-  <p class="address">주소: {{ user.address }}</p>
-  <p class="occupation">직업: {{ user.occupation }}</p>
- -->
+
 <style scoped>
-.profile-name{
-  font-size: x-large;
+.profile-button{
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 80px;
+}
+.profile-image{
+  background-image: url('@/views/Image/chart.jpg');
+  background-size: cover;
+  height: 200px;
   margin-bottom: 50px;
+  margin-top: 30px;
+}
+.profile-name{
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  color: rgb(184, 183, 183);
+  font-family: 'TheJamsil5Bold';
+  font-weight: 300;
 }
 
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #383838;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px; /* 버튼 간격을 위해 추가 */
 
+}
 
-
+.text-center {
+  text-align: center;
+}
 </style>

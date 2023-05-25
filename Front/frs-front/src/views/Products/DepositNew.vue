@@ -1,9 +1,11 @@
 <template>
-  <div id="deposit-page">
+  <div id="deposit-page" class="container">
+    <div><h2>예/적금 비교</h2></div>
     <div id="deposit-router">
-      <a href="/deposit">예금비교</a> |
-      <a href="/saving">적금비교</a> |
-      <h2>정기예금</h2>
+      <div class="deposit-links">
+      <a href="/deposit" class="deposit-link">예금비교</a>
+      <a href="/saving" class="deposit-link">적금비교</a> 
+    </div>
       <p @click="openRecommend">추천받기</p>
       <b-modal size="lg" title="금융 상품 추천 받기!" v-model="recommendItem" @hide="closeRecommend" centered>
         <b-row>
@@ -28,27 +30,37 @@
         </b-row>
       </b-modal>
     </div>
-    <div class="filter-container">
-      <label for="month-filter">개월 수:</label>
-      <select id="month-filter" v-model="selectedMonth">
-        <option value="">전체</option>
-        <option value="6">6개월</option>
-        <option value="12">12개월</option>
-        <option value="24">24개월</option>
-        <option value="36">36개월</option>
-      </select>
-      <label for="bank-filter">은행 이름:</label>
-      <select id="bank-filter" v-model="selectedBank">
-        <option value="">전체</option>
-        <option v-for="bank in banks" :value="bank" :key="bank">{{ bank }}</option>
-      </select>
-      <button @click="applyFilter">확인</button>
+    <div class="deposit-container">
+  <div class="filter-container">
+    <div class="filter-borderbox">
+    <label for="month-filter" class="filterdetail-margin" style="margin-top: 10px;">개월 수</label>
+    <select id="month-filter" v-model="selectedMonth" class="deposit-select">
+      <option value="">전체</option>
+      <option value="6">6개월</option>
+      <option value="12">12개월</option>
+      <option value="24">24개월</option>
+      <option value="36">36개월</option>
+    </select>
+    <br><br>
+    <label for="bank-filter" class="filterdetail-margin">은행 이름</label>
+    <select id="bank-filter" v-model="selectedBank" class="deposit-select" style="width: 100%;">
+      <option value="">전체</option>
+      <option v-for="bank in banks" :value="bank" :key="bank">{{ bank }}</option>
+    </select>
+    <div class="apply-button-container">
+      <button @click="applyFilter" class="apply-button">확인</button>
     </div>
+  </div>
+  </div>
+
+  <div class="deposittable-container">
     <b-table striped hover style="cursor: pointer;" @row-clicked="openModal" :items="filteredProducts" :fields="tableFields">
       <template #cell(fin_prdt_nm)="row">
         <p>{{ row.value }}</p>
       </template>
     </b-table>
+  </div>
+</div>
     <b-modal id="modalId" v-if="selectedProduct" v-model="showModal" @hide="closeModal" size="xl">
       <h3>{{ selectedProduct.fin_prdt_nm }}</h3>
       <h4>{{ selectedProduct.kor_co_nm }}</h4>
@@ -212,6 +224,17 @@ export default {
 </script>
 
 <style scoped>
+#deposit-page{
+  margin-top: 50px;
+}
+h2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'TheJamsil5Bold';
+  font-weight: 600;
+  font-size: 50px;
+}
 h3{
   display: flex;
   align-items: center;
@@ -225,6 +248,25 @@ h4{
   justify-content: center;
   font-family: 'TheJamsil5Bold';
   font-weight: 400;
+}
+.deposit-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.deposit-link {
+  color: #333;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 10px;
+  margin-right: 10px;
+  transition: color 0.3s;
+}
+
+.deposit-link:hover,
+.deposit-link.active {
+  color: #007bff;
 }
 #deposit-router{
   display: block;
@@ -242,7 +284,6 @@ td{
 .left-section {
   flex: 1;
 }
-
 .right-section {
   flex: 1;
   font-family: 'GangwonEdu_OTFBoldA';
@@ -250,6 +291,52 @@ td{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.deposit-container {
+  display: flex;
+}
+.filter-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  /* width: 30%;  */
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+}
+.deposittable-container {
+  flex: 1;
+  width: 70%;
+  padding-left: 10px;
+}
+.deposit-select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  width: 100%;
+}
+.filterdetail-margin {
+  margin-bottom: 10px;
+}
+.filter-borderbox{
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  padding: 16px 8px;
+  margin-top: 20px;
+}
+.apply-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+.apply-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 .detail-info {
   width: 80%; /* 적절한 너비로 조정 */

@@ -166,7 +166,7 @@ export default new Vuex.Store({
         .then((res) => {
           const user = res.data
           context.commit('SAVE_USER', user)
-          // location.reload()
+          location.reload()
         })
         .catch((err) => console.log(err))
     },

@@ -1,7 +1,7 @@
 <template>
   <div id="deposit-page">
     <div id="deposit-router">
-      <a href="/deposit">예금비교</a> |
+      <a href="/deposit">예금비교asdas</a> |
       <a href="/saving">적금비교</a> |
       <h2>정기예금</h2>
       <p @click="openRecommend">추천받기</p>
@@ -115,7 +115,9 @@ export default {
   created() {
     this.fetchProducts()
     // this.fetchOptions()
-  
+    setTimeout(() => {
+    this.filteredProducts()
+  }, 1000)
   },
   computed: {
 
@@ -125,6 +127,7 @@ export default {
       axios.get('http://127.0.0.1:8000/deposits/products/')
         .then(response => {
           this.products = response.data
+          console.log(response)
         })
         .catch(error => {
           console.error(error)

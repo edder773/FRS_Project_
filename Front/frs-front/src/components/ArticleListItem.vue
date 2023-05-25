@@ -3,7 +3,7 @@
     <td>{{ article.id }}</td>
     <td>{{ article.title }}</td>
     <td>{{ article.user }}</td>
-    <td>{{ article.created_at }}</td>
+    <td>{{ new Date(article?.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }}</td>
   </tr>
 </template>
 

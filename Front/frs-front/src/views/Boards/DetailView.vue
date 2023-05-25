@@ -1,15 +1,48 @@
 <template>
   <div id="detail-page">
-    <h1>Detail</h1>
-    <div v-if="!editMode && article">
-      <p>작성자 : {{ article.user }}</p>
-      <p>글 번호: {{ article?.id }}</p>
-      <p>제목: {{ article?.title }}</p>
-      <p>내용: {{ article?.content }}</p>
-      <p>작성시간: {{ article?.created_at }}</p>
-      <p>수정시간: {{ article?.updated_at }}</p>
-      <button v-if="IsCurrentUser(article.user)" @click="editMode = true">수정하기</button>
-      <button v-if="IsCurrentUser(article.user)" @click="deleteArticle">삭제</button>
+    <div v-if="!editMode && article" style="display: flex; margin-top:50px; justify-content: center; align-items: center;">
+      <b-card style="width: 90%" header-tag="header" footer-tag="footer" footer-bg-variant="white">
+  <template #header>
+    <h3 class="mb-0 text-right">
+      {{ article?.title }}
+    </h3>
+    <p style="font-size: 16px; margin-bottom: 7px;">{{ article?.user }} </p>
+    <p style="font-size: 12px; margin-top: 7px">{{ new Date(article?.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
+    <button style="padding: 4px 5px; font-size: 10px;" v-if="IsCurrentUser(article.user)" @click="editMode = true">수정하기</button>
+    <button style="padding: 4px 5px; font-size: 10px;" v-if="IsCurrentUser(article.user)" @click="deleteArticle">삭제</button>
+  </template>
+  <b-card-text style="height: 500px;">{{ article?.content }}</b-card-text>
+  <template #footer>
+    <p style="font-size: 16px;" v-if="!editMode">댓글</p>
+    <ul v-if="!editMode && comments.length">
+      <li v-for="comment in comments" :key="comment.id">
+        <div v-if="!comment.editMode">
+          <p style="font-size: 16px; margin-bottom: 4px;"> {{ comment?.user }}</p>
+          <p style="font-size: 12px; margin-top: 5px; margin-bottom: 5px;"> {{ comment?.content }} </p>
+          <p style="font-size: 12px; margin-top: 5px; margin-bottom: 5px;"> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
+          <button style="padding: 3px 4px; font-size: 10px;" v-if="IsCurrentUser(comment.user)" @click="editComment(comment)">수정</button>
+          <button style="padding: 3px 4px; font-size: 10px;" v-if="IsCurrentUser(comment.user)" @click="deleteComment(comment.id)">삭제</button>
+        </div>
+        <div v-else>
+          <p style="font-size: 16px; margin-bottom: 4px;"> {{ comment?.user }}</p>
+          <input type="text" v-model="comment.editedContent" style="width: 20%; height: 20px;">
+          <p style="font-size: 12px; margin-top: 5px; margin-bottom: 5px;"> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
+          <button style="padding: 3px 4px; font-size: 10px;" @click="updateComment(comment)">수정 완료</button>
+          <button style="padding: 3px 4px; font-size: 10px;" @click="cancelEditComment(comment)">취소</button>
+        </div>
+      </li>
+    </ul>
+    <p v-if="!editMode && !comments.length">댓글이 없습니다.</p>
+    <div v-if="!editMode">
+      <b-card :header="isUser">
+        <form @submit.prevent="createComment">
+        <input type="text" id="comment" v-model="newComment" style="width: 100%; height: 70px;">
+        <p style="cursor: pointer;" @click="submitForm">등록</p>
+      </form>
+      </b-card>
+    </div>
+  </template>
+</b-card>
     </div>
 
     <form v-if="editMode" @submit.prevent="updateArticle">
@@ -24,30 +57,7 @@
     </form>
     
     
-
-    <h2 v-if="!editMode">댓글</h2>
-    <ul v-if="!editMode && comments.length">
-      <li v-for="comment in comments" :key="comment.id">
-        <div v-if="!comment.editMode">
-          {{ comment?.user }} : {{ comment?.content }}
-          <button v-if="IsCurrentUser(comment.user)" @click="editComment(comment)">수정</button>
-          <button v-if="IsCurrentUser(comment.user)" @click="deleteComment(comment.id)">삭제</button>
-        </div>
-        <div v-else>
-          <input type="text" v-model="comment.editedContent">
-          <button @click="updateComment(comment)">수정 완료</button>
-          <button @click="cancelEditComment(comment)">취소</button>
-        </div>
-      </li>
-    </ul>
-    <p v-if="!editMode && !comments.length">댓글이 없습니다.</p>
-    <div v-if="!editMode">
-      <form @submit.prevent="createComment">
-        <label for="comment">댓글 작성:</label>
-        <input type="text" id="comment" v-model="newComment">
-        <button type="submit">댓글 작성</button>
-      </form>
-    </div>
+    
   </div>
 </template>
 
@@ -73,6 +83,9 @@ export default {
       return(user) => {
         return user === this.getUser.username
       }
+    },
+    isUser(){
+      return this.getUser.username
     }
   },
   created() {
@@ -99,7 +112,9 @@ export default {
           console.log(error)
         })
     },
-
+    submitForm(){
+      this.createComment()
+    },
     // 댓글 가져오기
     getArticleComments() {
       axios({

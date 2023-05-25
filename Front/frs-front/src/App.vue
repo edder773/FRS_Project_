@@ -6,10 +6,13 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item href="/deposit" class="nav-link-custom">예금비교</b-nav-item>
-          <b-nav-item href="/exchange" class="nav-link-custom">환율계산</b-nav-item>
+          <b-nav-item class="nav-link-custom" @click="toggleSidebar">환율계산</b-nav-item>
           <b-nav-item href="/map" class="nav-link-custom">은행찾기</b-nav-item>
           <b-nav-item href="/article" class="nav-link-custom">게시판</b-nav-item>
         </b-navbar-nav>
+        <b-sidebar v-model="sidebarOpen" title="환율계산">
+          <ExchangeRate/>
+        </b-sidebar>
         <b-navbar-nav class="ms-auto">
           <b-nav-item v-if="userId"><router-link :to="`/profile/${userId}`" class="nav-link-custom">프로필</router-link></b-nav-item>
           <b-nav-item v-if="!userId" @click="showSignUpModal" class="nav-link-custom">회원가입</b-nav-item>
@@ -107,10 +110,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import ExchangeRate from '@/views/ExchangeRate.vue'
 
 export default {
   data() {
     return {
+      sidebarOpen: false,
       showModal: false,
       loginModal: false,
       username: null,
@@ -138,6 +143,9 @@ export default {
       isSimilarUsername: false,
       showAdditionalFields: false,
     }
+  },
+  components:{
+    ExchangeRate
   },
   methods: {
     ...mapActions(['logout']),
@@ -176,7 +184,10 @@ export default {
   
         this.$store.dispatch('login', payload)
   
-      }
+      },
+      toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen; // 사이드바의 상태를 토글합니다.
+    },
   },
   computed: {
     ...mapState(['user']),

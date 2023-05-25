@@ -1,12 +1,11 @@
 <template>
   <div id="question-page" class="container">
-    <div class="main-menu">
       <div class="menu-links">
-        <router-link to="/article" class="menu-link">자유게시판</router-link> 
-        <router-link to="/question" class="menu-link active">자주 묻는 질문</router-link> 
-        <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
-      </div>
-    </div>
+      <router-link to="/article" class="menu-link">자유게시판</router-link> 
+      <router-link to="/question" class="menu-link">자주 묻는 질문</router-link> 
+      <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
+    
+    </div><hr>
 
     <div class="faq-section">
       <h2 class="section-title">자주 묻는 질문</h2>

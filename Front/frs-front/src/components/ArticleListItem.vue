@@ -1,8 +1,8 @@
 <template>
   <tr>
     <td>{{ article.id }}</td>
-    <td>{{ article.user }}</td>
     <td>{{ article.title }}</td>
+    <td>{{ article.user }}</td>
     <td>{{ article.created_at }}</td>
   </tr>
 </template>

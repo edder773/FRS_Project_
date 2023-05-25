@@ -1,17 +1,17 @@
 <template>
   <div class="article-list">
-    <b-card title="Article List" class="article-card">
       <template v-if="articles && articles.length > 0">
         <table>
           <thead>
             <tr>
               <th>번호</th>
-              <th>아이디</th>
               <th>제목</th>
+              <th>아이디</th>
               <th>작성시간</th>
             </tr>
           </thead>
           <tbody>
+            
             <ArticleListItem
               v-for="article in articles"
               :key="article.id"
@@ -21,7 +21,6 @@
         </table>
       </template>
       <p v-else class="text-danger">게시글이 없습니다.</p>
-    </b-card>
   </div>
 </template>
 

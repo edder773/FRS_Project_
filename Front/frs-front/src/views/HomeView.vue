@@ -46,6 +46,7 @@
           </b-carousel-slide>
       </a>
     </b-carousel>
+      
     <footer class="footer mt-auto py-3">
       <div class="text-center">
         <span class="text-muted">© 2023 FRS 금융 추천 페이지. All rights reserved.</span>
@@ -55,13 +56,22 @@
 </template>
 
 <script>
+// import Vue from 'vue';
+// import KakaoMap from '@/views/KakaoMap.vue';
+// import ExchangeRate from '@/views/ExchangeRate.vue'
 export default {
   name: 'HomeView',
-  methods: {
-    getImagePath(image) {
-      return require(`@/views/Image/${image}`);
+  // components: {
+  //   ExchangeRate,
+  //   KakaoMap
+    
+  //   },
+    methods: {
+      getImagePath(image) {
+        return require(`@/views/Image/${image}`);
+      },
+      
     },
-  },
 }
 </script>
 

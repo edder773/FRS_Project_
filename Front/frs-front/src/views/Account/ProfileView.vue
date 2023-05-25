@@ -139,14 +139,14 @@
 
 <script>
 import axios from 'axios'
-import { Bar } from 'vue-chartjs'
+// import { Bar } from 'vue-chartjs'
 export default {
   name: "ProfileView",
-  extends: Bar,
-  props: ['chartdata', 'options'],
-  mounted () {
-    this.renderChart(this.chartdata, this.options)
-  },
+  // extends: Bar,
+  // props: ['chartdata', 'options'],
+  // mounted () {
+  //   this.renderChart(this.chartdata, this.options)
+  // },
   data() {
     return {
       signedProducts: [],
@@ -155,8 +155,8 @@ export default {
         annual_income: 0,
         assets: 0,
         occupation: null,
-        bank: "",
-        address: "",
+        bank: null,
+        address: null,
         age: 0
       },
       bankOptions: ["KEB하나은행", "SC은행", "경남은행", "광주은행", "국민은행", "기업은행", "농협은행", "대구은행", "부산은행",
@@ -193,11 +193,10 @@ export default {
         bank: this.editedUser.bank !== null ? this.editedUser.bank : undefined,
         address: this.editedUser.address !== null ? this.editedUser.address : undefined,
         age: this.editedUser.age !== null ? this.editedUser.age : undefined,
-        fin_prdt_nm: this.user.fin_prdt_nm,
       }
       this.editMode = false;
-      this.$store.dispatch('profileChange', payload)
       console.log(payload)
+      this.$store.dispatch('profileChange', payload)
     },
     cancelEdit() {
       this.editedUser = {
@@ -209,7 +208,6 @@ export default {
         bank: this.user.bank,
         address: this.user.address,
         age: this.user.age,
-        fin_prdt_nm: this.user.fin_prdt_nm,
       };
       this.editMode = false;
     },

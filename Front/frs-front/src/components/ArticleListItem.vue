@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr @click="goToDetail(article.id)" style="cursor: pointer;">
     <td>{{ article.id }}</td>
     <td>{{ article.title }}</td>
     <td>{{ article.user }}</td>
@@ -14,6 +14,11 @@ export default {
     article: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    goToDetail(articleId) {
+      this.$emit('click', articleId)
     }
   }
 }

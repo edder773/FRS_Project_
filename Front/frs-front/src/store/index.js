@@ -168,7 +168,10 @@ export default new Vuex.Store({
           context.commit('SAVE_USER', user)
           location.reload()
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+        alert('아이디와 비밀번호가 일치하지 않거나 없는 계정입니다.')
+        console.log(err)
+    })
     },
     // 로그아웃 부분
     logout(context){

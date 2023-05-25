@@ -11,12 +11,7 @@
             </tr>
           </thead>
           <tbody>
-            
-            <ArticleListItem
-              v-for="article in articles"
-              :key="article.id"
-              :article="article"
-            />
+            <ArticleListItem  v-for="article in articles" :key="article.id" :article="article" @click="goToDetail(article.id)"/>
           </tbody>
         </table>
       </template>
@@ -37,6 +32,12 @@ export default {
   computed: {
     articles() {
       return this.$store.state.articles
+    }
+  },
+  methods: {
+    goToDetail(articleId) {
+      console.log(articleId)
+      this.$router.push({ name: 'detail', params: { id: articleId } });
     }
   }
 }

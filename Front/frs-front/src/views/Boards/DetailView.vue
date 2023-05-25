@@ -9,41 +9,51 @@
     <div v-if="!editMode && article">
       <b-card>
         <template #header>
-          <h3 class="mb-0 text-right">
+          <br>
+          <h3 class="mb-0 text-right" style="font-family: 'ONE-Mobile-Title';font-weight: 600;">
             {{ article?.title }}
-          </h3>
-          <p>{{ article?.user }} </p>
-          <p>{{ new Date(article?.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
-          <button v-if="IsCurrentUser(article.user)" @click="editMode = true">수정하기</button>
-          <button v-if="IsCurrentUser(article.user)" @click="deleteArticle">삭제</button>
+          </h3><br>
+          <p style="font-family: 'ONE-Mobile-Title';text-align: right;font-weight: 200;">{{ article?.user }} </p>
+          <p style="font-family: 'ONE-Mobile-Title';text-align: right;font-weight: 200;">{{ new Date(article?.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
+          <div class="button-group">
+          <b-button class="create-button" v-if="IsCurrentUser(article.user)" @click="editMode = true">수정하기</b-button>
+          <b-button class="create-button" v-if="IsCurrentUser(article.user)" @click="deleteArticle">삭제</b-button>
+          </div>
         </template>
-        <b-card-text>{{ article?.content }}</b-card-text>
+        <b-card-text style="font-family: 'ONE-Mobile-Title';font-weight: 100;">{{ article?.content }}</b-card-text>
+        <br><br><br><br><br><br><br><br>
         <template #footer>
-          <p v-if="!editMode">댓글</p>
+          <p v-if="!editMode" style="font-family: 'TheJamsil5Bold';">댓글</p>
           <ul v-if="!editMode && comments.length">
             <li v-for="comment in comments" :key="comment.id">
               <div v-if="!comment.editMode">
-                <p> {{ comment?.user }}</p>
+                <p style="font-family: 'ONE-Mobile-Title';text-align: right;font-weight: 200;"> {{ comment?.user }}</p>
                 <p> {{ comment?.content }} </p>
                 <p> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
-                <button v-if="IsCurrentUser(comment.user)" @click="editComment(comment)">수정</button>
-                <button v-if="IsCurrentUser(comment.user)" @click="deleteComment(comment.id)">삭제</button>
+                <div class="button-group">
+                <b-button class="create-button" v-if="IsCurrentUser(comment.user)" @click="editComment(comment)">수정</b-button>
+                <b-button class="create-button" v-if="IsCurrentUser(comment.user)" @click="deleteComment(comment.id)">삭제</b-button>
               </div>
+            </div>
               <div v-else>
-                <p> {{ comment?.user }}</p>
+                <p style="font-family: 'ONE-Mobile-Title';text-align: right;font-weight: 200;"> {{ comment?.user }}</p>
                 <input type="text" v-model="comment.editedContent">
                 <p> {{ new Date(comment?.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }} </p>
-                <button @click="updateComment(comment)">수정 완료</button>
-                <button @click="cancelEditComment(comment)">취소</button>
+                <div class="button-group">
+                <b-button class="create-button" @click="updateComment(comment)">수정 완료</b-button>
+                <b-button class="create-button" @click="cancelEditComment(comment)">취소</b-button>
+              </div>
               </div>
             </li>
           </ul>
-          <p v-if="!editMode && !comments.length">댓글이 없습니다.</p>
+          <p v-if="!editMode && !comments.length" style="font-family: 'GangwonEdu_OTFBoldA';">댓글이 없습니다.</p>
           <div v-if="!editMode">
             <b-card :header="isUser">
               <form @submit.prevent="createComment">
-                <input type="text" id="comment" v-model="newComment">
-                <p style="cursor: pointer;" @click="submitForm">등록</p>
+                <div class="button-group1">
+                <input type="text" id="comment" v-model="newComment" style="width: 500px;">
+                <b-button class="create-button" style="cursor: pointer;" @click="submitForm">등록</b-button>
+              </div>
               </form>
             </b-card>
           </div>
@@ -270,6 +280,13 @@ export default {
 #detail-page{
   margin-bottom: 100px;
 }
+h3{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'ONE-Mobile-Title';
+  font-weight: 500;
+}
 .menu-links {
   display: flex;
   justify-content: center;
@@ -290,5 +307,34 @@ export default {
 .menu-link:hover,
 .menu-link.active {
   color: #9bb5d1;
+}
+.create-button {
+  background-color: #383838;
+  color: #fff;
+  cursor: pointer;
+    font-family: 'ONE-Mobile-Title';
+      display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-button:hover {
+  background-color: #bdbdbd;
+  color: black;
+}
+.button-group {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 20px;
+  border: none;
+}
+.button-group1 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 700px;
+  border: none;
 }
 </style>

@@ -6,11 +6,15 @@
       <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
     </div>
     <hr>
+    <b-row>
+      <b-col class="d-flex align-items-center mt-3">
     <h2 class="section-title">자유게시판</h2>
-    <b-button class="create-button">
+    <b-button class="create-button ms-auto">
       <router-link :to="{ name: 'create' }" class="create-link" >글 작성하기</router-link>
     </b-button>
-    <br><hr>
+  </b-col>
+  </b-row>
+    <hr>
     <ArticleList />
     <!-- <hr> -->
     <router-view/>
@@ -66,21 +70,17 @@ export default {
 }
 .menu-link:hover,
 .menu-link.active {
-  color: #007bff;
+  color: #9bb5d1;
 }
 .create-button {
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  font-size: 15px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease-in-out;
-  margin-left: 80%; /* 추가 */
+  background-color: #383838;
+  color: #fff;
+  cursor: pointer;
 }
 
 .create-button:hover {
-  background-color: #0056b3;
+  background-color: #bdbdbd;
+  color: black;
 }
 
 .create-link {

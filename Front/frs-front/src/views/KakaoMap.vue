@@ -344,6 +344,5 @@ button {
   color: #fff;
   cursor: pointer;
   margin-left: 10px; /* 버튼 간격을 위해 추가 */
-  flex-direction: row;
 }
 </style>

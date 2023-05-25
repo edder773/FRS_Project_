@@ -2,8 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ExchangeRate from '../views/ExchangeRate.vue'
-import SignUpView from '../views/Account/SignUpView.vue'
-import LoginView from '../views/Account/LoginView.vue'
 import KakaoMap from '../views/KakaoMap.vue'
 import ArticleView from '../views/Boards/ArticleView.vue'
 import CreateView from '../views/Boards/CreateView.vue'
@@ -28,16 +26,6 @@ const routes = [
     path: '/exchange',
     name: 'exchange',
     component: ExchangeRate
-  },
-  {
-    path: '/signup',
-    name: 'signup',
-    component: SignUpView
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: LoginView
   },
   {
     path: '/map',

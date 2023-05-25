@@ -87,6 +87,9 @@
             <p><strong>우대 조건:</strong> {{ selectedProduct.spcl_cnd }}</p>
             <p><strong>가입 가능 유형:</strong> {{ selectedProduct.join_member }}</p>
             <p><strong>기타 참고 사항:</strong> {{ selectedProduct.etc_note }}</p>
+            <br>
+            <b-button class="apply-button-container" variant="success" @click="checkProduct(selectedProduct)">
+                          {{ checkIn(selectedProduct) ? '해지하기' : '가입하기' }}</b-button>
           </div>
         </div>
       </div>
@@ -99,6 +102,7 @@ import axios from 'axios'
 import KakaoMapCom from '@/components/KakaoMapCom.vue'
 import { BTable } from 'bootstrap-vue'
 import { BModal } from 'bootstrap-vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DepositNew',
@@ -206,7 +210,6 @@ export default {
     },
     checkProduct(product) {
       const user = this.getUser
-      console.log(user.financial_products)
       const payload = {
         user_id: user.pk,  // 'user_id' 키에 사용자 ID 값을 전달
         product_id: product.id  // 'product_id' 키에 상품 ID 값을 전달
@@ -215,11 +218,18 @@ export default {
     },
     // 가입여부 확인 기능
     checkIn(product){
-          return this.getUser.financial_products.includes(product.id)
-        },
+      return this.getUser.financial_products.includes(product.id)
+    },
 
   },
   computed: {
+    ...mapGetters(['getUser', 'getToken']),
+    currentImage() {
+      return this.images[this.currentImageIndex]
+    },
+    isLogin() {
+      return this.$store.getters.isLogin // 로그인 여부
+    },
     formattedProducts() {
       const months = ['6', '12', '24', '36']
       return this.products.map((product) => {
@@ -374,4 +384,5 @@ td{
 .filter-container {
   margin-bottom: 20px;
 }
+
 </style>

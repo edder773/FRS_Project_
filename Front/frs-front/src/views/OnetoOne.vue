@@ -4,7 +4,7 @@
       <router-link to="/article" class="menu-link">자유게시판</router-link> 
       <router-link to="/question" class="menu-link">자주 묻는 질문</router-link> 
       <router-link to="/onetoone" class="menu-link">1:1 문의</router-link> 
-    
+      <div class="onetoone-button">문의하기</div>
     </div><hr>
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style scoped>
+
 .menu-links {
   display: flex;
   justify-content: center;
@@ -35,5 +36,9 @@ export default {
 .menu-link:hover,
 .menu-link.active {
   color: #007bff;
+}
+.onetoone-container{
+  background-color: black;
+  height: 5000px;
 }
 </style>

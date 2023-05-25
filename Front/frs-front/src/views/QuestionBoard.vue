@@ -78,7 +78,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .main-menu {
   background-color: #f8f9fa;
   padding: 20px;

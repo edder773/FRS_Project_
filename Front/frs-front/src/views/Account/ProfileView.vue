@@ -132,7 +132,7 @@ export default {
       ],
       occupationOptions: ['의사', '교사', '변호사', '엔지니어', '회계사', '디자이너', '개발자', '마케터', '경찰관', '소방관',
       '간호사', '음악가', '배우', '기자', '요리사', '운전사', '경영자', '연구원', '프로그래머', '무직'],
-      savingProduct: [],
+      // savingProduct: [],
       depositProducts: []
     }
   },
@@ -185,18 +185,18 @@ export default {
         console.error(error);
       });
     },
-    fetchSavings() {
-      axios.get(`http://127.0.0.1:8000/deposits/savings/`)
-      .then(response => {
-        this.savingProduct = response.data
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    },
+    // fetchSavings() {
+    //   axios.get(`http://127.0.0.1:8000/deposits/savings/`)
+    //   .then(response => {
+    //     this.savingProduct = response.data
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+    // },
     async fetchSign() {
   try {
-    await Promise.all([this.fetchDeposits(), this.fetchSavings()])
+    await Promise.all([this.fetchDeposits()])
     setTimeout(() => {
       this.depositProducts.forEach((product) => {
       this.user.financial_products.forEach((result) => {
@@ -206,13 +206,13 @@ export default {
       });
     });
     
-    this.savingProduct.forEach((product) => {
-      this.user.financial_products.forEach((result) => {
-        if (product.id == result) {
-          this.signedProducts.push(product);
-        }
-      })
-    })
+    // this.savingProduct.forEach((product) => {
+    //   this.user.financial_products.forEach((result) => {
+    //     if (product.id == result) {
+    //       this.signedProducts.push(product);
+    //     }
+    //   })
+    // })
     },1500)
   } catch (error) {
     console.error(error);

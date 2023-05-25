@@ -25,9 +25,9 @@ $ cd Back/frs_back/
 $ python -m vevn venv
 $ source venv/Script/activate
 $ pip install -r requirements.txt
-$ python manage.py loaddata user_data.json
 $ python manage.py makemigrations
 $ python manage.py migrate
+$ python manage.py loaddata user_data.json
 ```
 
 ## 1. 📂 개요
@@ -230,6 +230,7 @@ for (const option of filteredOptions) {
 > 백엔드 구성은 프로젝트 전체 시간에 비해 목표 시간보다 빠르게 구성했고, 프론트에서 데이터를 접근하는 것을 전반적으로 직접 구현했다. <br>
 > 추천하는 알고리즘을 어떻게 구현하면 좋을까? 라는 생각에서 요즘 유행하는 심리테스트처럼 구성을 해보았고, 전반적으로 프론트에서 디자인하고 구상하였다. <br>
 > 추천 알고리즘을 numpy를 이용해서 처음에 구성했으나, 코드를 바꾸는 과정에서 에러가 발생해 django에서 제공하는 Q를 import해서 특정 구간에 따라 나눠 구성할 수 있게 했는데, 좀 더 다양하게 DB를 다룰 수 있었다면 알고리즘을 잘 짤 수 있었을거 같은데 아쉬움이 많이 남는다. <br>
+> 팀원이 프론트의 주요 구현 사항에 집중해줘서 백엔드 및 프론트 연동, 알고리즘 구현에 집중할 수 있었다. <br>
 > 전반적인 프론트엔드 & 백엔드 파트를 맡아서 작업을 진행하였고, 덕분에 Vue와 Django 프레임워크에 적응하는데 도움이 많이 됐다. <br>
 
 

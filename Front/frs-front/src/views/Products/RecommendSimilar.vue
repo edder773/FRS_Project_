@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <h1 style="text-align: center;">나와 비슷한 조건의 다른 사람이 선택한 상품!</h1>
+  <div id="similar-page">
     <div class="d-flex flex-column align-items-center">
+      <h1 style="margin: 0;font-family: 'TheJamsil5Bold';">나와 비슷한 조건의 다른 사람이 선택한 상품!</h1>
+      <br><br><br>
       <div v-for="product in productresult" :key="product.id">
-        <b-card style="width: 1000px" border-variant="secondary" :header="product.fin_prdt_nm" header-border-variant="secondary" align="center">
+        <b-card style="width: 1000px;font-family: 'TheJamsil5Bold';" border-variant="secondary" :header="product.fin_prdt_nm" header-border-variant="secondary" align="center">
+          
           <div class="card-body">
-            <b-card-text style="height: 100%">{{ product.mtrt_int }}</b-card-text>
+            <b-card-text style="height: 100%;font-family: 'GangwonEdu_OTFBoldA'; font-weight: 200;">{{ product.mtrt_int }}</b-card-text>
           </div>
           <div class="d-flex justify-content-end mt-2">
             <b-button variant="primary" @click="checkProduct(product)">
@@ -124,5 +126,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#similar-page{
+  font-family: 'GangwonEdu_OTFBoldA';
+  margin-top: 70px;
+}
 </style>

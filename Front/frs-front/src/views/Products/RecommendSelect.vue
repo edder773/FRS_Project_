@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="recommend-page">
     <div style="text-align: center; margin-top: 2%; margin-bottom: 2%">
-     <h1 style="margin: 0;">간단하게 알아보는 M(money)BTI</h1>
+     <h1 style="margin: 0;font-family: 'TheJamsil5Bold';">간단하게 알아보는 M(money)BTI</h1>
     </div>
     <div class="container">
       <div v-if="isMain" class="container">
@@ -266,16 +266,16 @@
               <b-card-text>{{ product.fin_prdt_nm }}</b-card-text>
               <b-button variant="primary" @click="showModal">상품 자세히 보기기</b-button>
               <b-modal size="lg" v-model="modalVisible" title="상품 상세 정보">
-                <b-card bg-variant="light" header="상품 정보" class="text-center">
+                <b-card bg-variant="light" header="상품 정보" class="text-center" style="font-family: 'TheJamsil5Bold';">
                   <b-card-text>
                     <p>만기시 이자 정보</p>
-                    <p>{{product.mtrt_int}}</p>
+                    <p style="font-family: 'GangwonEdu_OTFBoldA'; font-weight: 200;">{{product.mtrt_int}}</p>
                     <br>
                     <p>조건에 따른 우대 정보</p>
-                    <p>{{product.spcl_cnd}}</p>
+                    <p style="font-family: 'GangwonEdu_OTFBoldA'; font-weight: 200;">{{product.spcl_cnd}}</p>
                     <br>
                     <p>거래 실적 인정 기간</p>
-                    <p>{{product.etc_note}}</p>
+                    <p style="font-family: 'GangwonEdu_OTFBoldA'; font-weight: 200;">{{product.etc_note}}</p>
                     <b-button variant="success" @click="checkProduct(product)">
                       {{ checkIn(product) ? '해지하기' : '가입하기' }}</b-button>
                     </b-card-text>
@@ -510,12 +510,17 @@ checkIn(product){
 </script>
   
 <style scoped>
+#recommend-page{
+  font-family: 'GangwonEdu_OTFBoldA';
+  margin-top: 70px;
+}
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  border: 1px black;
 }
 
 .game-container {
